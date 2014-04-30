@@ -27,15 +27,15 @@ public class RunDanieliwi {
 		movie = ms.addMovie(movie);
 		System.out.println(movie);*/
 		//List <Movie> l = ms.findMoviebyYear(1997);
-		User u1= new User('daniel','1234', 'dani','' ,'' ,'' );
-		User u = us.addUser(u1)
+		//User u1= new User('daniel','1234', 'dani','' ,'' ,'' );
+		//User u = us.addUser(u1)
 		
 		Movie l = ms.findMoviebyId(3);
 	//	ms.deleteMovie(ms.findMoviebyId(4));
 		/*for(int i = 0; i < l.size(); i++){
 			System.out.println(l.get(i).toString());
 		}*/
-		System.out.println(u.toString());
+		//System.out.println(u.toString());
 	}
 
 }
