@@ -1,0 +1,10 @@
+cuando esta en rojo:
+git add <nombre_Archivo>
+o 
+git add *
+
+git commit -m " mensaje"
+
+git push origin master
+
+git pull 
