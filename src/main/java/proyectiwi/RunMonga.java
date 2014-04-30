@@ -1,5 +1,6 @@
 package proyectiwi;
 
+import java.sql.Date;
 import java.util.List;
 
 import movie.Movie;
@@ -7,7 +8,13 @@ import movie.Movie;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import person.Actor;
+import person.Director;
+import person.Screenplay;
+import person.User;
+
 import services.MovieService;
+import services.UserService;
 
 public class RunMonga {
 
@@ -21,6 +28,17 @@ ApplicationContext context = new ClassPathXmlApplicationContext("spring-module.x
 		
 		
 		MovieService ms = (MovieService)context.getBean("movieService");
+		UserService us =  (UserService)context.getBean("userService");
+		
+		Screenplay spp = new Screenplay("danieliwi6", Date.valueOf("2013-02-01"), "chile");
+		
+		User user = new User("nataliwiiiaaii32", Date.valueOf("2013-02-01"), "chile", "nataly", "holiii", "taaalii");
+		//Screenplay sp = ms.addScreenplay(spp);
+		User u = us.addUser(user);
+		System.out.println(u);
+		
+		/*
+		
 		Movie movie = new Movie("titanic2000", 2000, 120, "peru", 2000000, 30000000);
 		//System.out.println(movie);
 		movie = ms.addMovie(movie);
@@ -44,7 +62,7 @@ ApplicationContext context = new ClassPathXmlApplicationContext("spring-module.x
 			System.out.println("rem"+l.get(i).toString());
 			
 		}
-
+*/
 	}
 
 }

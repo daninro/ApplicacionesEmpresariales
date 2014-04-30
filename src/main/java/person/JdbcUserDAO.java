@@ -68,13 +68,13 @@ public class JdbcUserDAO{
 		try{
 			Connection connection = datasource.getConnection();
 			
-			String query = "INSERT INTO user1(user_name, password, name, date_of_birdth, country, email) values (?, ?, ?, ?, ?, ?)";
+			String query = "INSERT INTO user1(user_name, password, name, date_of_birth, country, email) values (?, ?, ?, ?, ?, ?)";
 			PreparedStatement statement = connection.prepareStatement(query);
 			
 			statement.setString(1, u.getUsername());
 			statement.setString(2, u.getPassword());
 			statement.setString(3, u.getName());
-			statement.setString(4, u.getDate_of_birth());
+			statement.setDate(4, u.getDate_of_birth());
 			statement.setString(5, u.getCountry());
 			statement.setString(6, u.getEmail());
 			statement.executeUpdate();
@@ -96,7 +96,7 @@ public class JdbcUserDAO{
 			ResultSet result = statement.executeQuery();
 			if(result.next()){
 			
-				user = new User(result.getString(1),result.getString(4) , result.getString(5), result.getString(6), result.getString(2), result.getString(3));
+				user = new User(result.getString(1),result.getDate(4) , result.getString(5), result.getString(6), result.getString(2), result.getString(3));
 			}
 		}catch(SQLException e){}
 		
@@ -114,7 +114,7 @@ public class JdbcUserDAO{
 			
 			statement.setString(1, u.getPassword());
 			statement.setString(2, u.getName());
-			statement.setString(3, u.getDate_of_birth());
+			statement.setDate(3, u.getDate_of_birth());
 			statement.setString(4, u.getCountry());
 			statement.setString(5, u.getEmail());
 			statement.setString(6, u.getUsername());

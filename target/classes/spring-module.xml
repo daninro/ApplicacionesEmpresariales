@@ -29,9 +29,24 @@
 		<property name="datasource" ref = "dataSourceBean" />
 	</bean>
 	
+	<bean id = "directorDao" class = "person.JdbcDirectorDAO" >
+		<property name="datasource" ref = "dataSourceBean" />
+	</bean>
+	
+	<bean id = "screenplayDao" class = "person.JdbcScreenplayDAO" >
+		<property name="datasource" ref = "dataSourceBean" />
+	</bean>
+	
+	<bean id = "actorDao" class = "person.JdbcActorDAO" >
+		<property name="datasource" ref = "dataSourceBean" />
+	</bean>
+	
 	<bean id = "movieService" class = "services.MovieService">
 		<property name="movieDAO" ref = "movieDao"/>
 		<property name="userDAO" ref = "userDao"/>
+		<property name="directorDAO" ref = "directorDao"/>
+		<property name="screenplayDAO" ref = "screenplayDao"/>
+		<property name="actorDAO" ref = "actorDao"/>
 	</bean>
 	
 	<bean id = "userService" class = "services.UserService">

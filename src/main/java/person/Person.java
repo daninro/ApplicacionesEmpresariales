@@ -1,11 +1,13 @@
 package person;
 
+import java.sql.Date;
+
 public class Person  {
 	private String name;
-	private String date_of_birth;
+	private Date date_of_birth;
 	private String country;
 
-	public Person(String name, String date_of_birth, String country){
+	public Person(String name, Date date_of_birth, String country){
 		this.setName(name);
 		this.setDate_of_birth(date_of_birth);
 		this.setCountry(country);
@@ -19,11 +21,11 @@ public class Person  {
 		this.name = name;
 	}
 
-	public String getDate_of_birth() {
+	public Date getDate_of_birth() {
 		return date_of_birth;
 	}
 
-	public void setDate_of_birth(String date_of_birth) {
+	public void setDate_of_birth(Date date_of_birth) {
 		this.date_of_birth = date_of_birth;
 	}
 
@@ -37,7 +39,7 @@ public class Person  {
 	
 	@Override
 	public String toString(){
-		return "Movie [name = " + name + "]";
+		return "Person [name = " + name + "]";
 	}
 
 }

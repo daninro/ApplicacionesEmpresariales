@@ -7,14 +7,48 @@ import movie.Movie;
 
 import org.springframework.transaction.annotation.Transactional;
 
+import person.Actor;
 import person.Director;
+import person.JdbcActorDAO;
+import person.JdbcDirectorDAO;
+import person.JdbcScreenplayDAO;
 import person.JdbcUserDAO;
+import person.Screenplay;
 import person.User;
+import java.sql.Date;
 
 public class MovieService {
 	
 	private JdbcMovieDAO movieDAO;
 	private JdbcUserDAO userDAO;
+	private JdbcDirectorDAO directorDAO;
+	public JdbcDirectorDAO getDirectorDAO() {
+		return directorDAO;
+	}
+
+	public void setDirectorDAO(JdbcDirectorDAO directorDAO) {
+		this.directorDAO = directorDAO;
+	}
+
+	public JdbcScreenplayDAO getScreenplayDAO() {
+		return screenplayDAO;
+	}
+
+	public void setScreenplayDAO(JdbcScreenplayDAO screenplayDAO) {
+		this.screenplayDAO = screenplayDAO;
+	}
+
+	public JdbcActorDAO getActorDAO() {
+		return actorDAO;
+	}
+
+	public void setActorDAO(JdbcActorDAO actorDAO) {
+		this.actorDAO = actorDAO;
+	}
+
+	private JdbcScreenplayDAO screenplayDAO;
+	private JdbcActorDAO actorDAO;
+	
 	/*accesors y mutators*/
 	
 	
@@ -85,36 +119,6 @@ public class MovieService {
 			
 	}
 	
-	@Transactional
-	public Director insertDirectortoMovie(Movie m, Director d){
-		Director director=null;
-		try{
-			director = movieDAO.addDirectortoMovie(m,d);
-		}catch(RuntimeException e){}
-		
-		return director;
-			
-	}
-	@Transactional
-	public Director insertDirector(Director d){
-		Director director=null;
-		try{
-			director = movieDAO.addDirector(d);
-		}catch(RuntimeException e){}
-		
-		return director;
-			
-	}
-	
-	@Transactional
-	public List<Movie> findMoviebyDirector(Director director){
-		List<Movie> movie = null;
-		try{
-			movie = movieDAO.findbyDirector(director);
-		} catch (RuntimeException e){}
-		
-		return movie;
-	}
 	
 	@Transactional
 	public Movie updateMovie(Movie m){
@@ -187,8 +191,61 @@ public class MovieService {
 		}catch(RuntimeException e){}
 	return movies;
 	}
+	@Transactional
+	public Director addDirector(Director d){
+		Director director = null;
+		try{
+			director = directorDAO.insert(d);
+			
+		}catch(RuntimeException e){}
+		return director;
+	}
+	@Transactional
+	public Actor addActor(Actor a){
+		Actor actor = null;
+		try{
+			actor = actorDAO.insert(a);
+			
+		}catch(RuntimeException e){}
+		return actor;
+		
+	}
+	@Transactional
+	public Screenplay addScreenplay(Screenplay sp){
+		Screenplay s = null;
+		try{
+			s = screenplayDAO.insert(sp);
+			
+		}catch(RuntimeException e){}
+		return sp;
+	}
 	
-
+	public Actor findActor(String name, Date date_of_birth) {
+		Actor actor = null;
+		try{
+			actor = actorDAO.find(name, date_of_birth);
+		}catch(RuntimeException e){}
+		return actor;
+	}
+	
+	
+	
+	public Director findDiretor(String name, Date date_of_birth) {
+		Director director= null;
+		try{
+			director = directorDAO.find(name, date_of_birth);
+		}catch(RuntimeException e){}
+		return director;
+	}
+	
+	public Screenplay findScreeplay(String name, Date date_of_birth) {
+		Screenplay sp = null;
+		try{
+			sp = screenplayDAO.find(name, date_of_birth);
+		}catch(RuntimeException e){}
+		return sp;
+	}
+	
 	
 		
 }

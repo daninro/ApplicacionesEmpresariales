@@ -293,66 +293,6 @@ public List<Movie> addMovietoWishlist(Movie movie, User u) {
 	}
 
 	
-	//revisar
-	public Director addDirectortoMovie(Movie m, Director d) {
-		try{
-			String query = "INSERT INTO directed_by (name, date_of_birth, id) VALUES (?, ?, ?)";
-			
-			Connection connection = datasource.getConnection();
-			PreparedStatement statement = connection.prepareStatement(query , Statement.RETURN_GENERATED_KEYS);
-			statement.setString(1, d.getName());
-			statement.setString(2, d.getDate_of_birth());
-			statement.setInt(3, m.getId());
-			statement.executeUpdate();
-		
-		}catch(SQLException e){
-			throw new RuntimeException(e);
-		}
-		return d;	
-	}
-	//revisar
-	public List<Movie> findbyDirector(Director d) {
-		List<Movie> m = new ArrayList<Movie>();
-		try{
-			
-			Connection connection = datasource.getConnection();
-			String query = "SELECT id FROM directed_by WHERE name = ? AND date_of_birth = ?";
-			PreparedStatement statement = connection.prepareStatement(query);
-			statement.setString(1, d.getName());
-			statement.setString(2, d.getDate_of_birth());
-			ResultSet result = statement.executeQuery();
-			while(result.next()){
-				Movie movie = findbyId(result.getInt(1));
-				m.add(movie);
-			}
-			
-		}catch(SQLException e){
-			throw new RuntimeException(e);
-		}
-		return m;
-	}
-
-	//revisar
-	public Director addDirector(Director d){
-		if(d == null) return null;
-		
-		try{
-			String query = "INSERT INTO director (name, date_of_birth,country) VALUES (?, ?, ?)";
-			
-			Connection connection = datasource.getConnection();
-			PreparedStatement statement = connection.prepareStatement(query , Statement.RETURN_GENERATED_KEYS);
-			statement.setString(1, d.getName());
-			statement.setString(2, d.getDate_of_birth());
-			statement.setString(3, d.getCountry());
-			statement.executeUpdate();
-				
-			
-			
-		}catch(SQLException e){
-			throw new RuntimeException(e);
-		}
-		return d;
-		
-	}
+	
 	
 }

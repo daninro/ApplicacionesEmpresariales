@@ -1,6 +1,7 @@
 package proyectiwi;
 
 import java.io.ObjectInputStream.GetField;
+import java.sql.Date;
 import java.util.List;
 
 import movie.JdbcMovieDAO;
@@ -48,8 +49,9 @@ public class Run {
 			
 		}
 		
-		us.addUser(new User("hola", "2014-12-12", "chile", "asd","asd", "asd"));
-		User u = us.getUserbyUsername("hola");
+		User u = us.addUser(new User("hola", Date.valueOf("2013-02-13"), "chile", "asd","asd", "asd"));
+		
+		//User u = us.getUserbyUsername("hola");
 		System.out.println(u.toString());
 		
 		
