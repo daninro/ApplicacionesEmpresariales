@@ -6,11 +6,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Date;
-import java.util.List;
+
 
 import javax.sql.DataSource;
 
-import movie.Movie;
+
 
 public class JdbcActorDAO  implements ActorDAO{
 	
@@ -104,12 +104,12 @@ public Actor deletebykey(String name, Date date) {
 public Actor update(Actor a) {
 Actor actor = null;
 	try{
-		String query = "UPDATE actor SET name = ?, date_of_birth = ?, country= ?"; 
+		String query = "UPDATE actor SET country = ? WHERE name = ? AND date_of_birth = ?"; 
 		Connection connection = datasource.getConnection();
 		PreparedStatement statement = connection.prepareStatement(query , Statement.RETURN_GENERATED_KEYS);
-		statement.setString(1, a.getName());
-		statement.setDate(2, a.getDate_of_birth());
-		statement.setString(3, a.getCountry());
+		statement.setString(1, a.getCountry());
+		statement.setString(2, a.getName());
+		statement.setDate(3, a.getDate_of_birth());
 		statement.executeUpdate();
 		actor = find(a.getName(), a.getDate_of_birth());
 	}catch(SQLException e){

@@ -8,6 +8,8 @@ import java.sql.Statement;
 import java.sql.Date;
 import javax.sql.DataSource;
 
+
+
 public class JdbcDirectorDAO implements DirectorDAO{
 	
 	private DataSource datasource;
@@ -67,5 +69,51 @@ public class JdbcDirectorDAO implements DirectorDAO{
 	}
 	
 	
+
+	public Director delete(Director d) {
+		
+		try{
+			Connection connection = datasource.getConnection();
+			String query = "DELETE FROM  director WHERE name = ? AND date_of_birth = ?";
+			PreparedStatement statement = connection.prepareStatement(query);
+			statement.setString(1, d.getName());
+			statement.setDate(2, d.getDate_of_birth());
+			statement.executeUpdate();
+			
+		}catch(SQLException e){}
+		return d;
+	}
+
+public Director deletebykey(String name, Date date) {
+	Director d = find(name, date);
+		try{
+			Connection connection = datasource.getConnection();
+			String query = "DELETE FROM  director WHERE name = ? AND date_of_birth = ?";
+			PreparedStatement statement = connection.prepareStatement(query);
+			statement.setString(1, name);
+			statement.setDate(2, date);
+			statement.executeUpdate();
+			
+		}catch(SQLException e){}
+		return d;
+	}
+
+public Director update(Director d) {
+	Director director = null;
+	try{
+		String query = "UPDATE director SET country = ? WHERE name = ? AND date_of_birth = ?"; 
+		Connection connection = datasource.getConnection();
+		PreparedStatement statement = connection.prepareStatement(query , Statement.RETURN_GENERATED_KEYS);
+		statement.setString(1, d.getCountry());
+		statement.setString(2, d.getName());
+		statement.setDate(3, d.getDate_of_birth());
+		statement.executeUpdate();
+		director = find(d.getName(), d.getDate_of_birth());
+	}catch(SQLException e){
+		throw new RuntimeException(e);
+	}
+	return director;
+	
+}
 	
 }

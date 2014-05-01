@@ -115,7 +115,7 @@ public class JdbcMovieDAO implements MovieDAO{
 		if(movie == null) return null;
 		Movie m = null;
 		try{
-			String query = "UPDATE movie SET name = ?, year = ?, running_time= ?, country = ?, budget = ?, box_office = ?"; 
+			String query = "UPDATE movie SET name = ?, year = ?, running_time= ?, country = ?, budget = ?, box_office = ? WHERE id = ?"; 
 			Connection connection = datasource.getConnection();
 			PreparedStatement statement = connection.prepareStatement(query , Statement.RETURN_GENERATED_KEYS);
 			statement.setString(1, movie.getName());
@@ -124,6 +124,7 @@ public class JdbcMovieDAO implements MovieDAO{
 			statement.setString(4, movie.getCountry());
 			statement.setInt(5, movie.getBudget());
 			statement.setInt(6, movie.getBox_office());
+			statement.setInt(7, movie.getId());
 			statement.executeUpdate();
 			m = findbyId(movie.getId());
 		}catch(SQLException e){

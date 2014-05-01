@@ -281,5 +281,70 @@ public class MovieServiceImplement implements MovieService{
 	}
 	
 	
+	@Transactional
+	public Director deleteDirector(Director d){
+		Director director = null;
+		try{
+			director = directorDAO.delete(d);
+			
+		}catch(RuntimeException e){}
+	return director;
+		
+	}
+	@Transactional
+	public Director deleteDirectorbykey(String name, Date date){
+		Director director = null;
+		try{
+			director = directorDAO.deletebykey(name, date);
+			
+		}catch(RuntimeException e){}
+	return director;
+		
+	}
+	@Transactional
+	public Director updateDirector(Director d){
+		Director director = null;
+		try{
+			director = directorDAO.update(d);
+			
+		}catch(RuntimeException e){}
+	return director;
+		
+	}
+	@Transactional
+	public Screenplay deleteScreenplay(Screenplay sp){
+		Screenplay screenplay = null;
+		try{
+			screenplay = screenplayDAO.delete(sp);
+			
+		}catch(RuntimeException e){}
+	return screenplay;
+		
+	}
+	@Transactional
+	public Screenplay deleteScreenplaybykey(String name, Date date){
+		
+		Screenplay screenplay = null;
+		try{
+			screenplay = screenplayDAO.deletebykey(name, date);
+			
+		}catch(RuntimeException e){}
+	return screenplay;
+		
+	}
+	@Transactional
+	public Screenplay updateScreenplay(Screenplay sp){
+		
+		Screenplay screenplay = null;
+		try{
+			screenplay = screenplayDAO.update(sp);
+			
+		}catch(RuntimeException e){}
+	return screenplay;
+		
+	}
+	
+	
+	
 		
 }

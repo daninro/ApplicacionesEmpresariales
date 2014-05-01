@@ -9,4 +9,8 @@ public interface UserDAO {
 		public User getUser(String username);
 		public User update(User u);
 		public User delete(User u);
+		
+		
+	
+	
 }

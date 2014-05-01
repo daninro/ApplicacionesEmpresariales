@@ -94,7 +94,7 @@ public class JdbcUserDAO implements UserDAO{
 			
 			String query = "SELECT * FROM  user1 WHERE user_name = ?";
 			PreparedStatement statement = connection.prepareStatement(query);
-			System.out.println("asf");
+			//System.out.println("asf");
 			statement.setString(1, username);
 			ResultSet result = statement.executeQuery();
 			if(result.next()){
@@ -111,7 +111,7 @@ public class JdbcUserDAO implements UserDAO{
 		try{
 			Connection connection = datasource.getConnection();
 			
-			String query = "UPDATE user SET password = ?, name = ?, date_of_birdth = ?, country = ?, email = ? WHERE user_name = ?";
+			String query = "UPDATE user1 SET password = ?, name = ?, date_of_birth = ?, country = ?, email = ? WHERE user_name = ?";
 			PreparedStatement statement = connection.prepareStatement(query);
 			
 			
@@ -121,6 +121,7 @@ public class JdbcUserDAO implements UserDAO{
 			statement.setString(4, u.getCountry());
 			statement.setString(5, u.getEmail());
 			statement.setString(6, u.getUsername());
+			//System.out.println(u.getUsername());
 			statement.executeUpdate();
 			
 			user = getUser(u.getUsername());

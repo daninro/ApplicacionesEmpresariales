@@ -47,5 +47,18 @@ public interface MovieService {
 	public Actor deleteActorbykey(String name, Date date);
 	@Transactional
 	public Actor updateActor(Actor a);
+	@Transactional
+	public Director deleteDirector(Director d);
+	@Transactional
+	public Director deleteDirectorbykey(String name, Date date);
+	@Transactional
+	public Director updateDirector(Director d);
+	@Transactional
+	public Screenplay deleteScreenplay(Screenplay sp);
+	@Transactional
+	public Screenplay deleteScreenplaybykey(String name, Date date);
+	@Transactional
+	public Screenplay updateScreenplay(Screenplay sp);
+	
 	
 }
