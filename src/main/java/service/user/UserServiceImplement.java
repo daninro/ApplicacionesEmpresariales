@@ -1,8 +1,6 @@
 package service.user;
 
-import movie.JdbcMovieDAO;
 import movie.MovieDAO;
-import user.JdbcUserDAO;
 import user.User;
 import user.UserDAO;
 
