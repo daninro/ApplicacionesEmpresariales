@@ -4,6 +4,7 @@ import java.util.List;
 
 import movie.JdbcMovieDAO;
 import movie.Movie;
+import movie.MovieDAO;
 
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,7 +20,7 @@ import java.sql.Date;
 
 public class MovieService {
 	
-	private JdbcMovieDAO movieDAO;
+	private MovieDAO movieDAO;
 	private JdbcUserDAO userDAO;
 	private JdbcDirectorDAO directorDAO;
 	public JdbcDirectorDAO getDirectorDAO() {
@@ -52,11 +53,11 @@ public class MovieService {
 	/*accesors y mutators*/
 	
 	
-	public JdbcMovieDAO getMovieDAO() {
+	public MovieDAO getMovieDAO() {
 		return movieDAO;
 	}
 	
-	public void setMovieDAO(JdbcMovieDAO movieDAO) {
+	public void setMovieDAO(MovieDAO movieDAO) {
 		this.movieDAO = movieDAO;
 	}
 

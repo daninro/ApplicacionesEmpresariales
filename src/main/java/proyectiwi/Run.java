@@ -38,7 +38,7 @@ public class Run {
 		
 		MovieService ms = (MovieService)context.getBean("movieService");
 		UserService us = (UserService)context.getBean("userService"); 
-		Movie movie = new Movie("titanic2", 1997, 120, "EEUU", 2000000, 30000000);
+		Movie movie = new Movie("titanic3", 1997, 120, "EEUU", 2000000, 30000000);
 		System.out.println(movie);
 		movie = ms.addMovie(movie);
 		System.out.println(movie);
@@ -49,7 +49,7 @@ public class Run {
 			
 		}
 		
-		User u = us.addUser(new User("hola", Date.valueOf("2013-02-13"), "chile", "asd","asd", "asd"));
+		User u = us.addUser(new User("hola", Date.valueOf("2013-02-13"), "chile", "asd","asd", "asds"));
 		
 		//User u = us.getUserbyUsername("hola");
 		System.out.println(u.toString());
