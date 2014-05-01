@@ -17,7 +17,7 @@ public class UserServiceImplement  implements UserService{
 		return movieDAO;
 	}
 	
-	public void setMovieDAO(JdbcMovieDAO movieDAO) {
+	public void setMovieDAO(MovieDAO movieDAO) {
 		this.movieDAO = movieDAO;
 	}
 
@@ -26,7 +26,7 @@ public class UserServiceImplement  implements UserService{
 	}
 
 	
-	public void setUserDAO(JdbcUserDAO userDAO) {
+	public void setUserDAO(UserDAO userDAO) {
 		this.userDAO = userDAO;
 	}
 
