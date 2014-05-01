@@ -29,7 +29,7 @@ public class RunDanieliwi {
 		//List <Movie> l = ms.findMoviebyYear(1997);
 		//User u1= new User('daniel','1234', 'dani','' ,'' ,'' );
 		//User u = us.addUser(u1)
-		
+	//asdsad	
 		Movie l = ms.findMoviebyId(3);
 	//	ms.deleteMovie(ms.findMoviebyId(4));
 		/*for(int i = 0; i < l.size(); i++){

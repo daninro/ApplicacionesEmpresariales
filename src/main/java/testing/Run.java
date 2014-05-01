@@ -21,7 +21,7 @@ public class Run {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
+		// 
 		ApplicationContext context = new ClassPathXmlApplicationContext("spring-module.xml");
 		
 		
@@ -49,7 +49,7 @@ public class Run {
 			
 		}
 		
-		User u = us.addUser(new User("hola", Date.valueOf("2013-02-13"), "chile", "asd","asd", "asdsss"));
+		User u = us.addUser(new User("hola", Date.valueOf("2013-02-13"), "chile", "asd","asd", "asdssdhds"));
 		
 		//User u = us.getUserbyUsername("hola");
 		System.out.println(u.toString());
