@@ -49,7 +49,7 @@ public class Run {
 			
 		}
 		
-		User u = us.addUser(new User("hola", Date.valueOf("2013-02-13"), "chile", "asd","asd", "asds"));
+		User u = us.addUser(new User("hola", Date.valueOf("2013-02-13"), "chile", "asd","asd", "asdsss"));
 		
 		//User u = us.getUserbyUsername("hola");
 		System.out.println(u.toString());

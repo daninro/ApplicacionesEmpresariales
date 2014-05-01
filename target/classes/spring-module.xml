@@ -25,23 +25,23 @@
 		<property name="datasource" ref = "dataSourceBean" />
 	</bean>
 	
-	<bean id = "userDao" class = "person.JdbcUserDAO" >
+	<bean id = "userDao" class = "user.JdbcUserDAO" >
 		<property name="datasource" ref = "dataSourceBean" />
 	</bean>
 	
-	<bean id = "directorDao" class = "person.JdbcDirectorDAO" >
+	<bean id = "directorDao" class = "director.JdbcDirectorDAO" >
 		<property name="datasource" ref = "dataSourceBean" />
 	</bean>
 	
-	<bean id = "screenplayDao" class = "person.JdbcScreenplayDAO" >
+	<bean id = "screenplayDao" class = "screenplay.JdbcScreenplayDAO" >
 		<property name="datasource" ref = "dataSourceBean" />
 	</bean>
 	
-	<bean id = "actorDao" class = "person.JdbcActorDAO" >
+	<bean id = "actorDao" class = "actor.JdbcActorDAO" >
 		<property name="datasource" ref = "dataSourceBean" />
 	</bean>
 	
-	<bean id = "movieService" class = "services.MovieService">
+	<bean id = "movieService" class = "service.movie.MovieServiceImplement">
 		<property name="movieDAO" ref = "movieDao"/>
 		<property name="userDAO" ref = "userDao"/>
 		<property name="directorDAO" ref = "directorDao"/>
@@ -49,7 +49,7 @@
 		<property name="actorDAO" ref = "actorDao"/>
 	</bean>
 	
-	<bean id = "userService" class = "services.UserService">
+	<bean id = "userService" class = "service.user.UserServiceImplement">
 		<property name="movieDAO" ref = "movieDao"/>
 		<property name="userDAO" ref = "userDao"/>
 	</bean>
