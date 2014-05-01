@@ -2,7 +2,7 @@ package movie;
 
 import java.util.List;
 
-import person.User;
+import user.User;
 
 public interface MovieDAO {
 	public Movie insert(Movie movie);
