@@ -246,6 +246,39 @@ public class MovieServiceImplement implements MovieService{
 		}catch(RuntimeException e){}
 		return sp;
 	}
+
+	@Transactional
+	public Actor deleteActor(Actor a) {
+		Actor actor = null;
+		try{
+			actor = actorDAO.delete(a);
+			
+		}catch(RuntimeException e){}
+	return actor;
+		
+	}
+
+	@Transactional
+	public Actor deleteActorbykey(String name, Date date) {
+		Actor actor = null;
+		try{
+			actor = actorDAO.deletebykey(name, date);
+			
+		}catch(RuntimeException e){}
+	return actor;
+		
+	}
+
+	@Transactional
+	public Actor updateActor(Actor a) {
+		Actor actor = null;
+		try{
+			actor = actorDAO.update(a);
+			
+		}catch(RuntimeException e){}
+	return actor;
+		
+	}
 	
 	
 		

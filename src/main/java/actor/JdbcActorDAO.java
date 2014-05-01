@@ -6,8 +6,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Date;
+import java.util.List;
 
 import javax.sql.DataSource;
+
+import movie.Movie;
 
 public class JdbcActorDAO  implements ActorDAO{
 	
@@ -70,4 +73,49 @@ public class JdbcActorDAO  implements ActorDAO{
 		this.datasource = datasource;
 	}
 
+	public Actor delete(Actor a) {
+		
+		try{
+			Connection connection = datasource.getConnection();
+			String query = "DELETE FROM  actor WHERE name = ? AND date_of_birth = ?";
+			PreparedStatement statement = connection.prepareStatement(query);
+			statement.setString(1, a.getName());
+			statement.setDate(2, a.getDate_of_birth());
+			statement.executeUpdate();
+			
+		}catch(SQLException e){}
+		return a;
+	}
+
+public Actor deletebykey(String name, Date date) {
+		Actor a = find(name, date);
+		try{
+			Connection connection = datasource.getConnection();
+			String query = "DELETE FROM  actor WHERE name = ? AND date_of_birth = ?";
+			PreparedStatement statement = connection.prepareStatement(query);
+			statement.setString(1, name);
+			statement.setDate(2, date);
+			statement.executeUpdate();
+			
+		}catch(SQLException e){}
+		return a;
+	}
+
+public Actor update(Actor a) {
+Actor actor = null;
+	try{
+		String query = "UPDATE actor SET name = ?, date_of_birth = ?, country= ?"; 
+		Connection connection = datasource.getConnection();
+		PreparedStatement statement = connection.prepareStatement(query , Statement.RETURN_GENERATED_KEYS);
+		statement.setString(1, a.getName());
+		statement.setDate(2, a.getDate_of_birth());
+		statement.setString(3, a.getCountry());
+		statement.executeUpdate();
+		actor = find(a.getName(), a.getDate_of_birth());
+	}catch(SQLException e){
+		throw new RuntimeException(e);
+	}
+	return actor;
+	
+}
 }

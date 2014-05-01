@@ -41,4 +41,11 @@ public interface MovieService {
 	public Actor findActor(String name, Date date_of_birth);
 	public Director findDiretor(String name, Date date_of_birth);
 	public Screenplay findScreeplay(String name, Date date_of_birth);
+	@Transactional
+	public Actor deleteActor(Actor a);
+	@Transactional
+	public Actor deleteActorbykey(String name, Date date);
+	@Transactional
+	public Actor updateActor(Actor a);
+	
 }
