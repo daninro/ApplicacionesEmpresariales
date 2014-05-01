@@ -30,11 +30,15 @@ ApplicationContext context = new ClassPathXmlApplicationContext("spring-module.x
 		MovieService ms = (MovieService)context.getBean("movieService");
 		UserService us =  (UserService)context.getBean("userService");
 		
-		Screenplay spp = new Screenplay("danieliwi6", Date.valueOf("2013-02-01"), "chile");
+		Screenplay spp = new Screenplay("danieliwi7", Date.valueOf("2013-02-01"), "chile");
 		
-		User user = new User("nataliwiiiaaii32", Date.valueOf("2013-02-01"), "chile", "nataly", "holiii", "taaalii");
+		//Screenplay s = ms.addScreenplay(spp);
+		//System.out.println(s);
+		
+		User user = new User("iissfaaisdai32", Date.valueOf("2013-03-01"), "chilafe", "nafataly", "holiaddaii", "taaaeeladgssgidaafi");
 		//Screenplay sp = ms.addScreenplay(spp);
-		User u = us.addUser(user);
+	//	User u = us.addUser(user);
+		User u= us.deleteUser(user);
 		System.out.println(u);
 		
 		/*

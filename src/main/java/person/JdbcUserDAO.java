@@ -77,9 +77,12 @@ public class JdbcUserDAO{
 			statement.setDate(4, u.getDate_of_birth());
 			statement.setString(5, u.getCountry());
 			statement.setString(6, u.getEmail());
+			System.out.println("sdsfg");
 			statement.executeUpdate();
+			System.out.println("sdsfg");
 			user = getUser(u.getUsername());
-		}catch(SQLException e){}
+			System.out.println(user);
+		}catch(SQLException e){ System.out.println(e);}
 		return user;
 	}
 
@@ -128,8 +131,30 @@ public class JdbcUserDAO{
 	}
 	
 	public User delete(User u) {
-		// TODO Auto-generated method stub
-		return null;
+		User user = null;
+		try{
+			Connection connection = datasource.getConnection();
+			
+			String query = "DELETE FROM user1 WHERE user_name = ?";
+			PreparedStatement statement = connection.prepareStatement(query);
+			statement.setString(1, u.getUsername());
+			
+			/*statement.setString(1, u.getPassword());
+			statement.setString(2, u.getName());
+			statement.setDate(3, u.getDate_of_birth());
+			statement.setString(4, u.getCountry());
+			statement.setString(5, u.getEmail());
+			statement.setString(6, u.getUsername());*/
+			
+			statement.executeUpdate();
+			
+			user = getUser(u.getUsername());
+			
+		}catch(SQLException e){}
+		
+		return user;
+		
+		
 	}
 
 	

@@ -38,6 +38,6 @@ public class User extends Person{
 	}
 	
 	public String toString(){
-		return "Movie [username = " + username + " " + this.getName() + "]";
+		return "User [username = " + username + " " + this.getName() + "]";
 	}
 }
