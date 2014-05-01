@@ -139,13 +139,7 @@ public class JdbcUserDAO{
 			PreparedStatement statement = connection.prepareStatement(query);
 			statement.setString(1, u.getUsername());
 			
-			/*statement.setString(1, u.getPassword());
-			statement.setString(2, u.getName());
-			statement.setDate(3, u.getDate_of_birth());
-			statement.setString(4, u.getCountry());
-			statement.setString(5, u.getEmail());
-			statement.setString(6, u.getUsername());*/
-			
+						
 			statement.executeUpdate();
 			
 			user = getUser(u.getUsername());
@@ -153,8 +147,7 @@ public class JdbcUserDAO{
 		}catch(SQLException e){}
 		
 		return user;
-		
-		
+			
 	}
 
 	
