@@ -5,7 +5,7 @@
   <artifactId>proyectiwi</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <packaging>war</packaging>
-  <description>	</description>
+  
   <name>proyectiwi</name>
   
    <properties>
@@ -52,11 +52,92 @@
       <version>1.2.2</version>
     </dependency>
   
+  
+  <!-- de aqui pique yo . ale -->
+  
+   <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>3.8.1</version>
+      <scope>test</scope>
+    </dependency>
+   
+    <dependency>
+       <groupId>javax.servlet</groupId>
+       <artifactId>servlet-api</artifactId>
+       <version>2.5</version>
+       <scope>provided</scope>
+    </dependency>
+	<dependency>
+		<groupId>javax.servlet.jsp</groupId>
+		<artifactId>jsp-api</artifactId>
+		<version>2.1</version>
+	    <scope>provided</scope>
+	</dependency>
+	        
+	<dependency>
+		<groupId>javax.servlet</groupId>
+		<artifactId>jstl</artifactId>
+		<version>1.2</version>
+	    <scope>provided</scope>
+	</dependency>
+	
+	  
+  
+  
+  
+<!-- JUnit -->  
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>3.8.1</version>
+      <scope>test</scope>
+    </dependency>
+    
+    <!-- Spring framework -->
+	<dependency>
+		<groupId>org.springframework</groupId>
+		<artifactId>spring-core</artifactId>
+		<version>3.2.4.RELEASE</version>
+	</dependency>
+	
+	<dependency>
+		<groupId>org.springframework</groupId>
+		<artifactId>spring-context</artifactId>
+		<version>3.2.4.RELEASE</version>
+	</dependency>
+  
+  
 	</dependencies>
 	
 	  <build>
+	  
+	   
+	
+    
+  
+	  
+	  
+	  
     
     <plugins>
+    
+    	<plugin>
+			<groupId>org.mortbay.jetty</groupId>
+			<artifactId>maven-jetty-plugin</artifactId>
+		</plugin>
+		
+		<plugin>
+	        <artifactId>maven-compiler-plugin</artifactId>
+	        <version>3.0</version>
+	        <configuration>
+	            <source>1.7</source>
+	            <target>1.7</target>
+	        </configuration>
+    	</plugin>
+	
+    
+    
 		
 	  <!-- ========== CONFIGURACION DEL PLUGIN SQL ========== -->
       <plugin>
@@ -74,7 +155,7 @@
 
         <configuration>
           <driver>org.postgresql.Driver</driver>
-          <url>jdbc:postgresql://plop.inf.udec.cl:5432/is2014</url>
+          <url>jdbc:postgresql://plop.inf.udec.cl:5432/is2014</url><!-- para conectarsea atenea -->
           <username>inostroza</username>
           <password>is2014</password>
           <autocommit>true</autocommit>
