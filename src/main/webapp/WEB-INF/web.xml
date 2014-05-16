@@ -7,17 +7,7 @@ xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns
     
     <servlet>
         <servlet-name>simple-servlet</servlet-name>
-        <servlet-class>es.udc.fi.asi.servlet.SimpleServlet</servlet-class>
-    </servlet>
-    
-    <servlet>
-        <servlet-name>servlet-jsp</servlet-name>
-        <servlet-class>es.udc.fi.asi.servlet.ServletJSP</servlet-class>
-    </servlet>
-    
-    <servlet>
-        <servlet-name>search</servlet-name>
-        <servlet-class>es.udc.fi.asi.servlet.Search</servlet-class>
+        <servlet-class>servlet.SimpleServlet</servlet-class>
     </servlet>
     
     
@@ -28,12 +18,12 @@ xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns
     </servlet-mapping>
     
     <servlet-mapping>
-        <servlet-name>servlet-jsp</servlet-name>
+        <servlet-name>simple-servlet</servlet-name>
         <url-pattern>/hellojsp</url-pattern>
     </servlet-mapping>
     
     <servlet-mapping>
-        <servlet-name>search</servlet-name>
+        <servlet-name>simple-servlet</servlet-name>
         <url-pattern>/search</url-pattern>
     </servlet-mapping>
 	
