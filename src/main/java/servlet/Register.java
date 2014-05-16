@@ -38,10 +38,14 @@ public class Register extends HttpServlet {
 									request.getParameter("username")
 								)
 							);
-		PrintWriter out = response.getWriter();
+		if(u != null)
+			request.getRequestDispatcher("confirmation.jsp").forward(request, response);
+		else{
+			request.setAttribute("results", "usuario existente!");
+			request.getRequestDispatcher("bad_confirmation.jsp").forward(request, response);
+		}
 		
 		
-		out.println(u.toString());
 		
 		
 		

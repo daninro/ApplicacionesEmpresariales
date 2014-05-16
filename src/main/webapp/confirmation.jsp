@@ -4,7 +4,7 @@
 	<body>
 	
 	
-      <h2>Registro efectuado existosamente</h2><
+      <h2>Registro efectuado existosamente</h2>
 
 	
 	</body>

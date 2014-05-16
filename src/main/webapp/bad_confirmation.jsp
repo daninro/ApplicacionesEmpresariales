@@ -5,7 +5,7 @@
 	</head>
 	<body>
 	
-	      <h2>Ha ocurrido una falla en el registro :(</h2><
+	      <h2>Ha ocurrido una falla en el registro :(</h2>
 			<c:out value="${results}"/>
 	
 	</body>
