@@ -19,7 +19,7 @@ public class SimpleServlet extends HttpServlet {
 		out.println("<html>");
 		out.println("<body>");
 		out.println("<h1>");
-		out.println("Hello world!");
+		out.println("Hello danieliwi!");
 		out.println("</h1>");
 		out.println("</body>");
 		out.println("</html>");
