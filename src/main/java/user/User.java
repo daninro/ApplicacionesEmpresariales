@@ -40,6 +40,6 @@ public class User extends Person{
 	}
 	
 	public String toString(){
-		return "User [username = " + username + " " + this.getName() + "]";
+		return "User [username = " + username + ", password = " + password + ", name = " + this.getName() + ", mail = " + email + ", date of birth = " + this.getDate_of_birth() + ", country = " + this.getCountry() + "]";
 	}
 }

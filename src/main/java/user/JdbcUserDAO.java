@@ -77,11 +77,11 @@ public class JdbcUserDAO implements UserDAO{
 			statement.setDate(4, u.getDate_of_birth());
 			statement.setString(5, u.getCountry());
 			statement.setString(6, u.getEmail());
-			System.out.println("sdsfg");
+			
 			statement.executeUpdate();
-			System.out.println("sdsfg");
+			
 			user = getUser(u.getUsername());
-			System.out.println(user);
+			
 		}catch(SQLException e){ System.out.println(e);}
 		return user;
 	}
@@ -98,8 +98,7 @@ public class JdbcUserDAO implements UserDAO{
 			statement.setString(1, username);
 			ResultSet result = statement.executeQuery();
 			if(result.next()){
-			
-				user = new User(result.getString(1),result.getDate(4) , result.getString(5), result.getString(6), result.getString(2), result.getString(3));
+				user = new User(result.getString(3),result.getDate(4) , result.getString(5), result.getString(6), result.getString(2), result.getString(1));
 			}
 		}catch(SQLException e){}
 		

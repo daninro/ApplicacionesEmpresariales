@@ -9,26 +9,15 @@ xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns
         <servlet-name>register</servlet-name>
         <servlet-class>servlet.Register</servlet-class>
     </servlet>
-    
-    
-    
+
     <servlet-mapping>
         <servlet-name>register</servlet-name>
         <url-pattern>/register</url-pattern>
     </servlet-mapping>
     
     <servlet-mapping>
-        <servlet-name>simple-servlet</servlet-name>
-        <url-pattern>/hellojsp</url-pattern>
+        <servlet-name>register</servlet-name>
+        <url-pattern>/register/a</url-pattern>
     </servlet-mapping>
-    
-    <servlet-mapping>
-        <servlet-name>simple-servlet</servlet-name>
-        <url-pattern>/search</url-pattern>
-    </servlet-mapping>
-	
-	
-    
-    
-    
+
 </web-app>
