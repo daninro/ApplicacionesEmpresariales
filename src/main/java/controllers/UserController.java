@@ -29,7 +29,7 @@ public class UserController {
 	public void setUserService(UserService userService) {
 		this.userService = userService;
 	}
-	@RequestMapping(method = {RequestMethod.GET})
+	@RequestMapping
 	public void register(HttpServletRequest request){
 		System.out.println("entramos en get");
 	}
@@ -55,12 +55,8 @@ public class UserController {
 	public void search(Model m){
 		
 	}
-	
-	
 	@RequestMapping
 	public void bad_confirmation(Model m){
 		m.addAttribute("results", "monga");
 	}
-
-	
 }
