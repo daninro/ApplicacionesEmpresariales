@@ -53,6 +53,16 @@
     </dependency>
   
   
+  <!-- Spring MVC ale -->
+  <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-webmvc</artifactId>
+      <version>3.2.4.RELEASE</version>
+    </dependency>
+  
+  
+  
+  
   <!-- de aqui pique yo . ale -->
   
   <!-- JUnit -->  
@@ -69,6 +79,7 @@
        <version>2.5</version>
        <scope>provided</scope>
     </dependency>
+	
 	<dependency>
 		<groupId>javax.servlet.jsp</groupId>
 		<artifactId>jsp-api</artifactId>

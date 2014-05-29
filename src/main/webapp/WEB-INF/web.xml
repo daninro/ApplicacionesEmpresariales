@@ -6,18 +6,25 @@ xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns
     <display-name>Archetype Created Web Application</display-name>
     
     <servlet>
-        <servlet-name>register</servlet-name>
-        <servlet-class>servlet.Register</servlet-class>
-    </servlet>
-
+		<servlet-name>main</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
+	</servlet>
+    
     <servlet-mapping>
-        <servlet-name>register</servlet-name>
+        <servlet-name>main</servlet-name>
+        <url-pattern>/</url-pattern>
+    </servlet-mapping>
+    
+    <!-- 
+    <servlet-mapping>
+        <servlet-name>main</servlet-name>
         <url-pattern>/register</url-pattern>
     </servlet-mapping>
     
     <servlet-mapping>
-        <servlet-name>register</servlet-name>
+        <servlet-name>main</servlet-name>
         <url-pattern>/register/a</url-pattern>
     </servlet-mapping>
-
+-->
 </web-app>

@@ -19,6 +19,12 @@
     	<property name="password" value="is2014" />
   	</bean>
 	
+	<bean id="transactionManager"  class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+    <property name="dataSource" ref ="dataSourceBean"/>
+	</bean>
+	<tx:annotation-driven transaction-manager="transactionManager"/>
+	
+	
 	<!-- Movie DAO -->
 	
 	<bean id = "movieDao" class = "movie.JdbcMovieDAO" >
@@ -54,35 +60,12 @@
 		<property name="userDAO" ref = "userDao"/>
 	</bean>
 	
+		
+	<!--  	
+	<bean class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping"/>
+	<bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter"/>
+	 -->
 	
 	
-	<!-- DAO implementations 
-	<bean id="employeeDaoBean" class="es.udc.fi.asi.model.employee.JdbcEmployeeDAO" >
-		<property name="dataSource" ref="dataSourceBean" />
-	</bean>
-	
-	<bean id="departmentDaoBean" class="es.udc.fi.asi.model.department.JdbcDepartmentDAO" >
-		<property name="dataSource" ref="dataSourceBean" />
-	</bean>
-	
-	 Transaction management 	
-	<bean id="transactionManagerBean"
-  			class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
-    	<property name="dataSource" ref="dataSourceBean" />
-  	</bean>
-	
-	EmployeeService 
-	<bean id="employeeServiceBean" class="es.udc.fi.asi.model.employeeservice.EmployeeServiceImpl">
-		<property name="employeeDAO" ref="employeeDaoBean" />
-		<property name="departmentDAO" ref="departmentDaoBean" />
-		<property name="transactionManager" ref="transactionManagerBean" />
-	</bean>
-	
-	 departmenteService 
-	<bean id="departmentServiceBean" class="es.udc.fi.asi.model.departmentservice.DepartmentServiceImpl">
-		<property name="departmentDAO" ref="departmentDaoBean" />
-		<property name="transactionManager" ref="transactionManagerBean" />
-	</bean>
-	-->
 	
 </beans>

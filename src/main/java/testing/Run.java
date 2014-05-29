@@ -11,7 +11,9 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 
+import service.movie.MovieService;
 import service.movie.MovieServiceImplement;
+import service.user.UserService;
 import service.user.UserServiceImplement;
 import user.User;
 
@@ -36,8 +38,8 @@ public class Run {
 		System.out.println(movie.toString());
 		*/
 		
-		MovieServiceImplement ms = (MovieServiceImplement)context.getBean("movieService");
-		UserServiceImplement us = (UserServiceImplement)context.getBean("userService"); 
+		MovieService ms = (MovieService)context.getBean("movieService");
+		UserService us = (UserService)context.getBean("userService"); 
 		Movie movie = new Movie("titanic3", 1997, 120, "EEUU", 2000000, 30000000);
 		System.out.println(movie);
 		movie = ms.addMovie(movie);
