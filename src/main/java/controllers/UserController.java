@@ -51,6 +51,30 @@ public class UserController {
 		return "redirect:/user/bad_confirmation"; 
 	}
 	
+	
+	@RequestMapping
+	public void login(HttpServletRequest request){
+		
+	}
+	
+	@RequestMapping (method = {RequestMethod.POST})
+	public String login(Model m, HttpServletRequest request){
+	User u = null;
+	u = userService.getUserbyUsername(request.getParameter("username"));
+	if(u!=null){
+		if(u.getPassword().compareTo(request.getParameter("password"))==0){
+			System.out.println(u.getPassword());
+			return "redirect:/user/confirmation";
+		}
+	}
+	
+		return "redirect:/user/bad_confirmation";
+	
+		} 
+	
+	
+	
+	
 	@RequestMapping
 	public void search(Model m){
 		
@@ -58,5 +82,10 @@ public class UserController {
 	@RequestMapping
 	public void bad_confirmation(Model m){
 		m.addAttribute("results", "monga");
+	}
+	
+	@RequestMapping
+	public void confirmation(Model m){
+		
 	}
 }
