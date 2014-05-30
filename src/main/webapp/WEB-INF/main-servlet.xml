@@ -65,6 +65,12 @@
 	<bean name="/user/*" class="controllers.UserController">
 		<property name="userService" ref="userService"/>
 	</bean>
+	
+	<bean name="/movie/*" class="controllers.MovieController">
+		<property name="movieService" ref="movieService"/>
+	</bean>
+	
+	
 	<!--  
 	<bean name="/register/*" class="controllers.UserController">
 		<property name="userService" ref="userService"/>
