@@ -353,7 +353,7 @@ public class MovieServiceImplement implements MovieService{
 			defaultMark = userDAO.setMarkbyUser(movieId,mark,username);
 			
 		}catch(RuntimeException e){}
-		
+		System.out.println("as:" + defaultMark);					
 		return defaultMark;
 	}
 	

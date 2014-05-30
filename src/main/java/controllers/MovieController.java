@@ -1,6 +1,8 @@
 package controllers;
 
 import java.util.List;
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import movie.Movie;
@@ -70,13 +72,14 @@ public class MovieController extends MyController{
 	@RequestMapping(method = {RequestMethod.POST})
 	public String mark(Model model, HttpSession session, HttpServletRequest request){
 		if(!isLogin(session)) return getLogin();
-		List<Movie> list = movieService.getAllMovies();
-		for(int i = 0; i < list.size(); i++){
-			String mark = request.getParameter(list.get(0).getId()+ "_mark");
-			movieService.setMark(list.get(0).getId(), Integer.parseInt(mark), session.getAttribute("username").toString());
-			
-		}
-		model.addAttribute("movieList",list);
+		String id = request.getParameter("id");
+		System.out.println(id);
+		String mark = request.getParameter(id+"_mark");
+		movieService.setMark(Integer.parseInt(id), Integer.parseInt(mark), (String)session.getAttribute("username"));
+		System.out.println(id);
+		System.out.println(mark);
+		
+		
 		return "redirect:/movie/list";
 	}
 	

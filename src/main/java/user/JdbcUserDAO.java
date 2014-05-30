@@ -156,17 +156,21 @@ public class JdbcUserDAO implements UserDAO{
 		try{
 			Connection connection = datasource.getConnection();
 			
-			String query = "UPDATE evaluate SET calification = ? WHERE user_name = ? AND id = ?";
+			//String query = "UPDATE evaluate SET calification = ? WHERE user_name = ? AND id = ?";
+			String query = "INSERT INTO evaluate(user_name, id, calification) values(?, ?, ?) ";
 			PreparedStatement statement = connection.prepareStatement(query);
 			
-			statement.setInt(1, mark);
-			statement.setString(2, username);
-			statement.setInt(3, new Integer(movieId));
-			statement.executeUpdate();
+			statement.setString(1, username);
+			statement.setInt(2, movieId);
+			statement.setInt(3, mark);
 			
 			
 			
-		}catch(SQLException e){}
+			statement.executeQuery();
+			
+		}catch(SQLException e){
+			
+		}
 		
 		return mark;
 	}
