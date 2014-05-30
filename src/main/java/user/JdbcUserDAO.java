@@ -150,5 +150,47 @@ public class JdbcUserDAO implements UserDAO{
 			
 	}
 
+	@Override
+	public Integer setMarkbyUser(int movieId, Integer mark, String username) {
+
+		try{
+			Connection connection = datasource.getConnection();
+			
+			String query = "UPDATE evaluate SET calification = ? WHERE user_name = ? AND id = ?";
+			PreparedStatement statement = connection.prepareStatement(query);
+			
+			statement.setInt(1, mark);
+			statement.setString(2, username);
+			statement.setInt(3, new Integer(movieId));
+			statement.executeUpdate();
+			
+			
+			
+		}catch(SQLException e){}
+		
+		return mark;
+	}
+	public int getMarkbyUser(int m, String u) {
+		
+		int n=0;
+		
+		try{
+			Connection connection = datasource.getConnection();
+			
+			String query = "SELECT calification FROM  evaluate WHERE user_name = ? AND id = ?";
+			PreparedStatement statement = connection.prepareStatement(query);
+			
+			statement.setString(1, u);
+			statement.setInt(2, m);
+			ResultSet result = statement.executeQuery();
+			if(result.next()){
+				n = result.getInt(1);
+			}
+			
+			
+		}catch(SQLException e){}
+		
+		return n;
+	}
 	
 }

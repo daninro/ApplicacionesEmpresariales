@@ -9,6 +9,7 @@ public interface UserDAO {
 		public User getUser(String username);
 		public User update(User u);
 		public User delete(User u);
+		public Integer setMarkbyUser(int movieId, Integer mark, String username);
 		
 		
 	

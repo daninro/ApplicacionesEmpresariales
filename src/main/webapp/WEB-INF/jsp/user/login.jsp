@@ -1,7 +1,9 @@
 <html>
 <head><title>Inicio Sesión</title></head>
 	<body>
-		 <p><h2>Iniciar Sesión</h2></p>
+	
+		 <h2>Iniciar Sesión</h2>
+	
 		<form method = "POST" action="login">
 			<p><label for = "keywords">Usuario</label>
 			<input type = "text" id = "keywords" name = "username"/></p>

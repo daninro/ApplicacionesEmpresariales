@@ -14,6 +14,7 @@
 	<h3>List of movies</h3>
 
 	<table border="1" bgcolor="cyan" align="center" >
+	
 		<tr>
 			<th>Name</th>
 			<th>Year</th>
@@ -22,9 +23,9 @@
 			<th>Budget</th>
 			<th>Box Office</th>
 		</tr>
-
+		<form action = "mark" method = "POST">
 		<c:forEach var="movie" items="${movieList}" varStatus="status">
-
+			
 			<tr>
 				<td>${movie.name}</td>
 				<td>${movie.year}</td>
@@ -32,10 +33,19 @@
 				<td>${movie.country}</td>
 				<td>${movie.budget}</td>
 				<td>${movie.box_office}</td>
+				<input type="hidden" name="id" value = "${movie.id}"/>
+				<td><input type="radio" name="${movie.id}_mark" value="1" checked/>1
+				<input type="radio" name="${movie.id}_mark" value="2"/>2
+				<input type="radio" name="${movie.id}_mark" value="3"/>3
+				<input type="radio" name="${movie.id}_mark" value="4"/>4
+				<input type="radio" name="${movie.id}_mark" value="5"/>5</td>
+				
 			</tr>
-
+			
+			
 		</c:forEach>
-
+		<input type = "submit" name = "s" value = "calificar"/>
+		</form>	
 	</table>
 
 </body>

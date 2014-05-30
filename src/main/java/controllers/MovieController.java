@@ -1,37 +1,39 @@
 package controllers;
 
-import java.sql.Date;
 import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
-
+import javax.servlet.http.HttpSession;
 import movie.Movie;
 
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-
 import service.movie.MovieService;
+import service.user.UserService;
 
-@Controller
-public class MovieController {
+
+public class MovieController extends MyController{
 	private MovieService movieService;
-
-	
-	public MovieService getMovieService() {
-		return movieService;
-	}
-
+	/***services mutators***/
 	public void setMovieService(MovieService movieService) {
 		this.movieService = movieService;
 	}
-	@RequestMapping
-	public void addmovie( HttpServletRequest request){}
+	public void setUserService(UserService userService) {
+	}
 	
+	
+	/***movie/addmovie view form***/
+	@RequestMapping
+	public String addmovie(Model m, HttpSession session){
+		if(!isLogin(session)) return getLogin();
+		return "movie/addmovie";
+	}
+	
+	/***movie/addmovie getform***/
 	@RequestMapping(method = {RequestMethod.POST})
-	public String addmovie(Model m, HttpServletRequest request){
-		
+	public String addmovie(Model m, HttpServletRequest request, HttpSession session){
+		if(!isLogin(session)) return getLogin();
+		 
 		Movie mov = new Movie(
 				request.getParameter("name"), 
 				Integer.parseInt(request.getParameter("year")), 
@@ -43,18 +45,39 @@ public class MovieController {
 		
 				Movie p = movieService.addMovie(mov);
 				if(p != null){
-			return "redirect:/movie/list";
+			return "redirect:/user/confirmation";
 		}
 		return "redirect:/user/bad_confirmation"; 
 	}
 	
-	@RequestMapping
-	public void confirmation( HttpServletRequest request){}
 	
+	/***movie/list list movie***/
 	@RequestMapping
-	public void list(Model model){
+	public String list(Model model, HttpSession session){
+		if(!isLogin(session)) return getLogin();
 		List<Movie> list = movieService.getAllMovies();
 		model.addAttribute("movieList",list);
+		return "/movie/list";
 	}	
+	
+	@RequestMapping
+	public String mark(Model model, HttpSession session){
+		if(!isLogin(session)) return getLogin();
+		List<Movie> list = movieService.getAllMovies();
+		model.addAttribute("movieList",list);
+		return "/movie/mark";
+	}	
+	@RequestMapping(method = {RequestMethod.POST})
+	public String mark(Model model, HttpSession session, HttpServletRequest request){
+		if(!isLogin(session)) return getLogin();
+		List<Movie> list = movieService.getAllMovies();
+		for(int i = 0; i < list.size(); i++){
+			String mark = request.getParameter(list.get(0).getId()+ "_mark");
+			movieService.setMark(list.get(0).getId(), Integer.parseInt(mark), session.getAttribute("username").toString());
+			
+		}
+		model.addAttribute("movieList",list);
+		return "redirect:/movie/list";
+	}
 	
 }

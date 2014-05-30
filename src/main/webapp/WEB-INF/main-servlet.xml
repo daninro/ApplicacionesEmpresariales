@@ -68,14 +68,10 @@
 	
 	<bean name="/movie/*" class="controllers.MovieController">
 		<property name="movieService" ref="movieService"/>
-	</bean>
-	
-	
-	<!--  
-	<bean name="/register/*" class="controllers.UserController">
 		<property name="userService" ref="userService"/>
 	</bean>
-	-->
+	
+	
 	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<property name = "prefix" value = "/WEB-INF/jsp/"/>
 		<property name = "suffix" value = ".jsp"/>

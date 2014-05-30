@@ -343,6 +343,20 @@ public class MovieServiceImplement implements MovieService{
 	return screenplay;
 		
 	}
+
+	@Override
+	@Transactional
+	public Integer setMark(int movieId, Integer mark, String username) {
+		Integer defaultMark = -1;
+		try{
+			
+			defaultMark = userDAO.setMarkbyUser(movieId,mark,username);
+			
+		}catch(RuntimeException e){}
+		
+		return defaultMark;
+	}
+	
 	
 	
 	

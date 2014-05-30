@@ -1,8 +1,12 @@
 <html>
 <head><title>Registro</title></head>
 <body>
-    <p><h2>Registro</h2></p>
- 	<form method = "POST" action="register">
+<ul>
+		<li><a href = "/ApplicacionesEmpresariales/user/index">Principal</a></li>
+	</ul>
+	
+    <p><h2>Añadir pelicula</h2></p>
+ 	<form method = "POST" action="addmovie">
 			<p><label for = "keywords">Nombre</label>
 			<input type = "text" id = "keywords" name = "name"/></p>
 

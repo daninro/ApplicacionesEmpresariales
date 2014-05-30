@@ -26,6 +26,9 @@ public interface MovieService {
 	public List<Movie> deleteMovie(Movie m);
 	@Transactional
 	public Integer setMark(Movie m, Integer mark, User u);
+	@Transactional
+	public Integer setMark(int movieId, Integer mark, String username);
+	
 	public Integer getMark(Movie m, User u);
 	@Transactional
 	public List<Movie> addWishlist(Movie m, User u);
