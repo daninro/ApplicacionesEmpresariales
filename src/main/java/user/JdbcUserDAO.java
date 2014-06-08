@@ -81,7 +81,7 @@ public class JdbcUserDAO implements UserDAO{
 			statement.executeUpdate();
 			
 			user = getUser(u.getUsername());
-			
+			connection.close();
 		}catch(SQLException e){ System.out.println(e);}
 		return user;
 	}

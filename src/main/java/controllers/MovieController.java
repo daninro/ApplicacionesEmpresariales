@@ -1,8 +1,6 @@
 package controllers;
 
 import java.util.List;
-import java.util.Map;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import movie.Movie;
@@ -47,7 +45,7 @@ public class MovieController extends MyController{
 		
 				Movie p = movieService.addMovie(mov);
 				if(p != null){
-			return "redirect:/user/confirmation";
+			return "redirect:/movie/list";
 		}
 		return "redirect:/user/bad_confirmation"; 
 	}
