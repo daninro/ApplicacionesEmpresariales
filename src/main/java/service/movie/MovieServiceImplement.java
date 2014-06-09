@@ -68,6 +68,7 @@ public class MovieServiceImplement implements MovieService{
 	 * @throws OperationUncompletedException if a problem is founded while
 	 * the method is executed
 	 */
+	@Transactional
 	public List<Movie> getAllMovies() throws OperationUncompletedException{
 		List<Movie> movie = null;
 		try{
@@ -78,7 +79,7 @@ public class MovieServiceImplement implements MovieService{
 		return movie;
 	}
 		
-	
+	@Transactional
 	public Movie findMoviebyId(Integer id) throws OperationUncompletedException{
 		Movie movie = null;
 		try{
@@ -102,7 +103,7 @@ public class MovieServiceImplement implements MovieService{
 		
 		return movies;
 	}
-	
+	@Transactional
 	public List<Movie> findMoviebyYear(Integer year) throws OperationUncompletedException{
 		List<Movie> movie = null;
 		try{
@@ -113,7 +114,7 @@ public class MovieServiceImplement implements MovieService{
 		
 		return movie;
 	}
-	
+	@Transactional
 	public List<Movie> findMoviebyCountry(String c) throws OperationUncompletedException{
 		List<Movie> movie = null;
 		try{
@@ -184,7 +185,7 @@ public class MovieServiceImplement implements MovieService{
 		}					
 		return defaultMark;
 	}
-	
+	@Transactional
 	public Integer getMark(Movie m, User u)throws OperationUncompletedException{
 		Integer defaultMark = -1;
 		try{
@@ -221,8 +222,6 @@ public class MovieServiceImplement implements MovieService{
 			
 		} catch (MyNotFoundException e) {
 			throw new OperationUncompletedException("Ocurrio un problema al obtener la wishlist");
-			
-			//e.printStackTrace();
 		}
 	return movies;
 	}
@@ -247,7 +246,6 @@ public class MovieServiceImplement implements MovieService{
 		Director director = null;
 		try{
 			director = directorDAO.insert(d);
-			
 		}catch(RuntimeException e){
 			throw new OperationUncompletedException("Ocurrio un problema durante la insercion del director");
 		}
@@ -261,6 +259,8 @@ public class MovieServiceImplement implements MovieService{
 			actor = actorDAO.insert(a);
 			
 		}catch(RuntimeException e){
+			throw new OperationUncompletedException("Ocurrio un problema durante la insercion dela ctor");
+		} catch (MyNotFoundException e) {
 			throw new OperationUncompletedException("Ocurrio un problema durante la insercion dela ctor");
 		}
 		return actor;
