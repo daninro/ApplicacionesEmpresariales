@@ -9,6 +9,8 @@ import java.sql.Statement;
 
 import javax.sql.DataSource;
 
+import org.springframework.jdbc.datasource.DataSourceUtils;
+
 
 
 public class JdbcScreenplayDAO implements ScreenplayDAO{
@@ -18,10 +20,10 @@ public class JdbcScreenplayDAO implements ScreenplayDAO{
 	public Screenplay insert(Screenplay sp) {
 		
 		Screenplay screenplay = null;
+		Connection connection = null;
 		try{
 			String query = "INSERT INTO screenplay (name, date_of_birth, country) VALUES (?, ?, ?)";
-			
-			Connection connection = datasource.getConnection();
+			connection = DataSourceUtils.getConnection(datasource);
 			PreparedStatement statement = connection.prepareStatement(query , Statement.RETURN_GENERATED_KEYS);
 			statement.setString(1, sp.getName());
 			statement.setDate(2, sp.getDate_of_birth());
@@ -39,9 +41,10 @@ public class JdbcScreenplayDAO implements ScreenplayDAO{
 	public Screenplay find(String name, Date date_of_birth) {
 		
 		Screenplay sp = null;
+		Connection connection = null;
 		try{
 			
-			Connection connection = datasource.getConnection();
+			connection = DataSourceUtils.getConnection(datasource);
 			String query = "SELECT * FROM screenplay WHERE name = ? AND date_of_birth = ?";
 			PreparedStatement statement = connection.prepareStatement(query);
 			statement.setString(1, name);
@@ -74,9 +77,9 @@ public class JdbcScreenplayDAO implements ScreenplayDAO{
 	
 	
 	public Screenplay delete(Screenplay sp) {
-		
+		Connection connection = null;
 		try{
-			Connection connection = datasource.getConnection();
+			connection = DataSourceUtils.getConnection(datasource);
 			String query = "DELETE FROM  screenplay WHERE name = ? AND date_of_birth = ?";
 			PreparedStatement statement = connection.prepareStatement(query);
 			statement.setString(1, sp.getName());
