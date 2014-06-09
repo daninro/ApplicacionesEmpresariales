@@ -1,11 +1,11 @@
 package exceptions;
 
-public class MyNotFoundExeption extends Exception{
+public class MyNotFoundException extends Exception{
 
 	private static final long serialVersionUID = 1L;
 	private String message;
 	private int counter = 1;
-	public MyNotFoundExeption(String message){
+	public MyNotFoundException(String message){
 		this.message = message;
 	}
 	

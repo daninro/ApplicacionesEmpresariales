@@ -29,7 +29,7 @@ public class Register extends HttpServlet {
 		ApplicationContext context = new ClassPathXmlApplicationContext("spring-module.xml");
 		UserServiceImplement us = (UserServiceImplement)context.getBean("userService"); 
 
-		User u = us.addUser(	new User(
+		User u = null;/*us.addUser(	new User(
 									request.getParameter("name"), 
 									Date.valueOf(request.getParameter("date")),
 									request.getParameter("country") , 
@@ -38,6 +38,7 @@ public class Register extends HttpServlet {
 									request.getParameter("username")
 								)
 							);
+							*/
 		if(u != null)
 			request.getRequestDispatcher("confirmation.jsp").forward(request, response);
 		else{

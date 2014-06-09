@@ -85,6 +85,7 @@ public class MovieController extends MyController{
 		try {
 				l = movieService.searchByName(name);
 				} catch (OperationUncompletedException e) {
+					
 					//incompleto
 					System.out.println("enviar a pagina de error");
 					return "movie/search";

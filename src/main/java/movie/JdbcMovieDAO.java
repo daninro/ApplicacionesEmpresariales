@@ -9,7 +9,7 @@ import java.util.List;
 import javax.sql.DataSource;
 import org.springframework.jdbc.datasource.DataSourceUtils;
 
-import exceptions.MyNotFoundExeption;
+import exceptions.MyNotFoundException;
 import user.User;
 
 
@@ -17,6 +17,7 @@ import user.User;
 public class JdbcMovieDAO implements MovieDAO{
 
 	private DataSource datasource;
+	
 	/** accesors and mutators**/
 	public DataSource getDatasource() {
 		return datasource;
@@ -52,7 +53,7 @@ public class JdbcMovieDAO implements MovieDAO{
 		return movie;
 	}
 
-	public Movie findbyId(Integer id) throws MyNotFoundExeption {
+	public Movie findbyId(Integer id) throws MyNotFoundException {
 		Movie m = null;
 		Connection connection = null;
 		try{
@@ -66,7 +67,7 @@ public class JdbcMovieDAO implements MovieDAO{
 				m.setId(result.getInt(1));
 			}else{
 				try {connection.close();} catch (SQLException | NullPointerException e2) {}
-				throw new MyNotFoundExeption("id no encontrado");
+				throw new MyNotFoundException("id no encontrado");
 			}
 			
 		}catch(SQLException e){
@@ -119,7 +120,7 @@ public class JdbcMovieDAO implements MovieDAO{
 		return m;
 	}
 
-	public Movie update(Movie movie) throws MyNotFoundExeption {
+	public Movie update(Movie movie) throws MyNotFoundException {
 		if(movie == null) return null;
 		Movie m = null;
 		Connection connection = null;
@@ -141,7 +142,7 @@ public class JdbcMovieDAO implements MovieDAO{
 			
 			throw new RuntimeException(e);
 			
-		}catch(MyNotFoundExeption e){
+		}catch(MyNotFoundException e){
 			
 			e.addDetails("actualizacion fallida");
 			throw e;
@@ -186,7 +187,7 @@ public class JdbcMovieDAO implements MovieDAO{
 		}catch(SQLException e){
 			
 			throw new RuntimeException(e); 
-		} catch (MyNotFoundExeption e) {
+		} catch (MyNotFoundException e) {
 			
 			System.out.println("getWishlistbyUser: no deberia entrar aqui jamás");
 		}
@@ -287,9 +288,9 @@ public class JdbcMovieDAO implements MovieDAO{
 				movie.setId(result.getInt(1));
 				m.add(movie);
 			}
-			connection.close();
+			//connection.close();
 		}catch(SQLException e){
-			try {connection.close();} catch (SQLException | NullPointerException e2) {}
+			//try {connection.close();} catch (SQLException | NullPointerException e2) {}
 			throw new RuntimeException(e);
 		}
 		return m;	

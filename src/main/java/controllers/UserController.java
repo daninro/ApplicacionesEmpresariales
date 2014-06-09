@@ -8,6 +8,8 @@ import javax.servlet.http.HttpSession;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
+import exceptions.OperationUncompletedException;
 import service.user.UserService;
 import user.User;
 
@@ -30,11 +32,14 @@ public class UserController extends MyController{
 				request.getParameter("password"), 
 				request.getParameter("username")
 			);
-		User p = userService.addUser(u);
-		if(u.getUsername().equals(p.getUsername())){
-			m.addAttribute("message", "usuario agregado");
-			return "/message/message";
-		}
+		try{
+			User p = userService.addUser(u);
+		
+			if(u.getUsername().equals(p.getUsername())){
+				m.addAttribute("message", "usuario agregado");
+				return "/message/message";
+			}
+		}catch(OperationUncompletedException e){};
 		m.addAttribute("message", "no pudimos :(");
 		return "/message/message"; 
 	}

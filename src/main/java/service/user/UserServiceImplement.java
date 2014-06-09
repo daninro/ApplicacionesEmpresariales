@@ -1,5 +1,7 @@
 package service.user;
 
+import exceptions.MyNotFoundException;
+import exceptions.OperationUncompletedException;
 import movie.MovieDAO;
 import user.User;
 import user.UserDAO;
@@ -22,26 +24,31 @@ public class UserServiceImplement  implements UserService{
 	public UserDAO getUserDAO() {
 		return userDAO;
 	}
-
 	
 	public void setUserDAO(UserDAO userDAO) {
 		this.userDAO = userDAO;
 	}
 
-	public User addUser(User u){
+	public User addUser(User u)throws OperationUncompletedException{
 		User user = null;
 		try{
 			user = userDAO.insert(u);
-		} catch (RuntimeException e){}
+		} catch (RuntimeException e){
+			throw new OperationUncompletedException("Ocurrio un problema durante la insercion");
+		}
 		
 		return user;
 	}
 
-	public User editUser(User u){
+	public User editUser(User u)throws OperationUncompletedException{
 		User user = null;
 		try{
 			user = userDAO.update(u);
-		} catch (RuntimeException e){}
+		} catch (RuntimeException e){	
+			throw new OperationUncompletedException("Ocurrio un problema durante la actualizacion");
+		}catch (MyNotFoundException e) {
+			throw new OperationUncompletedException("no se encontro la pelicula a actualizar");
+		}
 		
 		return user;
 	}

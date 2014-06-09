@@ -35,40 +35,40 @@ public interface MovieService {
 	public Integer getMark(Movie m, User u) throws OperationUncompletedException;
 	
 	@Transactional
-	public List<Movie> addWishlist(Movie m, User u);
+	public List<Movie> addWishlist(Movie m, User u)throws OperationUncompletedException;;
 	@Transactional
-	public List<Movie> deleteMoviefromWishlist(Movie m, User u);
-	public List<Movie> getWishlist(User u);
+	public List<Movie> deleteMoviefromWishlist(Movie m, User u) throws OperationUncompletedException;
+	public List<Movie> getWishlist(User u)throws OperationUncompletedException;
 	
 	@Transactional
-	public Director addDirector(Director d);
+	public Director addDirector(Director d)throws OperationUncompletedException;
 	@Transactional
-	public Actor addActor(Actor a);
+	public Actor addActor(Actor a)throws OperationUncompletedException;
 	@Transactional
-	public Screenplay addScreenplay(Screenplay sp);
+	public Screenplay addScreenplay(Screenplay sp)throws OperationUncompletedException;
 	
-	public Actor findActor(String name, Date date_of_birth);
-	public Director findDiretor(String name, Date date_of_birth);
-	public Screenplay findScreeplay(String name, Date date_of_birth);
-	
-	@Transactional
-	public Actor deleteActor(Actor a);
-	@Transactional
-	public Actor deleteActorbykey(String name, Date date);
-	@Transactional
-	public Actor updateActor(Actor a);
+	public Actor findActor(String name, Date date_of_birth)throws OperationUncompletedException;
+	public Director findDiretor(String name, Date date_of_birth)throws OperationUncompletedException;
+	public Screenplay findScreeplay(String name, Date date_of_birth)throws OperationUncompletedException;
 	
 	@Transactional
-	public Director deleteDirector(Director d);
+	public Actor deleteActor(Actor a)throws OperationUncompletedException;
 	@Transactional
-	public Director deleteDirectorbykey(String name, Date date);
+	public Actor deleteActorbykey(String name, Date date)throws OperationUncompletedException;
 	@Transactional
-	public Director updateDirector(Director d);
+	public Actor updateActor(Actor a)throws OperationUncompletedException;
 	
 	@Transactional
-	public Screenplay deleteScreenplay(Screenplay sp);
+	public Director deleteDirector(Director d)throws OperationUncompletedException;
 	@Transactional
-	public Screenplay deleteScreenplaybykey(String name, Date date);
+	public Director deleteDirectorbykey(String name, Date date)throws OperationUncompletedException;
 	@Transactional
-	public Screenplay updateScreenplay(Screenplay sp);
+	public Director updateDirector(Director d)throws OperationUncompletedException;
+	
+	@Transactional
+	public Screenplay deleteScreenplay(Screenplay sp)throws OperationUncompletedException;
+	@Transactional
+	public Screenplay deleteScreenplaybykey(String name, Date date) throws OperationUncompletedException;
+	@Transactional
+	public Screenplay updateScreenplay(Screenplay sp)throws OperationUncompletedException;
 }
