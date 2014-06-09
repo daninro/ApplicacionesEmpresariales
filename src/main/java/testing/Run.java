@@ -10,6 +10,8 @@ import movie.Movie;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import exceptions.OperationUncompletedException;
+
 
 import service.movie.MovieService;
 import service.movie.MovieServiceImplement;
@@ -21,38 +23,35 @@ public class Run {
 
 	/**
 	 * @param args
+	 * @throws OperationUncompletedException 
 	 */
-	public static void main(String[] args) {
+	public static void main(String[] args) throws OperationUncompletedException {
 		// 
 		ApplicationContext context = new ClassPathXmlApplicationContext("spring-module.xml");
 		
-		
-		/*
-		JdbcMovieDAO m = (JdbcMovieDAO) context.getBean("movieDao");
-		
-		
-		
-		Movie movie = new Movie("titanic2", 1997, 120, "EEUU", 2000000, 30000000);
-		System.out.println(movie.toString());
-		m.insert(movie);
-		System.out.println(movie.toString());
-		*/
-		
 		MovieService ms = (MovieService)context.getBean("movieService");
 		UserService us = (UserService)context.getBean("userService"); 
-		Movie movie = new Movie("titanic3", 1997, 120, "EEUU", 2000000, 30000000);
+		Movie movie = new Movie("lola", 1997, 120, "EEUU", 2000000, 30000000);
 		System.out.println(movie);
 		movie = ms.addMovie(movie);
 		System.out.println(movie);
+		
 		List<Movie> l = ms.getAllMovies();
-		ms.deleteMovie(ms.findMoviebyId(4));
-		for(int i = 0; i < l.size(); i++){
-			System.out.println(l.get(i).toString());
+		
+		try{
+			l = ms.deleteMovie(ms.findMoviebyId(12));
+		}
+		catch(OperationUncompletedException e){
+			System.out.println(e.toString());
 			
 		}
 		
-		User u = us.addUser(new User("Diego Seco", Date.valueOf("1982-10-31"), "espanol", "dseco@udec.cl","pass", "dsecos"));
-		System.out.println(u.toString());
+		for(int i = 0; i < l.size(); i++){
+			System.out.println(l.get(i).toString());
+		}
+		
+		//User u = us.addUser(new User("Diego Seco", Date.valueOf("1982-10-31"), "espanol", "dseco@udec.cl","pass", "dsecos"));
+		//System.out.println(u.toString());
 		
 		
 		

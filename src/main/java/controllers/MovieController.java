@@ -8,8 +8,9 @@ import movie.Movie;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
+import exceptions.OperationUncompletedException;
 import service.movie.MovieService;
-import service.user.UserService;
 
 
 public class MovieController extends MyController{
@@ -18,9 +19,6 @@ public class MovieController extends MyController{
 	public void setMovieService(MovieService movieService) {
 		this.movieService = movieService;
 	}
-	public void setUserService(UserService userService) {
-	}
-	
 	
 	/***movie/addmovie view form***/
 	@RequestMapping
@@ -43,41 +41,99 @@ public class MovieController extends MyController{
 				Integer.parseInt(request.getParameter("box_office"))
 				);
 		
-				Movie p = movieService.addMovie(mov);
+				Movie p = null;
+				try {
+					p = movieService.addMovie(mov);
+				} catch (OperationUncompletedException e) {
+					//incompleto
+					System.out.println("enviar a pagina de error");
+				}
 				if(p != null){
 			return "redirect:/movie/list";
 		}
 		return "redirect:/user/bad_confirmation"; 
 	}
-	
-	
+		
 	/***movie/list list movie***/
 	@RequestMapping
 	public String list(Model model, HttpSession session){
 		if(!isLogin(session)) return getLogin();
-		List<Movie> list = movieService.getAllMovies();
+		List<Movie> list = null;
+		try {
+			list = movieService.getAllMovies();
+		} catch (OperationUncompletedException e) {
+			//incompleto
+			System.out.println("enviar a pagina de error con e.getMessage");
+		}
 		model.addAttribute("movieList",list);
 		return "/movie/list";
 	}	
+	/**movie/search movie search***/
+	
+	@RequestMapping
+	public String search(Model m, HttpSession session){
+		if(!isLogin(session)) return getLogin();
+		return "movie/search";
+	}
+	
+	/***movie/addmovie getform***/
+	@RequestMapping(method = {RequestMethod.POST})
+	public String search(Model m, HttpServletRequest request, HttpSession session){
+		if(!isLogin(session)) return getLogin();
+		String name = request.getParameter("name");
+		System.out.println(name);
+		
+		List<Movie> l = null;
+		try {
+				l = movieService.searchByName(name);
+				} catch (OperationUncompletedException e) {
+					//incompleto
+					System.out.println("enviar a pagina de error");
+					return "movie/search";
+				}
+		if(!l.isEmpty()) {
+			m.addAttribute("movieList",l);
+			System.out.println(l.get(0));
+		}
+		return "movie/search";
+	}
+	
+	
+	
+	
+	
 	
 	@RequestMapping
 	public String mark(Model model, HttpSession session){
 		if(!isLogin(session)) return getLogin();
-		List<Movie> list = movieService.getAllMovies();
+		List<Movie> list = null;
+		try {
+			list = movieService.getAllMovies();
+		} catch (OperationUncompletedException e) {
+			//incompleto
+			System.out.println("enviar a pagina de error con e.getMessage");
+		}
 		model.addAttribute("movieList",list);
 		return "/movie/mark";
 	}	
+
 	@RequestMapping(method = {RequestMethod.POST})
 	public String mark(Model model, HttpSession session, HttpServletRequest request){
 		if(!isLogin(session)) return getLogin();
 		String id = request.getParameter("id");
 		System.out.println(id);
 		String mark = request.getParameter(id+"_mark");
-		movieService.setMark(Integer.parseInt(id), Integer.parseInt(mark), (String)session.getAttribute("username"));
-		System.out.println(id);
-		System.out.println(mark);
 		
 		
+		try {
+			movieService.setMark(Integer.parseInt(id), Integer.parseInt(mark), (String)session.getAttribute("username"));
+		} catch (NumberFormatException e) {
+			//problemas con la transformacion numerica, javascripts deberia preocuparse (la interfaz)
+			
+		} catch (OperationUncompletedException e) {
+			//incompleto
+			System.out.println("enviar a pagina de error con e.getMessage");
+		}
 		return "redirect:/movie/list";
 	}
 	

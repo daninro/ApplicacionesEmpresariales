@@ -23,7 +23,7 @@
     <property name="dataSource" ref ="dataSourceBean"/>
 	</bean>
 	<tx:annotation-driven transaction-manager="transactionManager"/>
-	
+	<tx:annotation-driven proxy-target-class="true"/>
 	
 	<!-- Movie DAO -->
 	
@@ -68,7 +68,7 @@
 	
 	<bean name="/movie/*" class="controllers.MovieController">
 		<property name="movieService" ref="movieService"/>
-		<property name="userService" ref="userService"/>
+		<!-- <property name="userService" ref="userService"/>-->
 	</bean>
 	
 	
