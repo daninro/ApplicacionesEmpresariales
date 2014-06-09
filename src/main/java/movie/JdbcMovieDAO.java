@@ -29,9 +29,10 @@ public class JdbcMovieDAO implements MovieDAO{
 	
 	public Movie insert(Movie movie){
 		if(movie == null) return null;
+		Connection connection = null;
 		try{
 			String query = "INSERT INTO movie (name, year, running_time, country, budget, box_office) VALUES (?, ?, ?, ?, ?, ?)";
-			Connection connection = DataSourceUtils.getConnection(datasource);
+			connection = DataSourceUtils.getConnection(datasource);
 			PreparedStatement statement = connection.prepareStatement(query , Statement.RETURN_GENERATED_KEYS);
 			statement.setString(1, movie.getName());
 			statement.setInt(2, movie.getYear());
@@ -41,10 +42,10 @@ public class JdbcMovieDAO implements MovieDAO{
 			statement.setInt(6, movie.getBox_office());
 			statement.executeUpdate();
 			ResultSet resultset = statement.getGeneratedKeys();
-			
 			if(resultset != null && resultset.next()){
 				movie.setId(resultset.getInt(1));
 			}
+			
 		}catch(SQLException e){
 			throw new RuntimeException(e);
 		}
@@ -53,8 +54,9 @@ public class JdbcMovieDAO implements MovieDAO{
 
 	public Movie findbyId(Integer id) throws MyNotFoundExeption {
 		Movie m = null;
+		Connection connection = null;
 		try{
-			Connection connection = DataSourceUtils.getConnection(datasource);
+			connection = DataSourceUtils.getConnection(datasource);
 			String query = "SELECT * FROM movie WHERE id = ?";
 			PreparedStatement statement = connection.prepareStatement(query);
 			statement.setInt(1, id);
@@ -63,8 +65,10 @@ public class JdbcMovieDAO implements MovieDAO{
 				m = new Movie(result.getString(2), result.getInt(3), result.getInt(4), result.getString(5), result.getInt(6), result.getInt(7));
 				m.setId(result.getInt(1));
 			}else{
+				try {connection.close();} catch (SQLException | NullPointerException e2) {}
 				throw new MyNotFoundExeption("id no encontrado");
 			}
+			
 		}catch(SQLException e){
 			throw new RuntimeException(e);
 		}
@@ -73,9 +77,10 @@ public class JdbcMovieDAO implements MovieDAO{
 
 	public List<Movie> findbyYear(Integer year) {
 		List<Movie> m = new ArrayList<Movie>();
+		Connection connection = null;
 		try{
 			
-			Connection connection = DataSourceUtils.getConnection(datasource);
+			connection = DataSourceUtils.getConnection(datasource);
 			String query = "SELECT * FROM movie WHERE year = ?";
 			PreparedStatement statement = connection.prepareStatement(query);
 			statement.setInt(1, year);
@@ -85,6 +90,7 @@ public class JdbcMovieDAO implements MovieDAO{
 				movie.setId(result.getInt(1));
 				m.add(movie);
 			}
+			
 		}catch(SQLException e){
 			throw new RuntimeException(e);
 		}
@@ -93,8 +99,9 @@ public class JdbcMovieDAO implements MovieDAO{
 
 	public List<Movie> findbyCountry(String c) {
 		List<Movie> m = new ArrayList<Movie>();
+		Connection connection = null;
 		try{
-			Connection connection = DataSourceUtils.getConnection(datasource);
+			connection = DataSourceUtils.getConnection(datasource);
 			String query = "SELECT * FROM movie WHERE country = ?";
 			PreparedStatement statement = connection.prepareStatement(query);
 			statement.setString(1, c);
@@ -104,7 +111,9 @@ public class JdbcMovieDAO implements MovieDAO{
 				movie.setId(result.getInt(1));
 				m.add(movie);
 			}
+			
 		}catch(SQLException e){
+			
 			throw new RuntimeException(e);
 		}
 		return m;
@@ -113,9 +122,10 @@ public class JdbcMovieDAO implements MovieDAO{
 	public Movie update(Movie movie) throws MyNotFoundExeption {
 		if(movie == null) return null;
 		Movie m = null;
+		Connection connection = null;
 		try{
 			String query = "UPDATE movie SET name = ?, year = ?, running_time= ?, country = ?, budget = ?, box_office = ? WHERE id = ?"; 
-			Connection connection = DataSourceUtils.getConnection(datasource);
+			connection = DataSourceUtils.getConnection(datasource);
 			PreparedStatement statement = connection.prepareStatement(query , Statement.RETURN_GENERATED_KEYS);
 			statement.setString(1, movie.getName());
 			statement.setInt(2, movie.getYear());
@@ -126,11 +136,13 @@ public class JdbcMovieDAO implements MovieDAO{
 			statement.setInt(7, movie.getId());
 			statement.executeUpdate();
 			m = findbyId(movie.getId());
-
+			
 		}catch(SQLException e){
+			
 			throw new RuntimeException(e);
 			
 		}catch(MyNotFoundExeption e){
+			
 			e.addDetails("actualizacion fallida");
 			throw e;
 		
@@ -141,15 +153,18 @@ public class JdbcMovieDAO implements MovieDAO{
 	public List<Movie> addMovietoWishlist(Movie movie, User u) {
 		List<Movie> movies = null; 
 		if(movie == null) return null;
+		Connection connection = null;
 		try{
 			String query = "INSERT INTO wishlist (user_name, id) VALUES (?, ?)";
-			Connection connection = DataSourceUtils.getConnection(datasource);
+			connection = DataSourceUtils.getConnection(datasource);
 			PreparedStatement statement = connection.prepareStatement(query , Statement.RETURN_GENERATED_KEYS);
 			statement.setString(1, u.getName());
 			statement.setInt(2, movie.getId());
 			statement.executeUpdate();
 			movies = getWishlistbyUser(u);
+			
 		}catch(SQLException e){
+			
 			throw new RuntimeException(e);
 		}
 		return movies;
@@ -157,8 +172,9 @@ public class JdbcMovieDAO implements MovieDAO{
 
 	public List<Movie> getWishlistbyUser(User u) {
 		List<Movie> movies = new ArrayList<Movie>();
+		Connection connection = null;
 		try{
-			Connection connection = DataSourceUtils.getConnection(datasource);
+			connection = DataSourceUtils.getConnection(datasource);
 			String query = "SELECT id FROM  wishlist WHERE user_name = ?";
 			PreparedStatement statement = connection.prepareStatement(query);
 			statement.setString(1, u.getName());
@@ -166,9 +182,12 @@ public class JdbcMovieDAO implements MovieDAO{
 			while(result.next()){
 				movies.add(findbyId(result.getInt(1)));
 			}
+			
 		}catch(SQLException e){
+			
 			throw new RuntimeException(e); 
 		} catch (MyNotFoundExeption e) {
+			
 			System.out.println("getWishlistbyUser: no deberia entrar aqui jamás");
 		}
 		return movies;
@@ -176,15 +195,18 @@ public class JdbcMovieDAO implements MovieDAO{
 
 	public List<Movie> deleteMoviefromWishlistbyUser(Movie m, User u) {
 		List<Movie> movies = null;
+		Connection connection = null;
 		try{
-			Connection connection = DataSourceUtils.getConnection(datasource);
+			connection = DataSourceUtils.getConnection(datasource);
 			String query = "DELETE FROM  wishlist WHERE id = ? AND user_name = ?";
 			PreparedStatement statement = connection.prepareStatement(query);
 			statement.setInt(1, m.getId());
 			statement.setString(2, u.getName());
 			statement.executeUpdate();
 			movies = getWishlistbyUser(u);
+			
 		}catch(SQLException e){
+			
 			throw new RuntimeException(e);
 		}
 		return movies;
@@ -192,9 +214,10 @@ public class JdbcMovieDAO implements MovieDAO{
 
 	public List<Movie> getAll() {
 		List<Movie> m = new ArrayList<Movie>();
+		Connection connection = null;
 		try{
 			
-			Connection connection = DataSourceUtils.getConnection(datasource);
+			connection = DataSourceUtils.getConnection(datasource);
 			String query = "SELECT * FROM movie ";
 			PreparedStatement statement = connection.prepareStatement(query);
 			ResultSet result = statement.executeQuery();
@@ -203,7 +226,9 @@ public class JdbcMovieDAO implements MovieDAO{
 				movie.setId(result.getInt(1));
 				m.add(movie);
 			}
+			
 		}catch(SQLException e){
+			
 			throw new RuntimeException(e);
 		}
 		return m;	
@@ -211,14 +236,17 @@ public class JdbcMovieDAO implements MovieDAO{
 
 	public List<Movie> deleteMovie(Movie m) {
 		List<Movie> movies = null;
+		Connection connection = null;
 		try{
-			Connection connection = DataSourceUtils.getConnection(datasource);
+			connection = DataSourceUtils.getConnection(datasource);
 			String query = "DELETE FROM  movie WHERE id = ?";
 			PreparedStatement statement = connection.prepareStatement(query);
 			statement.setInt(1, m.getId());
 			statement.executeUpdate();
 			movies = getAll();
+			
 		}catch(SQLException e){
+			
 			throw new RuntimeException(e);
 		}
 		return movies;
@@ -226,8 +254,9 @@ public class JdbcMovieDAO implements MovieDAO{
 	
 	public List<Movie> deleteMovie(Integer m) {
 		List<Movie> movies = null;
+		Connection connection = null;
 		try{
-			Connection connection = DataSourceUtils.getConnection(datasource);
+			connection = DataSourceUtils.getConnection(datasource);
 			String query = "DELETE FROM  movie WHERE id = ?";
 			PreparedStatement statement = connection.prepareStatement(query);
 			statement.setInt(1, m);
@@ -235,6 +264,7 @@ public class JdbcMovieDAO implements MovieDAO{
 			movies = getAll();
 			
 		}catch(SQLException e){
+			
 			throw new RuntimeException(e);
 		}
 		return movies;
@@ -243,9 +273,10 @@ public class JdbcMovieDAO implements MovieDAO{
 	@Override
 	public List<Movie> searchByName(String name) {
 		List<Movie> m = new ArrayList<Movie>();
+		Connection connection = null;
 		try{
 			
-			Connection connection = DataSourceUtils.getConnection(datasource);
+			connection = DataSourceUtils.getConnection(datasource);
 			String query = "SELECT * FROM movie WHERE name like ?";
 			
 			PreparedStatement statement = connection.prepareStatement(query);
@@ -256,10 +287,11 @@ public class JdbcMovieDAO implements MovieDAO{
 				movie.setId(result.getInt(1));
 				m.add(movie);
 			}
+			connection.close();
 		}catch(SQLException e){
+			try {connection.close();} catch (SQLException | NullPointerException e2) {}
 			throw new RuntimeException(e);
 		}
 		return m;	
-	
 	}
 }

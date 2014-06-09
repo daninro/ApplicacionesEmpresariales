@@ -81,8 +81,6 @@ public class MovieController extends MyController{
 	public String search(Model m, HttpServletRequest request, HttpSession session){
 		if(!isLogin(session)) return getLogin();
 		String name = request.getParameter("name");
-		System.out.println(name);
-		
 		List<Movie> l = null;
 		try {
 				l = movieService.searchByName(name);
@@ -93,12 +91,30 @@ public class MovieController extends MyController{
 				}
 		if(!l.isEmpty()) {
 			m.addAttribute("movieList",l);
-			System.out.println(l.get(0));
 		}
 		return "movie/search";
 	}
 	
+	@RequestMapping(method = {RequestMethod.POST})
+	public String table_search(Model m, HttpServletRequest request, HttpSession session){
+		if(!isLogin(session)) return getLogin();
+		String name = request.getParameter("name");
+		List<Movie> l = null;
+		try {
+				l = movieService.searchByName(name);
+				} catch (OperationUncompletedException e) {
+					//incompleto
+					System.out.println("enviar a pagina de error");
+					return "movie/search";
+				}
+		if(!l.isEmpty()) {
+			m.addAttribute("movieList",l);
+		}
+		System.out.println(m.containsAttribute("movieList"));
+		return "movie/table_search";
+	}
 	
+		
 	
 	
 	

@@ -3,6 +3,19 @@
 <html>
 <head>
 <title>Search</title>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script>
+$(document).ready(function(){
+  $("#keywords").keyup(function(){
+    txt=$("input").val();
+    $.post("table_search",{name:txt},function(result){
+      $("span").html(result);
+    });
+  });
+});
+</script>
+
+
 </head>
 <body>
 <ul>
@@ -14,7 +27,7 @@
 			<input type = "text" id = "keywords" name = "name"/></p>
 			<input type = "submit" value = "buscar" >
 	</form>
-	
+	<span>
 	<table border="1" bgcolor="cyan" align="center" >
 		<tr>
 			<th>Name</th>
@@ -39,6 +52,6 @@
 		</c:forEach>
 
 	</table>
-
+	</span>
 </body>
 </html>

@@ -62,6 +62,7 @@
 	
 	
 	
+	
 	<bean name="/user/*" class="controllers.UserController">
 		<property name="userService" ref="userService"/>
 	</bean>
