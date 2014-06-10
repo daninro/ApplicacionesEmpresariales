@@ -37,7 +37,7 @@ ApplicationContext context = new ClassPathXmlApplicationContext("spring-module.x
 		//Screenplay s = ms.addScreenplay(spp);
 		//System.out.println(s);
 		
-		User user = new User("nn", Date.valueOf("2013-03-01"), "chilafe", "nafataly", "holiaddaii", "lala");
+		User user = new User("nn", Date.valueOf("2013-03-01"), "chilafe", "nafataly", "holiaddaii", "lala", false);
 		
 		//Screenplay sp = ms.addScreenplay(spp);
 		//Screenplay a = new Screenplay("danieliwi7", 	Date.valueOf("2013-02-01"),"chileeeeee");

@@ -7,12 +7,13 @@ public class User extends Person{
 	private String email;
 	private String password;
 	private String username;
-		
-	public User(String name, Date date_of_birth, String country, String email, String password, String username) {
+	private boolean isAdmin;	
+	public User(String name, Date date_of_birth, String country, String email, String password, String username, boolean isAdmin) {
 		super(name, date_of_birth, country);
 		this.setEmail(email);
 		this.setPassword(password);
 		this.setUsername(username);
+		this.isAdmin = isAdmin;
 	}
 
 	public String getEmail() {
@@ -41,5 +42,9 @@ public class User extends Person{
 	
 	public String toString(){
 		return "User [username = " + username + ", password = " + password + ", name = " + this.getName() + ", mail = " + email + ", date of birth = " + this.getDate_of_birth() + ", country = " + this.getCountry() + "]";
+	}
+	
+	public boolean isAdmin(){
+		return isAdmin;
 	}
 }

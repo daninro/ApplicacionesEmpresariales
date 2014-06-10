@@ -68,7 +68,7 @@ public class JdbcUserDAO implements UserDAO{
 		try{
 			Connection connection = datasource.getConnection();
 			
-			String query = "INSERT INTO user1(user_name, password, name, date_of_birth, country, email) values (?, ?, ?, ?, ?, ?)";
+			String query = "INSERT INTO user1(user_name, password, name, date_of_birth, country, email, is_admin) values (?, ?, ?, ?, ?, ?, ?)";
 			PreparedStatement statement = connection.prepareStatement(query);
 			
 			statement.setString(1, u.getUsername());
@@ -77,7 +77,7 @@ public class JdbcUserDAO implements UserDAO{
 			statement.setDate(4, u.getDate_of_birth());
 			statement.setString(5, u.getCountry());
 			statement.setString(6, u.getEmail());
-			
+			statement.setBoolean(7,  u.isAdmin());
 			statement.executeUpdate();
 			
 			user = getUser(u.getUsername());
@@ -98,7 +98,7 @@ public class JdbcUserDAO implements UserDAO{
 			statement.setString(1, username);
 			ResultSet result = statement.executeQuery();
 			if(result.next()){
-				user = new User(result.getString(3),result.getDate(4) , result.getString(5), result.getString(6), result.getString(2), result.getString(1));
+				user = new User(result.getString(3),result.getDate(4) , result.getString(5), result.getString(6), result.getString(2), result.getString(1), result.getBoolean(7));
 			}
 		}catch(SQLException e){}
 		
@@ -174,6 +174,7 @@ public class JdbcUserDAO implements UserDAO{
 		
 		return mark;
 	}
+	
 	public int getMarkbyUser(int m, String u) {
 		
 		int n=0;
