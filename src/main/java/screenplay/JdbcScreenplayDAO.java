@@ -11,6 +11,8 @@ import javax.sql.DataSource;
 
 import org.springframework.jdbc.datasource.DataSourceUtils;
 
+import exceptions.MyNotFoundException;
+
 
 
 public class JdbcScreenplayDAO implements ScreenplayDAO{
@@ -26,9 +28,7 @@ public class JdbcScreenplayDAO implements ScreenplayDAO{
 	
 	
 	
-	public Screenplay insert(Screenplay sp) {
-		
-		Screenplay screenplay = null;
+	public Screenplay insert(Screenplay sp) throws MyNotFoundException{
 		Connection connection = null;
 		try{
 			String query = "INSERT INTO screenplay (name, date_of_birth, country) VALUES (?, ?, ?)";
@@ -38,13 +38,19 @@ public class JdbcScreenplayDAO implements ScreenplayDAO{
 			statement.setDate(2, sp.getDate_of_birth());
 			statement.setString(3, sp.getCountry());
 			statement.executeUpdate();
-		
-			screenplay = find(sp.getName(), sp.getDate_of_birth());
+			ResultSet resultset = statement.getGeneratedKeys();
+			
+			if(resultset != null && resultset.next()){
+				sp.setId(resultset.getInt(1));
+			}
+			else{
+				throw new MyNotFoundException("No se pudo generar la clave");
+			}
 			
 		}catch(SQLException e){
 			throw new RuntimeException(e);
 		}
-		return screenplay;
+		return sp;
 	}
 
 	public Screenplay find(String name, Date date_of_birth) {
