@@ -13,9 +13,6 @@ import screenplay.ScreenplayDAO;
 import screenplay.Screenplay;
 import user.User;
 import user.UserDAO;
-import actor.Actor;
-import actor.JdbcActorDAO;
-import actor.ActorDAO;
 import director.Director;
 import director.DirectorDAO;
 import exceptions.MyNotFoundException;
@@ -27,7 +24,6 @@ public class MovieServiceImplement implements MovieService{
 	private UserDAO userDAO;
 	private DirectorDAO directorDAO;
 	private ScreenplayDAO screenplayDAO;
-	private ActorDAO actorDAO;
 
 	/*accesors y mutators*/
 	public MovieDAO getMovieDAO() {
@@ -53,12 +49,6 @@ public class MovieServiceImplement implements MovieService{
 	}
 	public void setScreenplayDAO(JdbcScreenplayDAO screenplayDAO) {
 		this.screenplayDAO = screenplayDAO;
-	}
-	public ActorDAO getActorDAO() {
-		return actorDAO;
-	}
-	public void setActorDAO(JdbcActorDAO actorDAO) {
-		this.actorDAO = actorDAO;
 	}
 
 	
@@ -254,20 +244,7 @@ public class MovieServiceImplement implements MovieService{
 		return director;
 	}
 	
-	@Transactional
-	public Actor addActor(Actor a)throws OperationUncompletedException{
-		Actor actor = null;
-		try{
-			actor = actorDAO.insert(a);
-			
-		}catch(RuntimeException e){
-			throw new OperationUncompletedException("Ocurrio un problema durante la insercion dela ctor");
-		} catch (MyNotFoundException e) {
-			throw new OperationUncompletedException("Ocurrio un problema durante la insercion dela ctor");
-		}
-		return actor;
-		
-	}
+	
 	
 	@Transactional
 	public Screenplay addScreenplay(Screenplay sp)throws OperationUncompletedException{
@@ -281,19 +258,7 @@ public class MovieServiceImplement implements MovieService{
 		return s;
 	}
 	
-	public Actor findActor(String name, Date date_of_birth)throws OperationUncompletedException {
-		Actor actor = null;
-		try{
-			actor = actorDAO.find(name, date_of_birth);
-		}catch(RuntimeException e){
-			throw new OperationUncompletedException("Ocurrio un problema en la busqueda");
-		}
-		catch (MyNotFoundException e) {
-			throw new OperationUncompletedException("El actor buscado no existe");
-		}
-			
-		return actor;
-	}
+	
 	
 	public Director findDiretor(String name, Date date_of_birth)throws OperationUncompletedException {
 		Director director= null;
@@ -319,50 +284,7 @@ public class MovieServiceImplement implements MovieService{
 		return sp;
 	}
 
-	@Transactional
-	public Actor deleteActor(Actor a) throws OperationUncompletedException{
-		Actor actor = null;
-		try{
-			actor = actorDAO.delete(a);
 			
-		}catch(RuntimeException e){
-			throw new OperationUncompletedException("Ocurrio un problema en la eliminacion");
-		}catch (MyNotFoundException e) {
-			throw new OperationUncompletedException("El actor no existe");
-		}
-		
-	return actor;
-		
-	}
-
-	@Transactional
-	public Actor deleteActorbykey(String name, Date date) throws OperationUncompletedException{
-		Actor actor = null;
-		try{
-			actor = actorDAO.deletebykey(name, date);
-			
-		}catch(RuntimeException e){
-			throw new OperationUncompletedException("Ocurrio un problema en la eliminacion");
-		}catch (MyNotFoundException e) {
-			throw new OperationUncompletedException("El actor no existe");}
-	return actor;
-		
-	}
-
-	@Transactional
-	public Actor updateActor(Actor a) throws OperationUncompletedException {
-		Actor actor = null;
-		try{
-			actor = actorDAO.update(a);
-			
-		}catch(RuntimeException e){
-			throw new OperationUncompletedException("Ocurrio un problema en la actualizacion");
-		}catch (MyNotFoundException e) {
-			throw new OperationUncompletedException("El actor no existe");}
-	return actor;
-		
-	}
-		
 	@Transactional
 	public Director deleteDirector(Director d)throws OperationUncompletedException{
 		Director director = null;
