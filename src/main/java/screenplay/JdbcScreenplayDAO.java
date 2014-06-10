@@ -16,6 +16,15 @@ import org.springframework.jdbc.datasource.DataSourceUtils;
 public class JdbcScreenplayDAO implements ScreenplayDAO{
 
 	private DataSource datasource;
+	public DataSource getDatasource() {
+		return datasource;
+	}
+
+	public void setDatasource(DataSource datasource) {
+		this.datasource = datasource;
+	}
+	
+	
 	
 	public Screenplay insert(Screenplay sp) {
 		
@@ -66,15 +75,7 @@ public class JdbcScreenplayDAO implements ScreenplayDAO{
 		
 	}
 	
-	public DataSource getDatasource() {
-		return datasource;
-	}
 
-	public void setDatasource(DataSource datasource) {
-		this.datasource = datasource;
-	}
-	
-	
 	
 	public Screenplay delete(Screenplay sp) {
 		Connection connection = null;
@@ -106,6 +107,7 @@ public Screenplay deletebykey(String name, Date date) {
 
 public Screenplay update(Screenplay sp) {
 	Screenplay screenplay= null;
+	
 	try{
 		String query = "UPDATE screenplay SET country = ? WHERE name = ? AND date_of_birth = ?"; 
 		Connection connection = datasource.getConnection();
