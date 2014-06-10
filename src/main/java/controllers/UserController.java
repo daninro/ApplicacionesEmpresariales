@@ -41,7 +41,7 @@ public class UserController extends MyController{
 				return "/message/message";
 			}
 		}catch(OperationUncompletedException e){};
-		m.addAttribute("message", "no pudimos :(");
+			m.addAttribute("message", "no pudimos :(");
 		return "/message/message"; 
 	}
 	

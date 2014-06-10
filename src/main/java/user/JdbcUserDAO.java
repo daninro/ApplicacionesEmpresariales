@@ -120,7 +120,7 @@ public class JdbcUserDAO implements UserDAO{
 			statement.setString(4, u.getCountry());
 			statement.setString(5, u.getEmail());
 			statement.setString(6, u.getUsername());
-			//System.out.println(u.getUsername());
+			
 			statement.executeUpdate();
 			
 			user = getUser(u.getUsername());
