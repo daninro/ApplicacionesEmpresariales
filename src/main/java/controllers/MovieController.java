@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import exceptions.OperationUncompletedException;
 import service.movie.MovieService;
+import user.User;
 
 
 public class MovieController extends MyController{
@@ -24,14 +25,17 @@ public class MovieController extends MyController{
 	@RequestMapping
 	public String addmovie(Model m, HttpSession session){
 		if(!isLogin(session)) return getLogin();
-		return "movie/addmovie";
+		User u = (User) session.getAttribute("user");
+		if(u.isAdmin()){
+		return "movie/addmovie";}
+		return "redirect:/movie/list";
 	}
 	
 	/***movie/addmovie getform***/
 	@RequestMapping(method = {RequestMethod.POST})
 	public String addmovie(Model m, HttpServletRequest request, HttpSession session){
 		if(!isLogin(session)) return getLogin();
-		 
+			
 		Movie mov = new Movie(
 				request.getParameter("name"), 
 				Integer.parseInt(request.getParameter("year")), 
@@ -49,9 +53,11 @@ public class MovieController extends MyController{
 					System.out.println("enviar a pagina de error");
 				}
 				if(p != null){
-			return "redirect:/movie/list";
-		}
-		return "redirect:/user/bad_confirmation"; 
+					return "redirect:/movie/list";
+				}
+		
+		return "redirect:/user/bad_confirmation";
+		
 	}
 		
 	/***movie/list list movie***/
