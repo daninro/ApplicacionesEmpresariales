@@ -30,7 +30,8 @@ public class UserController extends MyController{
 				request.getParameter("country") , 
 				request.getParameter("email"),
 				request.getParameter("password"), 
-				request.getParameter("username")
+				request.getParameter("username"),
+				false
 			);
 		try{
 			User p = userService.addUser(u);
