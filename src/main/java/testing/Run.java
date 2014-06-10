@@ -50,7 +50,7 @@ public class Run {
 			System.out.println(l.get(i).toString());
 		}
 		
-		//User u = us.addUser(new User("Diego Seco", Date.valueOf("1982-10-31"), "espanol", "dseco@udec.cl","pass", "dsecos"));
+		User u = us.addUser(new User("Diego Seco", Date.valueOf("1982-10-31"), "espanol", "dseco@udec.cl","pass", "dsecos", true));
 		//System.out.println(u.toString());
 		
 		

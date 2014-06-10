@@ -25,8 +25,6 @@
 	<tx:annotation-driven transaction-manager="transactionManager"/>
 	<tx:annotation-driven proxy-target-class="true"/>
 	
-	<!-- Data Source -->
-	
 	<!-- Movie DAO -->
 	
 	<bean id = "movieDao" class = "movie.JdbcMovieDAO" >
@@ -52,16 +50,48 @@
 	<bean id = "movieService" class = "service.movie.MovieServiceImplement">
 		<property name="movieDAO" ref = "movieDao"/>
 		<property name="userDAO" ref = "userDao"/>
-		<property name="directorDAO" ref = "directorDao"/>
+		<!-- <property name="directorDAO" ref = "directorDao"/>
 		<property name="screenplayDAO" ref = "screenplayDao"/>
-		<property name="actorDAO" ref = "actorDao"/>
+		<property name="actorDAO" ref = "actorDao"/>-->
 	</bean>
 	
 	<bean id = "userService" class = "service.user.UserServiceImplement">
+		<property name="movieDAO" ref = "movieDao"/>
 		<property name="userDAO" ref = "userDao"/>
 	</bean>
 	
-		
+	<bean id = "screenplayService" class = "service.screenplay.ScreenplayServiceImplement">
+		<property name="screenplayDAO" ref= "screenplayDao" ></property>
+	</bean>
+	<bean id = "actorService" class = "service.actor.ActorServiceImplement">
+		<property name="actorDAO" ref= "actorDao" ></property>
+	</bean>
+	
+	<bean id = "directorService" class = "service.director.DirectorServiceImplement">
+		<property name="directorDAO" ref= "directorDao" ></property>
+	</bean>
+	
+	<bean name="/user/*" class="controllers.UserController">
+		<property name="userService" ref="userService"/>
+	</bean>
+	
+	<bean name="/movie/*" class="controllers.MovieController">
+		<property name="movieService" ref="movieService"/>
+		<!-- <property name="userService" ref="userService"/>-->
+	</bean>
+	
+	
+	<bean name="/ajax/*" class="controllers.ControllerTest">
+		<property name="movieService" ref="movieService"/>
+		<!-- <property name="userService" ref="userService"/>-->
+	</bean>
+	
+	
+	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name = "prefix" value = "/WEB-INF/jsp/"/>
+		<property name = "suffix" value = ".jsp"/>
+	</bean>
+
 	<!--  	
 	<bean class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping"/>
 	<bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter"/>

@@ -4,7 +4,6 @@ import java.sql.Date;
 
 import org.springframework.transaction.annotation.Transactional;
 
-import screenplay.JdbcScreenplayDAO;
 import screenplay.Screenplay;
 import screenplay.ScreenplayDAO;
 import exceptions.MyNotFoundException;
@@ -17,7 +16,7 @@ public class ScreenplayServiceImplement implements ScreenplayService{
 	public ScreenplayDAO getScreenplayDAO() {
 		return screenplayDAO;
 	}
-	public void setScreenplayDAO(JdbcScreenplayDAO screenplayDAO) {
+	public void setScreenplayDAO(ScreenplayDAO screenplayDAO) {
 		this.screenplayDAO = screenplayDAO;
 	}
 

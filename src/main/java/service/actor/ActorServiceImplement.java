@@ -6,7 +6,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import actor.Actor;
 import actor.ActorDAO;
-import actor.JdbcActorDAO;
 import exceptions.MyNotFoundException;
 import exceptions.OperationUncompletedException;
 
@@ -16,7 +15,7 @@ public class ActorServiceImplement implements ActorService{
 	public ActorDAO getActorDAO() {
 		return actorDAO;
 	}
-	public void setActorDAO(JdbcActorDAO actorDAO) {
+	public void setActorDAO(ActorDAO actorDAO) {
 		this.actorDAO = actorDAO;
 	}
 
