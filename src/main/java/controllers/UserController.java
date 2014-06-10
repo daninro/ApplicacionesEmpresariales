@@ -55,8 +55,9 @@ public class UserController extends MyController{
 		u = userService.getUserbyUsername(request.getParameter("username"));
 		if(u!=null){
 			if(u.getPassword().compareTo(request.getParameter("password"))==0){
-				System.out.println(u.getPassword());
+				session.setAttribute("user", u);
 				session.setAttribute("username", u.getUsername());
+				System.out.println(u.getName());
 				return "redirect:/user/index";
 			}
 		}
