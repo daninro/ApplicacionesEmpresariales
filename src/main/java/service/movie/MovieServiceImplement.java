@@ -132,6 +132,8 @@ public class MovieServiceImplement implements MovieService{
 			movieDAO.insert(m);
 		}catch(RuntimeException e){
 			throw new OperationUncompletedException("Ocurrio un problema Durante la insercion");
+		} catch (MyNotFoundException e) {
+			throw new OperationUncompletedException("Ocurrio un problema durante la insercion: " + e.getMessage());
 		}
 		return m;
 	}

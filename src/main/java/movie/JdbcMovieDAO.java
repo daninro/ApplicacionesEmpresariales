@@ -26,9 +26,10 @@ public class JdbcMovieDAO implements MovieDAO{
 	public void setDatasource(DataSource datasource) {
 		this.datasource = datasource;
 	}
-	/** accesors and mutators**/
+	/** accesors and mutators
+	 * @throws MyNotFoundException **/
 	
-	public Movie insert(Movie movie){
+	public Movie insert(Movie movie) throws MyNotFoundException{
 		if(movie == null) return null;
 		Connection connection = null;
 		try{
@@ -45,6 +46,9 @@ public class JdbcMovieDAO implements MovieDAO{
 			ResultSet resultset = statement.getGeneratedKeys();
 			if(resultset != null && resultset.next()){
 				movie.setId(resultset.getInt(1));
+			}else{
+				throw new MyNotFoundException("no pude generar la clave :(");
+				
 			}
 			
 		}catch(SQLException e){

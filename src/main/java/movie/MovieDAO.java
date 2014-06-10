@@ -7,7 +7,7 @@ import exceptions.MyNotFoundException;
 import user.User;
 
 public interface MovieDAO {
-	public Movie insert(Movie movie);
+	public Movie insert(Movie movie) throws MyNotFoundException;
 	public Movie findbyId(Integer id) throws MyNotFoundException;
 	public List<Movie> findbyYear(Integer year);
 	public List<Movie> findbyCountry(String c);
