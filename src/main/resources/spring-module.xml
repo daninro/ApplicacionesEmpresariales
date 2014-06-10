@@ -58,7 +58,6 @@
 	</bean>
 	
 	<bean id = "userService" class = "service.user.UserServiceImplement">
-		<property name="movieDAO" ref = "movieDao"/>
 		<property name="userDAO" ref = "userDao"/>
 	</bean>
 	

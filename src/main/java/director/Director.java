@@ -14,4 +14,7 @@ public class Director extends Person{
 		super(name, date_of_birth, country);
 	}
 
+	public String toString(){
+		return id + super.toString();
+	}
 }

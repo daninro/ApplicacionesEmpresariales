@@ -2,7 +2,6 @@ package screenplay;
 
 import java.sql.Date;
 import exceptions.MyNotFoundException;
-import exceptions.OperationUncompletedException;
 
 public interface ScreenplayDAO {
 		public Screenplay insert(Screenplay sp) throws MyNotFoundException;
