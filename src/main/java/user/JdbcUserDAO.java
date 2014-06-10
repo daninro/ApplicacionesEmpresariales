@@ -7,6 +7,8 @@ import java.sql.SQLException;
 
 import javax.sql.DataSource;
 
+import org.springframework.jdbc.datasource.DataSourceUtils;
+
 import movie.Movie;
 import exceptions.MyNotFoundException;
 
@@ -23,8 +25,9 @@ public class JdbcUserDAO implements UserDAO{
 	}
 
 	public Integer setMarkbyUser(Movie m, Integer mark, User u) {
+		Connection connection;
 		try{
-			Connection connection = datasource.getConnection();
+			connection = DataSourceUtils.getConnection(datasource);
 			String query = "UPDATE evaluate SET calification = ? WHERE user_name = ? AND id = ?";
 			PreparedStatement statement = connection.prepareStatement(query);
 			statement.setInt(1, mark);
@@ -39,8 +42,9 @@ public class JdbcUserDAO implements UserDAO{
 
 	public Integer getMarkbyUser(Movie m, User u) throws MyNotFoundException {
 		Integer n=null;
+		Connection connection;
 		try{
-			Connection connection = datasource.getConnection();
+			connection = DataSourceUtils.getConnection(datasource);
 			String query = "SELECT calification FROM  evaluate WHERE user_name = ? AND id = ?";
 			PreparedStatement statement = connection.prepareStatement(query);
 			statement.setString(1, u.getName());
@@ -59,8 +63,9 @@ public class JdbcUserDAO implements UserDAO{
 
 	public User insert(User u) {
 		User user = null;
+		Connection connection;
 		try{
-			Connection connection = datasource.getConnection();
+			connection = DataSourceUtils.getConnection(datasource);
 			
 			String query = "INSERT INTO user1(user_name, password, name, date_of_birth, country, email, is_admin) values (?, ?, ?, ?, ?, ?, ?)";
 			PreparedStatement statement = connection.prepareStatement(query);
@@ -84,9 +89,9 @@ public class JdbcUserDAO implements UserDAO{
 
 	public User getUser(String username) throws MyNotFoundException {
 		User user = null;
-		
+		Connection connection;
 		try{
-			Connection connection = datasource.getConnection();
+			connection = DataSourceUtils.getConnection(datasource);
 			
 			String query = "SELECT * FROM  user1 WHERE user_name = ?";
 			PreparedStatement statement = connection.prepareStatement(query);
@@ -106,8 +111,9 @@ public class JdbcUserDAO implements UserDAO{
 
 	public User update(User u) throws MyNotFoundException {
 		User user = null;
+		Connection connection;
 		try{
-			Connection connection = datasource.getConnection();
+			connection = DataSourceUtils.getConnection(datasource);
 			String query = "UPDATE user1 SET password = ?, name = ?, date_of_birth = ?, country = ?, email = ? WHERE user_name = ?";
 			PreparedStatement statement = connection.prepareStatement(query);
 			statement.setString(1, u.getPassword());
@@ -127,8 +133,9 @@ public class JdbcUserDAO implements UserDAO{
 	public User delete(User u) throws MyNotFoundException {
 		User user = null;
 		user = getUser(u.getUsername());
+		Connection connection;
 		try{
-			Connection connection = datasource.getConnection();
+			connection = DataSourceUtils.getConnection(datasource);
 			String query = "DELETE FROM user1 WHERE user_name = ?";
 			PreparedStatement statement = connection.prepareStatement(query);
 			statement.setString(1, u.getUsername());
@@ -143,9 +150,9 @@ public class JdbcUserDAO implements UserDAO{
 
 	@Override
 	public Integer setMarkbyUser(int movieId, Integer mark, String username) {
-
+		Connection connection;
 		try{
-			Connection connection = datasource.getConnection();
+			connection = DataSourceUtils.getConnection(datasource);
 			String query = "UPDATE evaluate SET calification = ? WHERE user_name = ? AND id = ?;" +  
 			"INSERT INTO evaluate(user_name, id, calification)" + 
 			"SELECT ?, ?, ?" +	"WHERE NOT EXISTS (SELECT * FROM evaluate WHERE id = ? AND user_name = ?)";
@@ -167,8 +174,9 @@ public class JdbcUserDAO implements UserDAO{
 	
 	public int getMarkbyUser(int m, String u) throws MyNotFoundException {
 		int n=0;
+		Connection connection;
 		try{
-			Connection connection = datasource.getConnection();
+			connection = DataSourceUtils.getConnection(datasource);
 			String query = "SELECT calification FROM  evaluate WHERE user_name = ? AND id = ?";
 			PreparedStatement statement = connection.prepareStatement(query);
 			statement.setString(1, u);

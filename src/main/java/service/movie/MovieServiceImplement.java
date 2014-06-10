@@ -147,7 +147,6 @@ public class MovieServiceImplement implements MovieService{
 		return defaultMark;
 	}
 	
-	@Override
 	@Transactional
 	public Integer setMark(int movieId, Integer mark, String username) throws OperationUncompletedException{
 		Integer defaultMark = -1;
