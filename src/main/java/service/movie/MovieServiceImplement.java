@@ -162,11 +162,11 @@ public class MovieServiceImplement implements MovieService{
 	public Integer getMark(Movie m, User u)throws OperationUncompletedException{
 		Integer defaultMark = -1;
 		try{
-			
 			defaultMark = userDAO.getMarkbyUser(m,u);
-			
 		}catch(RuntimeException e){
 			throw new OperationUncompletedException("ocurrio un problema al obtener las calificaciones");
+		} catch (MyNotFoundException e) {
+			throw new OperationUncompletedException("no se encontro la calificacion");
 		}
 		
 		return defaultMark;

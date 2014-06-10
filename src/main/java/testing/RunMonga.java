@@ -43,7 +43,7 @@ ApplicationContext context = new ClassPathXmlApplicationContext("spring-module.x
 		//Screenplay a = new Screenplay("danieliwi7", 	Date.valueOf("2013-02-01"),"chileeeeee");
 	//User u = us.addUser(user);
 		//us.editUser(user);
-		us.deleteUser(user);
+		//us.deleteUser(user);
 		//User u= us.deleteUser(user);
 		//ms.addScreenplay(a);
 		//System.out.println(ms.updateScreenplay(a));

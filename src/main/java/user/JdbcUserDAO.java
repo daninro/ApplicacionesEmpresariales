@@ -4,12 +4,11 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+
 import javax.sql.DataSource;
 
-import exceptions.MyNotFoundException;
-import exceptions.OperationUncompletedException;
-
 import movie.Movie;
+import exceptions.MyNotFoundException;
 
 public class JdbcUserDAO implements UserDAO{
 	
@@ -125,22 +124,19 @@ public class JdbcUserDAO implements UserDAO{
 		return user;
 	}
 	
-	public User delete(User u) {
+	public User delete(User u) throws MyNotFoundException {
 		User user = null;
+		user = getUser(u.getUsername());
 		try{
 			Connection connection = datasource.getConnection();
-			
 			String query = "DELETE FROM user1 WHERE user_name = ?";
 			PreparedStatement statement = connection.prepareStatement(query);
 			statement.setString(1, u.getUsername());
-			
-						
 			statement.executeUpdate();
-			
 			user = getUser(u.getUsername());
-			
-		}catch(SQLException e){}
-		
+		}catch(SQLException e){
+			throw new RuntimeException();
+		}
 		return user;
 			
 	}
@@ -150,16 +146,9 @@ public class JdbcUserDAO implements UserDAO{
 
 		try{
 			Connection connection = datasource.getConnection();
-			
-			//String query = "UPDATE evaluate SET calification = ? WHERE user_name = ? AND id = ?";
-			
-			//String query = "UPDATE evaluate SET calification = ? WHERE user_name = ? AND id = ?;" +  
-				//	"INSERT INTO evaluate(user_name, id, calification) values(?, ?, ?) ";
-			
 			String query = "UPDATE evaluate SET calification = ? WHERE user_name = ? AND id = ?;" +  
 			"INSERT INTO evaluate(user_name, id, calification)" + 
 			"SELECT ?, ?, ?" +	"WHERE NOT EXISTS (SELECT * FROM evaluate WHERE id = ? AND user_name = ?)";
-			
 			PreparedStatement statement = connection.prepareStatement(query);
 			statement.setInt(1, mark);
 			statement.setString(2, username);
@@ -171,31 +160,28 @@ public class JdbcUserDAO implements UserDAO{
 			statement.setString(8, username);
 			statement.executeUpdate();
 		}catch(SQLException e){
+			throw new RuntimeException();
 		}
 		return mark;
 	}
 	
-	public int getMarkbyUser(int m, String u) {
-		
+	public int getMarkbyUser(int m, String u) throws MyNotFoundException {
 		int n=0;
-		
 		try{
 			Connection connection = datasource.getConnection();
-			
-						
-			
 			String query = "SELECT calification FROM  evaluate WHERE user_name = ? AND id = ?";
 			PreparedStatement statement = connection.prepareStatement(query);
-			
 			statement.setString(1, u);
 			statement.setInt(2, m);
 			ResultSet result = statement.executeQuery();
 			if(result.next()){
 				n = result.getInt(1);
+			}else{ 
+				throw new MyNotFoundException("no se enonctro calificaioj");
 			}
-			
-			
-		}catch(SQLException e){}
+		}catch(SQLException e){
+			throw new RuntimeException();
+		}
 		
 		return n;
 	}

@@ -53,20 +53,28 @@ public class UserServiceImplement  implements UserService{
 		return user;
 	}
 	
-	public User deleteUser(User u){
+	public User deleteUser(User u) throws OperationUncompletedException{
 		User user = null;
 		try{
 			user = userDAO.delete(u);
-		} catch (RuntimeException e){}
+		} catch (RuntimeException e){
+			throw new OperationUncompletedException("Ocurio un problema al intenar eliminar el usuario");
+		} catch (MyNotFoundException e) {
+			throw new OperationUncompletedException("no se encontro el usuario a eliminar");		
+		}
 		
 		return user;
 	}
-	public User getUserbyUsername(String u){
+	public User getUserbyUsername(String u)throws OperationUncompletedException{
 		User user = null;
 		try{
 			System.out.println("fg");
 			user = userDAO.getUser(u);
-		} catch (RuntimeException e){}
+		} catch (RuntimeException e){
+			throw new OperationUncompletedException("Ocurio un problema en ls base de datos");
+		} catch (MyNotFoundException e) {
+			throw new OperationUncompletedException("no se encontro el usuario");
+		}
 		
 		return user;
 	}

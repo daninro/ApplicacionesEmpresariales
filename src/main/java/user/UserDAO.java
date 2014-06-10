@@ -9,7 +9,7 @@ public interface UserDAO {
 		public User insert(User u) ;
 		public User getUser(String username) throws MyNotFoundException;
 		public User update(User u)throws MyNotFoundException;
-		public User delete(User u);
+		public User delete(User u) throws MyNotFoundException;
 		public Integer setMarkbyUser(int movieId, Integer mark, String username);
 		
 		

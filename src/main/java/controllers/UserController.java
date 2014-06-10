@@ -35,13 +35,13 @@ public class UserController extends MyController{
 			);
 		try{
 			User p = userService.addUser(u);
-		
 			if(u.getUsername().equals(p.getUsername())){
 				m.addAttribute("message", "usuario agregado");
 				return "/message/message";
 			}
-		}catch(OperationUncompletedException e){};
-			m.addAttribute("message", "no pudimos :(");
+		}catch(OperationUncompletedException e){
+			m.addAttribute("message", e.getMessage());
+		}
 		return "/message/message"; 
 	}
 	
@@ -52,7 +52,12 @@ public class UserController extends MyController{
 	public String login(Model m, HttpServletRequest request, HttpSession session){
 		if(isLogin(session)) return "redirect:/movie/list";
 		User u = null;
-		u = userService.getUserbyUsername(request.getParameter("username"));
+		
+		try {
+			u = userService.getUserbyUsername(request.getParameter("username"));
+		} catch (OperationUncompletedException e) {
+			
+		}
 		if(u!=null){
 			if(u.getPassword().compareTo(request.getParameter("password"))==0){
 				session.setAttribute("user", u);
