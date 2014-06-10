@@ -50,9 +50,9 @@
 	<bean id = "movieService" class = "service.movie.MovieServiceImplement">
 		<property name="movieDAO" ref = "movieDao"/>
 		<property name="userDAO" ref = "userDao"/>
-		<property name="directorDAO" ref = "directorDao"/>
+		<!-- <property name="directorDAO" ref = "directorDao"/>
 		<property name="screenplayDAO" ref = "screenplayDao"/>
-		<property name="actorDAO" ref = "actorDao"/>
+		<property name="actorDAO" ref = "actorDao"/>-->
 	</bean>
 	
 	<bean id = "userService" class = "service.user.UserServiceImplement">
@@ -60,8 +60,16 @@
 		<property name="userDAO" ref = "userDao"/>
 	</bean>
 	
+	<bean id = "screenplayService" class = "service.screenplay.ScreenplayServiceImplement">
+		<property name="screenplayDAO" ref= "screenplayDao" ></property>
+	</bean>
+	<bean id = "actorService" class = "service.actor.ActorServiceImplement">
+		<property name="actorDAO" ref= "actorDao" ></property>
+	</bean>
 	
-	
+	<bean id = "directorService" class = "service.director.DirectorServiceImplement">
+		<property name="directorDAO" ref= "directorDao" ></property>
+	</bean>
 	
 	<bean name="/user/*" class="controllers.UserController">
 		<property name="userService" ref="userService"/>

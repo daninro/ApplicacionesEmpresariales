@@ -1,6 +1,5 @@
 package service.movie;
 
-import java.sql.Date;
 import java.util.List;
 
 import movie.Movie;
@@ -8,13 +7,8 @@ import movie.MovieDAO;
 
 import org.springframework.transaction.annotation.Transactional;
 
-import screenplay.JdbcScreenplayDAO;
-import screenplay.ScreenplayDAO;
-import screenplay.Screenplay;
 import user.User;
 import user.UserDAO;
-import director.Director;
-import director.DirectorDAO;
 import exceptions.MyNotFoundException;
 import exceptions.OperationUncompletedException;
 
@@ -22,9 +16,8 @@ public class MovieServiceImplement implements MovieService{
 	
 	private MovieDAO movieDAO;
 	private UserDAO userDAO;
-	private DirectorDAO directorDAO;
-	private ScreenplayDAO screenplayDAO;
-
+	
+	
 	/*accesors y mutators*/
 	public MovieDAO getMovieDAO() {
 		return movieDAO;
@@ -37,18 +30,6 @@ public class MovieServiceImplement implements MovieService{
 	}
 	public void setUserDAO(UserDAO userDAO) {
 		this.userDAO = userDAO;
-	}
-	public DirectorDAO getDirectorDAO() {
-		return directorDAO;
-	}
-	public void setDirectorDAO(DirectorDAO directorDAO) {
-		this.directorDAO = directorDAO;
-	}
-	public ScreenplayDAO getScreenplayDAO() {
-		return screenplayDAO;
-	}
-	public void setScreenplayDAO(JdbcScreenplayDAO screenplayDAO) {
-		this.screenplayDAO = screenplayDAO;
 	}
 
 	
@@ -233,150 +214,9 @@ public class MovieServiceImplement implements MovieService{
 	
 	//@minux777: creo que esto hay que sacarlo y crear otro servicio para "personas" o algo asi
 	
-	@Transactional
-	public Director addDirector(Director d)throws OperationUncompletedException{
-		Director director = null;
-		try{
-			director = directorDAO.insert(d);
-		}catch(RuntimeException e){
-			throw new OperationUncompletedException("Ocurrio un problema durante la insercion del director");
-		}
-		return director;
-	}
 	
 	
 	
-	@Transactional
-	public Screenplay addScreenplay(Screenplay sp)throws OperationUncompletedException{
-		Screenplay s = null;
-		try{
-			s = screenplayDAO.insert(sp);
-			
-		}catch(RuntimeException e){
-			throw new OperationUncompletedException("Ocurrio un problema durante la insercion del guionista");
-		}
-		return s;
-	}
-	
-	
-	
-	public Director findDiretor(String name, Date date_of_birth)throws OperationUncompletedException {
-		Director director= null;
-		try{
-			director = directorDAO.find(name, date_of_birth);
-		}catch(RuntimeException e){
-			throw new OperationUncompletedException("Ocurrio un problema en la busqueda");
-		}catch (MyNotFoundException e) {
-			throw new OperationUncompletedException("El director buscado no existe");
-		}
-		return director;
-	}
-	
-	public Screenplay findScreeplay(String name, Date date_of_birth) throws OperationUncompletedException{
-		Screenplay sp = null;
-		try{
-			sp = screenplayDAO.find(name, date_of_birth);
-		}catch(RuntimeException e){
-			throw new OperationUncompletedException("Ocurrio un problema en la busqueda");
-		}catch (MyNotFoundException e) {
-			throw new OperationUncompletedException("El guionista buscado no existe");
-		}
-		return sp;
-	}
-
-			
-	@Transactional
-	public Director deleteDirector(Director d)throws OperationUncompletedException{
-		Director director = null;
-		try{
-			director = directorDAO.delete(d);
-			
-		}catch(RuntimeException e){
-			throw new OperationUncompletedException("Ocurrio un problema en la eliminacion");
-		}catch (MyNotFoundException e) {
-			throw new OperationUncompletedException("El Director no existe");
-			
-		}
-	return director;
-		
-	}
-
-	@Transactional
-	public Director deleteDirectorbykey(String name, Date date) throws OperationUncompletedException{
-		Director director = null;
-		try{
-			director = directorDAO.deletebykey(name, date);
-			
-		}catch(RuntimeException e){
-			throw new OperationUncompletedException("Ocurrio un problema en la eliminacion");
-		}catch (MyNotFoundException e) {
-			throw new OperationUncompletedException("El director no existe");
-		}
-	return director;
-		
-	}
-	
-	@Transactional
-	public Director updateDirector(Director d)throws OperationUncompletedException{
-		Director director = null;
-		try{
-			director = directorDAO.update(d);
-			
-		}catch(RuntimeException e){
-			throw new OperationUncompletedException("Ocurrio un problema en la actualizacion");
-		}catch (MyNotFoundException e) {
-			throw new OperationUncompletedException("El director no existe");
-		}
-	return director;
-		
-	}
-	
-	@Transactional
-	public Screenplay deleteScreenplay(Screenplay sp)throws OperationUncompletedException{
-		Screenplay screenplay = null;
-		try{
-			screenplay = screenplayDAO.delete(sp);
-			
-		}catch(RuntimeException e){
-			throw new OperationUncompletedException("Ocurrio un problema en la eliminacion");
-		}catch (MyNotFoundException e) {
-			throw new OperationUncompletedException("El guionista no existe");
-		}
-	return screenplay;
-		
-	}
-	
-	@Transactional
-	public Screenplay deleteScreenplaybykey(String name, Date date)throws OperationUncompletedException{
-		
-		Screenplay screenplay = null;
-		try{
-			screenplay = screenplayDAO.deletebykey(name, date);
-			
-		}catch(RuntimeException e){
-			throw new OperationUncompletedException("Ocurrio un problema en la eliminacion");
-		}catch (MyNotFoundException e) {
-			throw new OperationUncompletedException("El guionista no existe");
-		}
-	return screenplay;
-		
-	}
-	
-	@Transactional
-	public Screenplay updateScreenplay(Screenplay sp)throws OperationUncompletedException{
-		
-		Screenplay screenplay = null;
-		try{
-			screenplay = screenplayDAO.update(sp);
-			
-		}catch(RuntimeException e){
-			throw new OperationUncompletedException("Ocurrio un problema en la actualizacion");
-		}catch (MyNotFoundException e) {
-			throw new OperationUncompletedException("El guionista no existe");
-		}
-	return screenplay;
-		
-	}
 
 
 		

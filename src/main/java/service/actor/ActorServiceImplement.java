@@ -10,7 +10,7 @@ import actor.JdbcActorDAO;
 import exceptions.MyNotFoundException;
 import exceptions.OperationUncompletedException;
 
-public class ActorServiceImplement {
+public class ActorServiceImplement implements ActorService{
 	private ActorDAO actorDAO;
 	
 	public ActorDAO getActorDAO() {
@@ -20,7 +20,6 @@ public class ActorServiceImplement {
 		this.actorDAO = actorDAO;
 	}
 
-	
 	@Transactional
 	public Actor addActor(Actor a)throws OperationUncompletedException{
 		Actor actor = null;
@@ -94,5 +93,6 @@ public class ActorServiceImplement {
 	return actor;
 		
 	}
+	
 
 }
