@@ -30,9 +30,12 @@ public class ControllerTest extends MyController{
 			int page = 1;
 			if(request.getParameter("page")!=null){
 				page = Integer.parseInt(request.getParameter("page"));
+				if(page == 0) page++;
 			}
 			 l = movieService.getAllMovies(page, 20);
 			m.addAttribute("movieList",l);
+			m.addAttribute("prev", page - 1);
+			m.addAttribute("next", page + 1);
 		} catch (OperationUncompletedException e) {
 			
 		}

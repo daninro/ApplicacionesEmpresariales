@@ -42,6 +42,7 @@ public interface MovieService {
 	public List<Movie> top20()throws OperationUncompletedException;
 	@Transactional
 	public List<Movie> last10()throws OperationUncompletedException;
+	@Transactional
 	public List<Movie> getAllMovies(int page, int i) throws OperationUncompletedException;
 	
 	

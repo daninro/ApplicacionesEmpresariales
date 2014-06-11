@@ -231,7 +231,7 @@ public class MovieServiceImplement implements MovieService{
 	return movies;
 	}
 	@Override
-	
+	@Transactional
 	public List<Movie> getAllMovies(int page, int i) throws OperationUncompletedException{
 		List<Movie> movie = null;
 		try{
