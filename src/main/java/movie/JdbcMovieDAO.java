@@ -241,10 +241,12 @@ public class JdbcMovieDAO implements MovieDAO{
 		List<Movie> m = new ArrayList<Movie>();
 		Connection connection = null;
 		try{
-			
 			connection = DataSourceUtils.getConnection(datasource);
-			String query = "SELECT * FROM movie	LIMIT" + pagesize + "OFFSET" + (pagesize * (page - 1));
+			String query = "SELECT * FROM movie	LIMIT " + pagesize + " OFFSET " + (pagesize * (page - 1));
+			
+			
 			PreparedStatement statement = connection.prepareStatement(query);
+			
 			ResultSet result = statement.executeQuery();
 			while(result.next()){
 				Movie movie = new Movie(result.getString(2), result.getInt(3), result.getInt(4), result.getString(5), result.getInt(6), result.getInt(7),result.getInt(8),result.getInt(9));
