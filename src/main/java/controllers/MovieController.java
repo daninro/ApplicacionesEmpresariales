@@ -160,4 +160,49 @@ public class MovieController extends MyController{
 		return "redirect:/movie/list";
 	}
 	
+	@RequestMapping
+	public String moviedetails(Model model, HttpSession session, HttpServletRequest request){
+		if(!isLogin(session)) return getLogin();
+		Movie m= null;
+		try {
+			m = movieService.findMoviebyId(5);
+		} catch (OperationUncompletedException e) {
+			//incompleto
+			System.out.println("enviar a pagina de error con e.getMessage");
+		}
+		model.addAttribute("movieDetails",m);
+		return "movie/moviedetails";
+	}
+	
+
+	
+	@RequestMapping(method = {RequestMethod.POST})
+	public String moviedetails(Model m, HttpServletRequest request, HttpSession session) throws OperationUncompletedException{
+		if(!isLogin(session)) return getLogin();
+		User u = (User) session.getAttribute("user");
+		int movieid= Integer.parseInt(request.getParameter("name"));
+		Movie mov = movieService.findMoviebyId(movieid);
+		
+				List <Movie>p = null;
+				try {
+					System.out.println(mov.getId());
+					System.out.println(u.getUsername());
+					System.out.println("la priemra cosa");
+					p = movieService.addWishlist(mov, u);
+					System.out.println(mov.toString());
+					System.out.println(u.toString());
+					System.out.println("la segunda cosa");
+
+				} catch (OperationUncompletedException e) {
+					//incompleto
+					System.out.println("enviar a pagina de error asdasdsad");
+				}
+		m.addAttribute("movieDetails", p);
+		return "movie/moviedetails2";
+
+	}
+
+	
+	
+	
 }
