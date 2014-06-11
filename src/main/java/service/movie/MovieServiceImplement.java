@@ -212,7 +212,7 @@ public class MovieServiceImplement implements MovieService{
 
 	
 	//@minux777: creo que esto hay que sacarlo y crear otro servicio para "personas" o algo asi
-	
+	@Transactional
 	public List<Movie> last10(){
 		List<Movie> movies = null;
 		try{
@@ -221,6 +221,7 @@ public class MovieServiceImplement implements MovieService{
 		}catch(RuntimeException e){	}
 	return movies;
 	}
+	@Transactional
 	public List<Movie> top20(){
 		List<Movie> movies = null;
 		try{
@@ -229,9 +230,16 @@ public class MovieServiceImplement implements MovieService{
 		}catch(RuntimeException e){	}
 	return movies;
 	}
+	@Override
 	
-	
-
-
-		
+	public List<Movie> getAllMovies(int page, int i) throws OperationUncompletedException{
+		List<Movie> movie = null;
+		try{
+			movie = movieDAO.getAll(page, i);
+		} catch (RuntimeException e){
+			throw new OperationUncompletedException("No se pudieron obtener las peliculas");
+		}
+		return movie;
+	}
+			
 }

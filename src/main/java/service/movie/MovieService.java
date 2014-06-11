@@ -38,6 +38,13 @@ public interface MovieService {
 	public List<Movie> deleteMoviefromWishlist(Movie m, User u) throws OperationUncompletedException;
 	@Transactional
 	public List<Movie> getWishlist(User u)throws OperationUncompletedException;
+	@Transactional
+	public List<Movie> top20();
+	@Transactional
+	public List<Movie> last10();
+	public List<Movie> getAllMovies(int page, int i) throws OperationUncompletedException;
+	
+	
 	
 	
 }

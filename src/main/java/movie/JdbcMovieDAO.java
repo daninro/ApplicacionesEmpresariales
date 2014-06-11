@@ -33,7 +33,7 @@ public class JdbcMovieDAO implements MovieDAO{
 		if(movie == null) return null;
 		Connection connection = null;
 		try{
-			String query = "INSERT INTO movie (name, year, running_time, country, budget, box_office) VALUES (?, ?, ?, ?, ?, ?)";
+			String query = "INSERT INTO movie (name, year, running_time, country, budget, box_office, mark, avg) VALUES (?, ?, ?, ?, ?, ?, '0', '0')";
 			connection = DataSourceUtils.getConnection(datasource);
 			PreparedStatement statement = connection.prepareStatement(query , Statement.RETURN_GENERATED_KEYS);
 			statement.setString(1, movie.getName());
@@ -67,7 +67,7 @@ public class JdbcMovieDAO implements MovieDAO{
 			statement.setInt(1, id);
 			ResultSet result = statement.executeQuery();
 			if(result.next()){
-				m = new Movie(result.getString(2), result.getInt(3), result.getInt(4), result.getString(5), result.getInt(6), result.getInt(7));
+			m = new Movie(result.getString(2), result.getInt(3), result.getInt(4), result.getString(5), result.getInt(6), result.getInt(7), result.getInt(8), result.getInt(9));
 				m.setId(result.getInt(1));
 			}else{
 				
@@ -91,7 +91,7 @@ public class JdbcMovieDAO implements MovieDAO{
 			statement.setInt(1, year);
 			ResultSet result = statement.executeQuery();
 			while(result.next()){
-				Movie movie = new Movie(result.getString(2), result.getInt(3), result.getInt(4), result.getString(5), result.getInt(6), result.getInt(7));
+				Movie movie = new Movie(result.getString(2), result.getInt(3), result.getInt(4), result.getString(5), result.getInt(6), result.getInt(7),result.getInt(8),result.getInt(9));
 				movie.setId(result.getInt(1));
 				m.add(movie);
 			}
@@ -112,7 +112,7 @@ public class JdbcMovieDAO implements MovieDAO{
 			statement.setString(1, c);
 			ResultSet result = statement.executeQuery();
 			while(result.next()){
-				Movie movie = new Movie(result.getString(2), result.getInt(3), result.getInt(4), result.getString(5), result.getInt(6), result.getInt(7));
+				Movie movie = new Movie(result.getString(2), result.getInt(3), result.getInt(4), result.getString(5), result.getInt(6), result.getInt(7),result.getInt(8),result.getInt(9));
 				movie.setId(result.getInt(1));
 				m.add(movie);
 			}
@@ -227,17 +227,37 @@ public class JdbcMovieDAO implements MovieDAO{
 			PreparedStatement statement = connection.prepareStatement(query);
 			ResultSet result = statement.executeQuery();
 			while(result.next()){
-				Movie movie = new Movie(result.getString(2), result.getInt(3), result.getInt(4), result.getString(5), result.getInt(6), result.getInt(7));
+				Movie movie = new Movie(result.getString(2), result.getInt(3), result.getInt(4), result.getString(5), result.getInt(6), result.getInt(7),result.getInt(8),result.getInt(9));
 				movie.setId(result.getInt(1));
 				m.add(movie);
 			}
-			
 		}catch(SQLException e){
-			
 			throw new RuntimeException(e);
 		}
 		return m;	
 	}
+
+	public List<Movie> getAll(int page, int pagesize) {
+		List<Movie> m = new ArrayList<Movie>();
+		Connection connection = null;
+		try{
+			
+			connection = DataSourceUtils.getConnection(datasource);
+			String query = "SELECT * FROM movie	LIMIT" + pagesize + "OFFSET" + (pagesize * (page - 1));
+			PreparedStatement statement = connection.prepareStatement(query);
+			ResultSet result = statement.executeQuery();
+			while(result.next()){
+				Movie movie = new Movie(result.getString(2), result.getInt(3), result.getInt(4), result.getString(5), result.getInt(6), result.getInt(7),result.getInt(8),result.getInt(9));
+				movie.setId(result.getInt(1));
+				m.add(movie);
+			}
+		}catch(SQLException e){
+			throw new RuntimeException(e);
+		}
+		return m;	
+	}
+	
+	
 
 	public List<Movie> deleteMovie(Movie m) {
 		List<Movie> movies = null;
@@ -288,7 +308,7 @@ public class JdbcMovieDAO implements MovieDAO{
 			statement.setString(1, "%" + name + "%");
 			ResultSet result = statement.executeQuery();
 			while(result.next()){
-				Movie movie = new Movie(result.getString(2), result.getInt(3), result.getInt(4), result.getString(5), result.getInt(6), result.getInt(7));
+				Movie movie = new Movie(result.getString(2), result.getInt(3), result.getInt(4), result.getString(5), result.getInt(6), result.getInt(7), result.getInt(8),result.getInt(9));
 				movie.setId(result.getInt(1));
 				m.add(movie);
 			}
@@ -309,34 +329,33 @@ public class JdbcMovieDAO implements MovieDAO{
 			PreparedStatement statement = connection.prepareStatement(query);
 			ResultSet result = statement.executeQuery();
 			while(result.next()){
-				Movie movie = new Movie(result.getString(2), result.getInt(3), result.getInt(4), result.getString(5), result.getInt(6), result.getInt(7));
+				Movie movie = new Movie(result.getString(2), result.getInt(3), result.getInt(4), result.getString(5), result.getInt(6), result.getInt(7), result.getInt(8),result.getInt(9));
 				movie.setId(result.getInt(1));
 				m.add(movie);
 			}
 		}catch(SQLException e){
 			throw new RuntimeException(e);
 		}
-		
 		return m;
 	}
 
-	
 	//REVISAR QUEDE ACAAAAAA
 	public List<Movie> top20(){
 		List<Movie> m = new ArrayList<Movie>();
 		Connection connection = null;
 		try{			
 			connection = DataSourceUtils.getConnection(datasource);
-			String query = "SELECT movie.*, AVG(evaluate.calification) as P " +
+			/*String query = "SELECT movie.*, AVG(evaluate.calification) as P " +
 					"FROM evaluate, movie " +
 					"WHERE movie.id = evaluate.id" +
 					"GROUP BY(movie.id)" +
 					"ORDER BY P DESC LIMIT 20";
-			
+			*/
+			String query = "SELECT * FROM movie ORDER BY avg DESC LIMIT 20";
 			PreparedStatement statement = connection.prepareStatement(query);
 			ResultSet result = statement.executeQuery();
 			while(result.next()){
-				Movie movie = new Movie(result.getString(2), result.getInt(3), result.getInt(4), result.getString(5), result.getInt(6), result.getInt(7));
+				Movie movie = new Movie(result.getString(2), result.getInt(3), result.getInt(4), result.getString(5), result.getInt(6), result.getInt(7), result.getInt(8),result.getInt(9));
 				movie.setId(result.getInt(1));
 				m.add(movie);
 			}

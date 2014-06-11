@@ -9,8 +9,11 @@ public class Movie {
 	private String country;
 	private int budget;
 	private int box_office;
+	private int mark;
+	private int avg;
+	private boolean isWishlist;
 	
-	public Movie( String name, int year, int running_time, String country, int budget, int box_office){
+	public Movie(String name, int year, int running_time, String country, int budget, int box_office, int avg, int mark){
 		this.id = -1;
 		this.setName(name);
 		this.setYear(year);
@@ -18,8 +21,34 @@ public class Movie {
 		this.setCountry(country);
 		this.setBudget(budget);
 		this.setBox_office(box_office);
+		
 	}
 
+	public boolean isWishlist(){
+		return isWishlist;
+	}
+	
+	public void isWishlist(boolean isWishlist){
+		this.isWishlist=isWishlist;
+	}
+	
+	
+	public int getMark(){
+		return mark;
+	}
+	
+	public void setMark(int mark){
+		this.mark=mark;
+	}
+	
+	public int getAvg(){
+		return avg;
+	}
+	
+	public void setAvg(int avg){
+		this.avg=avg;
+	}
+	
 	public int getId() {
 		return id;
 	}

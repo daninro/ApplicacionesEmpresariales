@@ -27,7 +27,11 @@ public class ControllerTest extends MyController{
 		if(!isLogin(session)) return getLogin();
 		List<Movie> l;
 		try {
-			 l = movieService.getAllMovies();
+			int page = 1;
+			if(request.getParameter("page")!=null){
+				page = Integer.parseInt(request.getParameter("page"));
+			}
+			 l = movieService.getAllMovies(page, 20);
 			m.addAttribute("movieList",l);
 		} catch (OperationUncompletedException e) {
 			
