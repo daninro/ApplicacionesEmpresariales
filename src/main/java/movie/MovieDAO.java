@@ -19,4 +19,5 @@ public interface MovieDAO {
 	public List<Movie> deleteMovie(Movie m);
 	public List<Movie> deleteMovie(Integer m);
 	public List<Movie> searchByName(String name);
+	
 }
