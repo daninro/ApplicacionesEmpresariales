@@ -23,7 +23,7 @@
 			<th>avg</th>
 		</tr>
 
-		<c:forEach var="movie" items="${top20}" varStatus="status">
+		<c:forEach var="movie" items="${last10}" varStatus="status">
 
 			<tr>
 				<td>${movie.name}</td>

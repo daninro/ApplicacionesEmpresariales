@@ -218,20 +218,28 @@ public class MovieServiceImplement implements MovieService{
 		try{
 			movies = movieDAO.last10();
 			
+			
 		}catch(RuntimeException e){	}
 	return movies;
 	}
+	
 	@Transactional
 	public List<Movie> top20(){
 		List<Movie> movies = null;
 		try{
 			movies = movieDAO.top20();
+			System.out.println(movies.get(1).getName());
 			
 		}catch(RuntimeException e){	}
 	return movies;
 	}
+<<<<<<< HEAD
 	@Override
 	@Transactional
+=======
+	
+	@Override
+>>>>>>> 7c2b33466ccc0014000f79b7f01a77812a0b2b01
 	public List<Movie> getAllMovies(int page, int i) throws OperationUncompletedException{
 		List<Movie> movie = null;
 		try{

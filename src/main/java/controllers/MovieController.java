@@ -206,6 +206,7 @@ public class MovieController extends MyController{
 		List<Movie> list = null;
 		try {
 			list = movieService.top20();
+			
 		} catch (OperationUncompletedException e) {
 			//incompleto
 			System.out.println("enviar a pagina de error con e.getMessage");
@@ -213,6 +214,22 @@ public class MovieController extends MyController{
 		model.addAttribute("top20",list);
 		return "/movie/top20";
 	}	
+	
+	@RequestMapping
+	public String last10(Model model, HttpSession session){
+		if(!isLogin(session)) return getLogin();
+		List<Movie> list = null;
+		try {
+			list = movieService.last10();
+			System.out.println(list.get(0).getName());
+		} catch (OperationUncompletedException e) {
+			//incompleto
+			System.out.println("enviar a pagina de error con e.getMessage");
+		}
+		model.addAttribute("last10",list);
+		return "/movie/last10";
+	}	
+
 	
 	
 	
