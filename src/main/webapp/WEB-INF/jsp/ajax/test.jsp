@@ -38,7 +38,7 @@
 				<input class = "cal" type = "radio" name = "${movie.id}" value = "3"/>3
 				<input class = "cal" type = "radio" name = "${movie.id}" value = "4"/>4
 				<input class = "cal" type = "radio" name = "${movie.id}" value = "5"/>5
-				<h1> ${movie.name}</h1>
+				<h3> ${movie.name}</h3>
 				<p>Year: ${movie.year}</p>
 				<p>Country: ${movie.country}</p>
 				<span id = "${movie.id}">
@@ -46,5 +46,6 @@
 				</span>
 			</div>
 		</c:forEach>		
+		<a href = "test?page=${prev}">prev</a><a href = "test?page=${next}">next</a>
 	</body>
 </html>

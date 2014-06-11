@@ -153,9 +153,9 @@ public class JdbcUserDAO implements UserDAO{
 		Connection connection;
 		try{
 			connection = DataSourceUtils.getConnection(datasource);
-			String query = "UPDATE evaluate SET calification = ? WHERE user_name = ? AND id = ?;" +  
-			"INSERT INTO evaluate(user_name, id, calification)" + 
-			"SELECT ?, ?, ?" +	"WHERE NOT EXISTS (SELECT * FROM evaluate WHERE id = ? AND user_name = ?)";
+			String query = "UPDATE evaluate2 SET calification = ? WHERE user_name = ? AND id = ?;" +  
+			"INSERT INTO evaluate2(user_name, id, calification)" + 
+			"SELECT ?, ?, ?" +	"WHERE NOT EXISTS (SELECT * FROM evaluate2 WHERE id = ? AND user_name = ?)";
 			PreparedStatement statement = connection.prepareStatement(query);
 			statement.setInt(1, mark);
 			statement.setString(2, username);
@@ -165,6 +165,7 @@ public class JdbcUserDAO implements UserDAO{
 			statement.setInt(6, mark);
 			statement.setInt(7, movieId);
 			statement.setString(8, username);
+			System.out.println(statement.toString());
 			statement.executeUpdate();
 		}catch(SQLException e){
 			throw new RuntimeException();

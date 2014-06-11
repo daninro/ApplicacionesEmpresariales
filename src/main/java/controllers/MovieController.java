@@ -193,7 +193,7 @@ public class MovieController extends MyController{
 
 				} catch (OperationUncompletedException e) {
 					//incompleto
-					System.out.println("enviar a pagina de error asdasdsad");
+					System.out.println("enviar a pagina de error asdasdsad" + e.toString());
 				}
 		m.addAttribute("movieDetails", p);
 		return "movie/moviedetails2";
