@@ -45,7 +45,6 @@
 					<input type = "submit" value = "Agregar a Wishlist" class = "wish" name = "${movie.id}">
 				</span>
 			</div>
-		</c:forEach>
-		
+		</c:forEach>		
 	</body>
 </html>

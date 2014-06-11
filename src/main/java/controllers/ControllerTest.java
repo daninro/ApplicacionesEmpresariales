@@ -1,16 +1,12 @@
 package controllers;
 
 import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-
 import movie.Movie;
-
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-
 import exceptions.OperationUncompletedException;
 
 
@@ -34,11 +30,11 @@ public class ControllerTest extends MyController{
 			 l = movieService.getAllMovies();
 			m.addAttribute("movieList",l);
 		} catch (OperationUncompletedException e) {
- 
+			
 		}
 		return "ajax/test";
 	}
-	
+	/*ajax/mark*/
 	@RequestMapping(method = {RequestMethod.POST})
 	public String mark(Model m, HttpServletRequest request, HttpSession session){
 		if(!isLogin(session)) return "ajax/empty";
