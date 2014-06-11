@@ -42,7 +42,7 @@ public class MovieController extends MyController{
 				Integer.parseInt(request.getParameter("running_time")),
 				request.getParameter("country"), 
 				Integer.parseInt(request.getParameter("budget")), 
-				Integer.parseInt(request.getParameter("box_office"))
+				Integer.parseInt(request.getParameter("box_office")),0,0
 				);
 		
 				Movie p = null;
@@ -75,6 +75,9 @@ public class MovieController extends MyController{
 		return "/movie/list";
 	}	
 	/**movie/search movie search***/
+	
+	
+	
 	
 	@RequestMapping
 	public String search(Model m, HttpSession session){
@@ -120,11 +123,6 @@ public class MovieController extends MyController{
 		System.out.println(m.containsAttribute("movieList"));
 		return "movie/table_search";
 	}
-	
-		
-	
-	
-	
 	
 	@RequestMapping
 	public String mark(Model model, HttpSession session){
