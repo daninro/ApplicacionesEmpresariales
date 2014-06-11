@@ -3,14 +3,22 @@
 	<head>
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 	<script>
-	$(document).ready(function(){
-	  $(".cal").click(function(){
-	    cal = $(this).val();
-	    id = $(this).attr("name");
-	    $.post("mark",{movieId:id, mark:cal},function(result){});
-	  });
-	});
+		$(document).ready(function(){
+		  $(".cal").click(function(){
+		    cal = $(this).val();
+		    id = $(this).attr("name");
+		    $.post("mark",{movieId:id, mark:cal},function(result){});
+		  });
+	
+		  $(".wish").click(function(){
+			id = $(this).attr("name");
+			$.post("../movie/moviedetails",{name:id},function(result){
+			$("span#"+id).html(result);
+			});
+		  });
+		});
 	</script>
+	
 	<style type="text/css"> 
 	.block{
 		float: left;
@@ -33,6 +41,9 @@
 				<h1> ${movie.name}</h1>
 				<p>Year: ${movie.year}</p>
 				<p>Country: ${movie.country}</p>
+				<span id = "${movie.id}">
+					<input type = "submit" value = "Agregar a Wishlist" class = "wish" name = "${movie.id}">
+				</span>
 			</div>
 		</c:forEach>
 		

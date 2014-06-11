@@ -70,7 +70,7 @@ public class JdbcMovieDAO implements MovieDAO{
 				m = new Movie(result.getString(2), result.getInt(3), result.getInt(4), result.getString(5), result.getInt(6), result.getInt(7));
 				m.setId(result.getInt(1));
 			}else{
-				try {connection.close();} catch (SQLException | NullPointerException e2) {}
+				
 				throw new MyNotFoundException("id no encontrado");
 			}
 			
@@ -292,9 +292,9 @@ public class JdbcMovieDAO implements MovieDAO{
 				movie.setId(result.getInt(1));
 				m.add(movie);
 			}
-			//connection.close();
+			
 		}catch(SQLException e){
-			//try {connection.close();} catch (SQLException | NullPointerException e2) {}
+			
 			throw new RuntimeException(e);
 		}
 		return m;	
