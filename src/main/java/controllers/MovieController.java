@@ -200,6 +200,19 @@ public class MovieController extends MyController{
 
 	}
 
+	@RequestMapping
+	public String top20(Model model, HttpSession session){
+		if(!isLogin(session)) return getLogin();
+		List<Movie> list = null;
+		try {
+			list = movieService.top20();
+		} catch (OperationUncompletedException e) {
+			//incompleto
+			System.out.println("enviar a pagina de error con e.getMessage");
+		}
+		model.addAttribute("top20",list);
+		return "/movie/top20";
+	}	
 	
 	
 	

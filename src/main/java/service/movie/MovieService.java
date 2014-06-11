@@ -39,9 +39,9 @@ public interface MovieService {
 	@Transactional
 	public List<Movie> getWishlist(User u)throws OperationUncompletedException;
 	@Transactional
-	public List<Movie> top20();
+	public List<Movie> top20()throws OperationUncompletedException;
 	@Transactional
-	public List<Movie> last10();
+	public List<Movie> last10()throws OperationUncompletedException;
 	public List<Movie> getAllMovies(int page, int i) throws OperationUncompletedException;
 	
 	
