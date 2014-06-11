@@ -233,13 +233,9 @@ public class MovieServiceImplement implements MovieService{
 		}catch(RuntimeException e){	}
 	return movies;
 	}
-<<<<<<< HEAD
+
 	@Override
 	@Transactional
-=======
-	
-	@Override
->>>>>>> 7c2b33466ccc0014000f79b7f01a77812a0b2b01
 	public List<Movie> getAllMovies(int page, int i) throws OperationUncompletedException{
 		List<Movie> movie = null;
 		try{

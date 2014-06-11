@@ -160,16 +160,29 @@ public class JdbcMovieDAO implements MovieDAO{
 		if(movie == null) return null;
 		Connection connection = null;
 		try{
-			String query = "INSERT INTO wishlist (user_name, id) VALUES (?, ?)";
+			//String query = "INSERT INTO wishlist (user_name, id) VALUES (?, ?)";
+			String query = "UPDATE evaluate2 SET iswished = 'TRUE' WHERE user_name = ? AND id = ?;" +  
+					"INSERT INTO evaluate2(user_name, id, iswished)" + 
+					"SELECT ?, ?, 'TRUE'" +	"WHERE NOT EXISTS (SELECT * FROM evaluate2 WHERE user_name = ? AND  id = ? )";
+					
 			connection = DataSourceUtils.getConnection(datasource);
+			
 			PreparedStatement statement = connection.prepareStatement(query , Statement.RETURN_GENERATED_KEYS);
 			statement.setString(1, u.getUsername());
 			statement.setInt(2, movie.getId());
+			statement.setString(3, u.getUsername());
+			statement.setInt(4, movie.getId());
+			statement.setString(5, u.getUsername());
+			statement.setInt(6, movie.getId());
+			
+			
+			System.out.println(statement.toString());
 			statement.executeUpdate();
+			
 			movies = getWishlistbyUser(u);
 			
 		}catch(SQLException e){
-			
+			System.out.println(e.toString());
 			throw new RuntimeException(e);
 		}
 		return movies;
