@@ -19,5 +19,8 @@ public interface MovieDAO {
 	public List<Movie> deleteMovie(Movie m);
 	public List<Movie> deleteMovie(Integer m);
 	public List<Movie> searchByName(String name);
+	public List<Movie> last10();
+	public List<Movie> top20();
+	
 	
 }

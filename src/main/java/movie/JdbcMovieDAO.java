@@ -299,5 +299,51 @@ public class JdbcMovieDAO implements MovieDAO{
 		}
 		return m;	
 	}
+	
+	public List<Movie> last10(){
+		List<Movie> m = new ArrayList<Movie>();
+		Connection connection = null;
+		try{			
+			connection = DataSourceUtils.getConnection(datasource);
+			String query = "SELECT * FROM movie ORDER BY id DESC LIMIT 10; ";
+			PreparedStatement statement = connection.prepareStatement(query);
+			ResultSet result = statement.executeQuery();
+			while(result.next()){
+				Movie movie = new Movie(result.getString(2), result.getInt(3), result.getInt(4), result.getString(5), result.getInt(6), result.getInt(7));
+				movie.setId(result.getInt(1));
+				m.add(movie);
+			}
+		}catch(SQLException e){
+			throw new RuntimeException(e);
+		}
+		
+		return m;
+	}
 
+	
+	//REVISAR QUEDE ACAAAAAA
+	public List<Movie> top20(){
+		List<Movie> m = new ArrayList<Movie>();
+		Connection connection = null;
+		try{			
+			connection = DataSourceUtils.getConnection(datasource);
+			String query = "SELECT movie.*, AVG(evaluate.calification) as P " +
+					"FROM evaluate, movie " +
+					"WHERE movie.id = evaluate.id" +
+					"GROUP BY(movie.id)" +
+					"ORDER BY P DESC LIMIT 20";
+			
+			PreparedStatement statement = connection.prepareStatement(query);
+			ResultSet result = statement.executeQuery();
+			while(result.next()){
+				Movie movie = new Movie(result.getString(2), result.getInt(3), result.getInt(4), result.getString(5), result.getInt(6), result.getInt(7));
+				movie.setId(result.getInt(1));
+				m.add(movie);
+			}
+		}catch(SQLException e){
+			throw new RuntimeException(e);
+		}
+		
+		return m;
+	}
 }

@@ -147,7 +147,6 @@ public class MovieServiceImplement implements MovieService{
 		return defaultMark;
 	}
 	
-	@Override
 	@Transactional
 	public Integer setMark(int movieId, Integer mark, String username) throws OperationUncompletedException{
 		Integer defaultMark = -1;
@@ -214,7 +213,22 @@ public class MovieServiceImplement implements MovieService{
 	
 	//@minux777: creo que esto hay que sacarlo y crear otro servicio para "personas" o algo asi
 	
-	
+	public List<Movie> last10(){
+		List<Movie> movies = null;
+		try{
+			movies = movieDAO.last10();
+			
+		}catch(RuntimeException e){	}
+	return movies;
+	}
+	public List<Movie> top20(){
+		List<Movie> movies = null;
+		try{
+			movies = movieDAO.top20();
+			
+		}catch(RuntimeException e){	}
+	return movies;
+	}
 	
 	
 
