@@ -10,6 +10,7 @@
 			<li><a href = "../movie/mark">calificar</a></li>
 			<li><a href = "../movie/search">buscar</a></li>
 			<li><a href = "../movie/top20">Top 20</a></li>
+			<li><a href = "../movie/last10">Ultimas agregadas</a></li>
 			<li><a href = "../user/logout">Logout</a></li>
 			</ul>
 	</body>

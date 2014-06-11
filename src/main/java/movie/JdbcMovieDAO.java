@@ -358,7 +358,7 @@ public class JdbcMovieDAO implements MovieDAO{
 			ResultSet result = statement.executeQuery();
 			while(result.next()){
 				Movie movie = new Movie(result.getString(2), result.getInt(3), result.getInt(4), result.getString(5), result.getInt(6), result.getInt(7), result.getInt(8),result.getInt(9));
-				System.out.println(movie.getName());
+			//	System.out.println(movie.getName());
 				movie.setId(result.getInt(1));
 				m.add(movie);
 			}
