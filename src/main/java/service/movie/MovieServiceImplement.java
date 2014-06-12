@@ -236,10 +236,10 @@ public class MovieServiceImplement implements MovieService{
 
 	@Override
 	@Transactional
-	public List<Movie> getAllMovies(int page, int i) throws OperationUncompletedException{
+	public List<Movie> getAllMovies(int page, int i, String username) throws OperationUncompletedException{
 		List<Movie> movie = null;
 		try{
-			movie = movieDAO.getAll(page, i);
+			movie = movieDAO.getAll(page, i, username);
 		} catch (RuntimeException e){
 			throw new OperationUncompletedException("No se pudieron obtener las peliculas");
 		}
