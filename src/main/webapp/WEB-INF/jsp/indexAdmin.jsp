@@ -5,8 +5,8 @@
 	</head>
 	<body>
 			<ul>
-			<li><a href = "../movie/list">listar peliculas</a></li>
 			<li><a href = "../movie/addmovie">Agregar Pelicula</a></li>
+			<li><a href = "../movie/list">listar peliculas</a></li>
 			<li><a href = "../movie/mark">calificar</a></li>
 			<li><a href = "../movie/search">buscar</a></li>
 			<li><a href = "../movie/top20">Top 20</a></li>

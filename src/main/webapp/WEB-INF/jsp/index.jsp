@@ -5,8 +5,13 @@
 	</head>
 	<body>
 			<ul>
+			<c:out value="Hola usuario ${user.username}">
+			</c:out>
+			<c:if test="${user.isAdmin}" >
+			<li><a href = "../movie/addmovie">Agregar Películas</a></li>
+			<li><a href = "../movie/addmovie">Modificar peliculas</a></li>
+			</c:if>
 			<li><a href = "../movie/list">listar peliculas</a></li>
-			<li><a href = "../movie/addmovie">Agregar Pelicula</a></li>
 			<li><a href = "../movie/mark">calificar</a></li>
 			<li><a href = "../movie/search">buscar</a></li>
 			<li><a href = "../movie/top20">Top 20</a></li>

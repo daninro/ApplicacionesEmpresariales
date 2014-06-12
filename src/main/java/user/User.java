@@ -47,4 +47,8 @@ public class User extends Person{
 	public boolean isAdmin(){
 		return isAdmin;
 	}
+	
+	public boolean getisAdmin(){
+		return isAdmin;
+	}
 }

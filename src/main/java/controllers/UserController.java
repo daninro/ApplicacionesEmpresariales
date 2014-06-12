@@ -1,9 +1,13 @@
 package controllers;
 
 import java.sql.Date;
+import java.util.List;
 
+import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+
+import movie.Movie;
 
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -46,11 +50,15 @@ public class UserController extends MyController{
 	}
 	
 	@RequestMapping
-	public void login(HttpServletRequest request, Model m){}
+	public String login(HttpServletRequest request, Model m, HttpSession session){
+		if(isLogin(session)) return "redirect:/movie/list";
+		return "user/login";
+		
+	}
 	
 	@RequestMapping (method = {RequestMethod.POST})
 	public String login(Model m, HttpServletRequest request, HttpSession session){
-		if(isLogin(session)) return "redirect:/movie/list";
+		
 		User u = null;
 		
 		try {
@@ -64,6 +72,7 @@ public class UserController extends MyController{
 				session.setAttribute("username", u.getUsername());
 				System.out.println(u.getName());
 				return "redirect:/user/index";
+				
 			}
 		}
 		m.addAttribute("message", "problemas logeandote");
@@ -76,8 +85,19 @@ public class UserController extends MyController{
 	}
 	
 	@RequestMapping
-	public String index(Model m, HttpSession session){
+	public String index(Model m, HttpSession session, ServletRequest request){
 		if(!isLogin(session)) return getLogin();
+		User u = null;
+		try {
+			u = userService.getUserbyUsername(request.getParameter("username"));
+			m.addAttribute("user",u);
+			
+		} catch (OperationUncompletedException e) {
+			
+		}
+		
+	
+		
 		return "/index";
 	}
 	
