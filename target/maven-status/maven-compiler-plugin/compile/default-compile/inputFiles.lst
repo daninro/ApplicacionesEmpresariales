@@ -6,11 +6,14 @@ C:\Users\Taaalii_\workspace\ApplicacionesEmpresariales\src\main\java\service\mov
 C:\Users\Taaalii_\workspace\ApplicacionesEmpresariales\src\main\java\service\screenplay\ScreenplayServiceImplement.java
 C:\Users\Taaalii_\workspace\ApplicacionesEmpresariales\src\main\java\actor\ActorDAO.java
 C:\Users\Taaalii_\workspace\ApplicacionesEmpresariales\src\main\java\user\UserDAO.java
+C:\Users\Taaalii_\workspace\ApplicacionesEmpresariales\src\main\java\filter\GenreFilter.java
 C:\Users\Taaalii_\workspace\ApplicacionesEmpresariales\src\main\java\screenplay\ScreenplayDAO.java
 C:\Users\Taaalii_\workspace\ApplicacionesEmpresariales\src\main\java\service\screenplay\ScreenplayService.java
 C:\Users\Taaalii_\workspace\ApplicacionesEmpresariales\src\main\java\movie\MovieDAO.java
 C:\Users\Taaalii_\workspace\ApplicacionesEmpresariales\src\main\java\controllers\MovieController.java
 C:\Users\Taaalii_\workspace\ApplicacionesEmpresariales\src\main\java\movie\JdbcMovieDAO.java
+C:\Users\Taaalii_\workspace\ApplicacionesEmpresariales\src\main\java\filter\Filter.java
+C:\Users\Taaalii_\workspace\ApplicacionesEmpresariales\src\main\java\filter\YearFilter.java
 C:\Users\Taaalii_\workspace\ApplicacionesEmpresariales\src\main\java\screenplay\JdbcScreenplayDAO.java
 C:\Users\Taaalii_\workspace\ApplicacionesEmpresariales\src\main\java\service\user\UserServiceImplement.java
 C:\Users\Taaalii_\workspace\ApplicacionesEmpresariales\src\main\java\director\JdbcDirectorDAO.java
@@ -18,6 +21,7 @@ C:\Users\Taaalii_\workspace\ApplicacionesEmpresariales\src\main\java\service\act
 C:\Users\Taaalii_\workspace\ApplicacionesEmpresariales\src\main\java\director\Director.java
 C:\Users\Taaalii_\workspace\ApplicacionesEmpresariales\src\main\java\exceptions\MyNotFoundException.java
 C:\Users\Taaalii_\workspace\ApplicacionesEmpresariales\src\main\java\service\actor\ActorService.java
+C:\Users\Taaalii_\workspace\ApplicacionesEmpresariales\src\main\java\filter\GroupFliter.java
 C:\Users\Taaalii_\workspace\ApplicacionesEmpresariales\src\main\java\screenplay\Screenplay.java
 C:\Users\Taaalii_\workspace\ApplicacionesEmpresariales\src\main\java\user\User.java
 C:\Users\Taaalii_\workspace\ApplicacionesEmpresariales\src\main\java\service\director\DirectorServiceImplement.java
@@ -27,6 +31,7 @@ C:\Users\Taaalii_\workspace\ApplicacionesEmpresariales\src\main\java\movie\Movie
 C:\Users\Taaalii_\workspace\ApplicacionesEmpresariales\src\main\java\service\director\DirectorService.java
 C:\Users\Taaalii_\workspace\ApplicacionesEmpresariales\src\main\java\actor\Actor.java
 C:\Users\Taaalii_\workspace\ApplicacionesEmpresariales\src\main\java\controllers\UserController.java
+C:\Users\Taaalii_\workspace\ApplicacionesEmpresariales\src\main\java\filter\CountryFilter.java
 C:\Users\Taaalii_\workspace\ApplicacionesEmpresariales\src\main\java\director\DirectorDAO.java
 C:\Users\Taaalii_\workspace\ApplicacionesEmpresariales\src\main\java\exceptions\OperationUncompletedException.java
 C:\Users\Taaalii_\workspace\ApplicacionesEmpresariales\src\main\java\person\Person.java

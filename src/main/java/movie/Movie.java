@@ -5,40 +5,43 @@ public class Movie {
 	private int id;
 	private String name;
 	private int year;
-	private int running_time;
 	private String country;
-	private int budget;
-	private int box_office;
-	private int mark;
 	private int avg;
 	private boolean isWishlist;
+	private int number_user;
+	private String image;
 	
-	public Movie(String name, int year, int running_time, String country, int budget, int box_office, int avg, int mark){
+	public Movie(String name, int year, String country, String image){
 		this.id = -1;
 		this.setName(name);
 		this.setYear(year);
-		this.setRunning_time(running_time);
 		this.setCountry(country);
-		this.setBudget(budget);
-		this.setBox_office(box_office);
-		
+		this.setImage(image);
+			
 	}
 
+	public void setImage(String image){
+		this.image=image;
+	}
+	
+	public String getImage(){
+		return image;
+	}
+	
+	public void setNumberUser(int numberuser){
+		this.number_user=numberuser;
+	}
+	public int getNumberUser(){
+		return number_user;
+	}
+	
+	
 	public boolean isWishlist(){
 		return isWishlist;
 	}
 	
 	public void isWishlist(boolean isWishlist){
 		this.isWishlist=isWishlist;
-	}
-	
-	
-	public int getMark(){
-		return mark;
-	}
-	
-	public void setMark(int mark){
-		this.mark=mark;
 	}
 	
 	public int getAvg(){
@@ -73,14 +76,6 @@ public class Movie {
 		this.year = year;
 	}
 
-	public int getRunning_time() {
-		return running_time;
-	}
-
-	public void setRunning_time(int running_time) {
-		this.running_time = running_time;
-	}
-
 	public String getCountry() {
 		return country;
 	}
@@ -89,22 +84,6 @@ public class Movie {
 		this.country = country;
 	}
 
-	public int getBudget() {
-		return budget;
-	}
-
-	public void setBudget(int budget) {
-		this.budget = budget;
-	}
-
-	public int getBox_office() {
-		return box_office;
-	}
-
-	public void setBox_office(int box_office) {
-		this.box_office = box_office;
-	}
-	
 	@Override
 	public String toString(){
 		return "Movie [name = " + name + " " + id + "]";

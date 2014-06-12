@@ -33,15 +33,13 @@ public class JdbcMovieDAO implements MovieDAO{
 		if(movie == null) return null;
 		Connection connection = null;
 		try{
-			String query = "INSERT INTO movie (name, year, running_time, country, budget, box_office, mark, avg) VALUES (?, ?, ?, ?, ?, ?, '0', '0')";
+			String query = "INSERT INTO movie (name, year, country, avg, number_users, picture) VALUES (?, ?, ?,'0','0',?)";
 			connection = DataSourceUtils.getConnection(datasource);
 			PreparedStatement statement = connection.prepareStatement(query , Statement.RETURN_GENERATED_KEYS);
 			statement.setString(1, movie.getName());
 			statement.setInt(2, movie.getYear());
-			statement.setInt(3, movie.getRunning_time());
-			statement.setString(4, movie.getCountry());
-			statement.setInt(5, movie.getBudget());
-			statement.setInt(6, movie.getBox_office());
+			statement.setString(3, movie.getCountry());
+			statement.setString(4, movie.getImage());
 			statement.executeUpdate();
 			ResultSet resultset = statement.getGeneratedKeys();
 			if(resultset != null && resultset.next()){
@@ -67,7 +65,7 @@ public class JdbcMovieDAO implements MovieDAO{
 			statement.setInt(1, id);
 			ResultSet result = statement.executeQuery();
 			if(result.next()){
-			m = new Movie(result.getString(2), result.getInt(3), result.getInt(4), result.getString(5), result.getInt(6), result.getInt(7), result.getInt(8), result.getInt(9));
+			m = new Movie(result.getString(2), result.getInt(3), result.getString(4), result.getString(7));
 				m.setId(result.getInt(1));
 			}else{
 				
@@ -91,7 +89,7 @@ public class JdbcMovieDAO implements MovieDAO{
 			statement.setInt(1, year);
 			ResultSet result = statement.executeQuery();
 			while(result.next()){
-				Movie movie = new Movie(result.getString(2), result.getInt(3), result.getInt(4), result.getString(5), result.getInt(6), result.getInt(7),result.getInt(8),result.getInt(9));
+				Movie movie = new Movie(result.getString(2), result.getInt(3), result.getString(4), result.getString(7));
 				movie.setId(result.getInt(1));
 				m.add(movie);
 			}
@@ -112,7 +110,7 @@ public class JdbcMovieDAO implements MovieDAO{
 			statement.setString(1, c);
 			ResultSet result = statement.executeQuery();
 			while(result.next()){
-				Movie movie = new Movie(result.getString(2), result.getInt(3), result.getInt(4), result.getString(5), result.getInt(6), result.getInt(7),result.getInt(8),result.getInt(9));
+				Movie movie = new Movie(result.getString(2), result.getInt(3), result.getString(4), result.getString(7));
 				movie.setId(result.getInt(1));
 				m.add(movie);
 			}
@@ -129,16 +127,13 @@ public class JdbcMovieDAO implements MovieDAO{
 		Movie m = null;
 		Connection connection = null;
 		try{
-			String query = "UPDATE movie SET name = ?, year = ?, running_time= ?, country = ?, budget = ?, box_office = ? WHERE id = ?"; 
+			String query = "UPDATE movie SET name = ?, year = ?, country = ? WHERE id = ?"; 
 			connection = DataSourceUtils.getConnection(datasource);
 			PreparedStatement statement = connection.prepareStatement(query , Statement.RETURN_GENERATED_KEYS);
 			statement.setString(1, movie.getName());
 			statement.setInt(2, movie.getYear());
-			statement.setInt(3, movie.getRunning_time());
-			statement.setString(4, movie.getCountry());
-			statement.setInt(5, movie.getBudget());
-			statement.setInt(6, movie.getBox_office());
-			statement.setInt(7, movie.getId());
+			statement.setString(3, movie.getCountry());
+			statement.setInt(4, movie.getId());
 			statement.executeUpdate();
 			m = findbyId(movie.getId());
 			
@@ -240,7 +235,7 @@ public class JdbcMovieDAO implements MovieDAO{
 			PreparedStatement statement = connection.prepareStatement(query);
 			ResultSet result = statement.executeQuery();
 			while(result.next()){
-				Movie movie = new Movie(result.getString(2), result.getInt(3), result.getInt(4), result.getString(5), result.getInt(6), result.getInt(7),result.getInt(8),result.getInt(9));
+				Movie movie = new Movie(result.getString(2), result.getInt(3), result.getString(4), result.getString(7));
 				movie.setId(result.getInt(1));
 				m.add(movie);
 			}
@@ -261,7 +256,7 @@ public class JdbcMovieDAO implements MovieDAO{
 			statement.setString(1, user_name);
 			ResultSet result = statement.executeQuery();
 			while(result.next()){
-				Movie movie = new Movie(result.getString(2), result.getInt(3), result.getInt(4), result.getString(5), result.getInt(6), result.getInt(7),result.getInt(8),result.getInt(9));
+				Movie movie = new Movie(result.getString(2), result.getInt(3), result.getString(4), result.getString(7));;
 				movie.setId(result.getInt(1));
 				m.add(movie);
 			}
@@ -322,7 +317,7 @@ public class JdbcMovieDAO implements MovieDAO{
 			statement.setString(1, "%" + name + "%");
 			ResultSet result = statement.executeQuery();
 			while(result.next()){
-				Movie movie = new Movie(result.getString(2), result.getInt(3), result.getInt(4), result.getString(5), result.getInt(6), result.getInt(7), result.getInt(8),result.getInt(9));
+				Movie movie = new Movie(result.getString(2), result.getInt(3), result.getString(4), result.getString(7));
 				movie.setId(result.getInt(1));
 				m.add(movie);
 			}
@@ -343,7 +338,7 @@ public class JdbcMovieDAO implements MovieDAO{
 			PreparedStatement statement = connection.prepareStatement(query);
 			ResultSet result = statement.executeQuery();
 			while(result.next()){
-				Movie movie = new Movie(result.getString(2), result.getInt(3), result.getInt(4), result.getString(5), result.getInt(6), result.getInt(7), result.getInt(8),result.getInt(9));
+				Movie movie = new Movie(result.getString(2), result.getInt(3), result.getString(4), result.getString(7));
 				movie.setId(result.getInt(1));
 				m.add(movie);
 			}
@@ -369,7 +364,7 @@ public class JdbcMovieDAO implements MovieDAO{
 			PreparedStatement statement = connection.prepareStatement(query);
 			ResultSet result = statement.executeQuery();
 			while(result.next()){
-				Movie movie = new Movie(result.getString(2), result.getInt(3), result.getInt(4), result.getString(5), result.getInt(6), result.getInt(7), result.getInt(8),result.getInt(9));
+				Movie movie = new Movie(result.getString(2), result.getInt(3), result.getString(4), result.getString(7));
 			//	System.out.println(movie.getName());
 				movie.setId(result.getInt(1));
 				m.add(movie);
