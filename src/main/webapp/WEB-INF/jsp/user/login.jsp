@@ -13,5 +13,7 @@
 			
 			<input type = "submit" value = "Iniciar Sesión" >
 		</form>
+		
+		<li><a href = "../user/register">Registrarse</a></li>
 	</body>
 </html>
