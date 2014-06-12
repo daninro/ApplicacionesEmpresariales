@@ -32,7 +32,7 @@ public class ControllerTest extends MyController{
 				page = Integer.parseInt(request.getParameter("page"));
 				if(page == 0) page++;
 			}
-			 l = movieService.getAllMovies(page, 20);
+			l = movieService.getAllMovies(page, 20, (String)session.getAttribute("username"));
 			m.addAttribute("movieList",l);
 			m.addAttribute("prev", page - 1);
 			m.addAttribute("next", page + 1);
@@ -41,6 +41,8 @@ public class ControllerTest extends MyController{
 		}
 		return "ajax/test";
 	}
+	
+	
 	/*ajax/mark*/
 	@RequestMapping(method = {RequestMethod.POST})
 	public String mark(Model m, HttpServletRequest request, HttpSession session){

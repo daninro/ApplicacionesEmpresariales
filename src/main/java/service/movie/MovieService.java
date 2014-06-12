@@ -43,7 +43,7 @@ public interface MovieService {
 	@Transactional
 	public List<Movie> last10()throws OperationUncompletedException;
 	@Transactional
-	public List<Movie> getAllMovies(int page, int i) throws OperationUncompletedException;
+	public List<Movie> getAllMovies(int page, int i, String username) throws OperationUncompletedException;
 	
 	
 	

@@ -21,7 +21,7 @@ public interface MovieDAO {
 	public List<Movie> searchByName(String name);
 	public List<Movie> last10();
 	public List<Movie> top20();
-	public List<Movie> getAll(int page, int i);
+	public List<Movie> getAll(int page, int i, String user);
 	
 	
 }

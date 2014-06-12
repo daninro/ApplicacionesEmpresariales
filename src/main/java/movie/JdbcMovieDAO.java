@@ -161,20 +161,20 @@ public class JdbcMovieDAO implements MovieDAO{
 		Connection connection = null;
 		try{
 			//String query = "INSERT INTO wishlist (user_name, id) VALUES (?, ?)";
-			String query = "UPDATE evaluate2 SET iswished = 'TRUE' WHERE user_name = ? AND id = ?;" +  
-					"INSERT INTO evaluate2(user_name, id, iswished)" + 
-					"SELECT ?, ?, 'TRUE'" +	"WHERE NOT EXISTS (SELECT * FROM evaluate2 WHERE user_name = ? AND  id = ? )";
-					
 			connection = DataSourceUtils.getConnection(datasource);
-			
-			PreparedStatement statement = connection.prepareStatement(query , Statement.RETURN_GENERATED_KEYS);
-			statement.setString(1, u.getUsername());
-			statement.setInt(2, movie.getId());
-			statement.setString(3, u.getUsername());
-			statement.setInt(4, movie.getId());
-			statement.setString(5, u.getUsername());
-			statement.setInt(6, movie.getId());
-			
+			String query = "UPDATE evaluate2 SET iswished = ? WHERE user_name = ? AND id = ?;" +  
+					"INSERT INTO evaluate2(user_name, id, iswished)" + 
+					"SELECT ?, ?, ? " +	"WHERE NOT EXISTS (SELECT * FROM evaluate2 WHERE user_name = ? AND  id = ?)";
+			PreparedStatement statement = connection.prepareStatement(query);
+			statement.setBoolean(1, true);
+			statement.setString(2, u.getUsername());
+			statement.setInt(3, movie.getId());
+			statement.setString(4, u.getUsername());
+			statement.setInt(5, movie.getId());
+			statement.setBoolean(6, true);
+			statement.setString(7, u.getUsername());
+			statement.setInt(8, movie.getId());
+
 			
 			System.out.println(statement.toString());
 			statement.executeUpdate();
@@ -250,16 +250,15 @@ public class JdbcMovieDAO implements MovieDAO{
 		return m;	
 	}
 
-	public List<Movie> getAll(int page, int pagesize) {
+	public List<Movie> getAll(int page, int pagesize, String user_name) {
 		List<Movie> m = new ArrayList<Movie>();
 		Connection connection = null;
 		try{
 			connection = DataSourceUtils.getConnection(datasource);
-			String query = "SELECT * FROM movie	LIMIT " + pagesize + " OFFSET " + (pagesize * (page - 1));
-			
-			
+			//String query = "SELECT * FROM movie	LIMIT " + pagesize + " OFFSET " + (pagesize * (page - 1));
+			String query = "SELECT * FROM movie WHERE movie.id NOT IN (SELECT id FROM evaluate2 WHERE user_name = ?) LIMIT "+pagesize+" OFFSET " + (pagesize * (page - 1));
 			PreparedStatement statement = connection.prepareStatement(query);
-			
+			statement.setString(1, user_name);
 			ResultSet result = statement.executeQuery();
 			while(result.next()){
 				Movie movie = new Movie(result.getString(2), result.getInt(3), result.getInt(4), result.getString(5), result.getInt(6), result.getInt(7),result.getInt(8),result.getInt(9));
