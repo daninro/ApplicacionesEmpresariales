@@ -13,6 +13,7 @@ public class Movie {
 	
 	public Movie(String name, int year, String country, String image){
 		this.id = -1;
+		this.number_user=0;
 		this.setName(name);
 		this.setYear(year);
 		this.setCountry(country);
