@@ -1,7 +1,10 @@
 package service.user;
 
+import java.util.List;
+
 import exceptions.MyNotFoundException;
 import exceptions.OperationUncompletedException;
+import movie.Movie;
 import movie.MovieDAO;
 import user.User;
 import user.UserDAO;
@@ -78,6 +81,22 @@ public class UserServiceImplement  implements UserService{
 		
 		return user;
 	}
+	public List<User> getAllUser() throws OperationUncompletedException{
+		List<User> user = null;
+		try{
+			user = userDAO.getAll();
+		} catch (RuntimeException e){
+			throw new OperationUncompletedException("No se pudieron obtener los usuarios");
+		}
+		return user;
+	}
 	
+	public void deleteUser(String user)throws OperationUncompletedException{
+		try{
+			userDAO.delete(user);
+		} catch (RuntimeException e){
+			
+		}
+	}
 	
 }

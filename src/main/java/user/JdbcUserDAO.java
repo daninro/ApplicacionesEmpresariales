@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.sql.DataSource;
 
@@ -193,6 +195,46 @@ public class JdbcUserDAO implements UserDAO{
 		}
 		
 		return n;
+	}
+	
+	public List<User> getAll(){
+		List<User> u = new ArrayList<User>();
+		Connection connection = null;
+		try{
+			connection = DataSourceUtils.getConnection(datasource);
+			String query = "SELECT * FROM user1";
+			PreparedStatement statement = connection.prepareStatement(query);
+			ResultSet result = statement.executeQuery();
+			while(result.next()){
+				User user = new User(result.getString(3), result.getDate(4), result.getString(5), result.getString(6), result.getString(2), result.getString(1), result.getBoolean(7));
+				if(!user.getisAdmin())
+					u.add(user);			
+			}
+						
+		}catch(SQLException e){
+			throw new RuntimeException(e);
+		}
+		return u;	
+	}
+	
+	public void delete(String user){
+		
+		
+		Connection connection = null;
+		try{
+			connection = DataSourceUtils.getConnection(datasource);
+			String query = "DELETE FROM  user1 WHERE user_name = ?";
+			PreparedStatement statement = connection.prepareStatement(query);
+			statement.setString(1, user);
+			
+			statement.executeUpdate();
+		
+			
+		}catch(SQLException e){
+			
+			throw new RuntimeException(e);
+		}
+		
 	}
 	
 }
