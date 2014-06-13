@@ -31,7 +31,7 @@ public class Run {
 		
 		MovieService ms = (MovieService)context.getBean("movieService");
 		UserService us = (UserService)context.getBean("userService"); 
-		Movie movie = new Movie("lola", 1997, 120, "EEUU", 2000000, 30000000,0,0);
+		Movie movie = new Movie("lola", 1997, "EEUU", "imagen");
 		System.out.println(movie);
 		movie = ms.addMovie(movie);
 		System.out.println(movie);

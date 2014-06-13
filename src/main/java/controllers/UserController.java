@@ -23,11 +23,28 @@ public class UserController extends MyController{
 	public void setUserService(UserService userService) {
 		this.userService = userService;
 	}
+	
 	@RequestMapping
-	public void register(){}
+	public String register(Model m, ServletRequest request, HttpSession session){
+	
+		if(isLogin(session)){
+			User u = null;
+			try{
+	    	u = userService.getUserbyUsername(request.getParameter("username"));
+	    	if(u.isAdmin())
+	    		m.addAttribute("user",u);
+			}catch(Exception e){}
+		}
+		
+	return "user/register";
+		
+	}
+	
 	
 	@RequestMapping(method = {RequestMethod.POST})
 	public String register(Model m, HttpServletRequest request){
+		String admin = request.getParameter("isAdmin");
+		System.out.println("aqui "+admin);
 		User u = new User(
 				request.getParameter("name"), 
 				Date.valueOf(request.getParameter("date")),
@@ -35,7 +52,7 @@ public class UserController extends MyController{
 				request.getParameter("email"),
 				request.getParameter("password"), 
 				request.getParameter("username"),
-				false
+				(admin!=null)?true:false
 			);
 		try{
 			User p = userService.addUser(u);
@@ -70,6 +87,7 @@ public class UserController extends MyController{
 			if(u.getPassword().compareTo(request.getParameter("password"))==0){
 				session.setAttribute("user", u);
 				session.setAttribute("username", u.getUsername());
+				
 				System.out.println(u.getName());
 				return "redirect:/user/index";
 				

@@ -39,10 +39,8 @@ public class MovieController extends MyController{
 		Movie mov = new Movie(
 				request.getParameter("name"), 
 				Integer.parseInt(request.getParameter("year")), 
-				Integer.parseInt(request.getParameter("running_time")),
-				request.getParameter("country"), 
-				Integer.parseInt(request.getParameter("budget")), 
-				Integer.parseInt(request.getParameter("box_office")),0,0
+				request.getParameter("country"),
+				request.getParameter("image")
 				);
 		
 				Movie p = null;
