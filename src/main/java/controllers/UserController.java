@@ -112,13 +112,70 @@ public class UserController extends MyController{
 			
 		} catch (OperationUncompletedException e) {
 			
-		}
-		
-	
-		
+		}	
 		return "/index";
 	}
+
+	@RequestMapping
+	public String deleteuser(Model model, HttpSession session){
+		if(!isLogin(session)) return getLogin();
+		List<User> user = null;
+		try {
+			user = userService.getAllUser();
+		} catch (OperationUncompletedException e) {
+			//incompleto
+			System.out.println("enviar a pagina de error con e.getMessage");
+		}
+		model.addAttribute("users",user);
+		return "/user/deleteuser";
+	}	
 	
 	
 	
+	
+	/*ajax/mark*/
+	@RequestMapping(method = {RequestMethod.POST})
+	public String deleteuser(Model m, HttpServletRequest request, HttpSession session){
+		if(!isLogin(session)) return getLogin();
+		String user = request.getParameter("user"); 
+		System.out.println("eliminado "+ user);
+			try {
+			userService.deleteUser(user);
+		} catch (OperationUncompletedException e) {
+			
+		}
+	return "/user/deleteuser";
+	}
+	
+	@RequestMapping
+	public void edituser(Model model, HttpServletRequest request,  HttpSession session){
+		User u = (User)session.getAttribute("user");
+		model.addAttribute("user",u);
+		System.out.println(u.getName());
+		
+		
+	}
+	
+	@RequestMapping(method = {RequestMethod.POST})
+	public String edituser(Model model, HttpSession session, HttpServletRequest request) throws OperationUncompletedException{
+		if(!isLogin(session)) return getLogin();
+		String user = request.getParameter("user");
+		User u = new User(
+				request.getParameter("name"), 
+				Date.valueOf(request.getParameter("date")),
+				request.getParameter("country") , 
+				request.getParameter("email"),
+				request.getParameter("password"), 
+				request.getParameter("user"),
+				Boolean.valueOf(request.getParameter("isAdim"))
+			);
+	
+			userService.editUser(u);
+	
+		return "user/edituser"; 
+		
+	
+	}
+	
+
 }

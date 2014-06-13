@@ -25,18 +25,7 @@
 				<td><label for = "keywords">Imagen</label></td>
 				<td><input type = "text" id = "keywords" name = "image"/></td>
 			</tr>
-			<tr>
-				<td><label for = "keywords">costo</label></td>
-				<td><input type = "text" id = "keywords" name = "budget"/></td>
-			</tr>
-			<tr>
-				<td><label for = "keywords">taquilla</label></td>
-				<td><input type = "text" id = "keywords" name = "box_office"/></td>
-			</tr>
-			<tr>
-				<td><label for = "keywords">duracion</label></td>
-				<td><input type = "text" id = "keywords" name = "running_time"/></td>
-			</tr>
+			
 		</table>
 		<h2>Géneros</h2>
 		<table>
