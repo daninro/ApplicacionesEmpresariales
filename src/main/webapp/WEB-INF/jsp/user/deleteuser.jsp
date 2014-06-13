@@ -16,6 +16,10 @@ $(document).ready(function(){
 </script>
 </head>
 	<body>
+	<ul>
+		<li><a href = "/ApplicacionesEmpresariales/user/index">Principal</a></li>
+</ul>
+
 		<h3>Eliminar Usuario </h3>
 		<table>
 		<c:forEach var="user" items="${users}" varStatus="status">
