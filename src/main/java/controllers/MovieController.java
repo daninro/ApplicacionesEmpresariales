@@ -228,7 +228,51 @@ public class MovieController extends MyController{
 		return "/movie/last10";
 	}	
 
+	@RequestMapping
+	public String editmovie(Model model, HttpServletRequest request,  HttpSession session){
+		if(!isLogin(session)) return getLogin();
+		User u = (User) session.getAttribute("user");
+		Movie m= null;
+		try {
+//agarrar la película que viene de la pag anterior a la edición, en vez del 5
+			m = movieService.findMoviebyId(5);
+		} catch (OperationUncompletedException e) {
+			//incompleto
+			System.out.println("enviar a pagina de error con e.getMessage");
+		}
+		model.addAttribute("movieDetails",m);
+		
+		if(u.isAdmin()){
+			return "movie/editmovie";}
+			return "redirect:index";
+	}
 	
+	@RequestMapping(method = {RequestMethod.POST})
+	public String editmovie(Model model, HttpSession session, HttpServletRequest request) throws OperationUncompletedException{
+		if(!isLogin(session)) return getLogin();
+		int a=Integer.parseInt(request.getParameter("movieid"));
+		Movie m=movieService.findMoviebyId(a);
+
+		Movie mov = new Movie(
+				request.getParameter("name"), 
+				Integer.parseInt(request.getParameter("year")), 
+				request.getParameter("country"), 
+				request.getParameter("imagen"));
+		mov.setAvg(m.getAvg());
+		mov.setId(m.getId());
+		mov.setNumberUser(m.getNumberUser());
+		
+				Movie p = null;
+				try {
+					p = movieService.updateMovie(mov);
+		} catch (OperationUncompletedException e) {
+			//incompleto
+			System.out.println("enviar a pagina de error con e.getMessage");
+		}
+		model.addAttribute("movieDetails",p);
+//falta enviar a la ficha de la película
+		return "movie/editmovie";
+	}
 	
 	
 }
