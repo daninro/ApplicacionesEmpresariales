@@ -31,6 +31,10 @@
 	
 	</head>
 	<body>
+	<ul>
+		<li><a href = "/ApplicacionesEmpresariales/user/index">Principal</a></li>
+	</ul>
+	
 		<c:forEach var="movie" items="${movieList}" varStatus="status">
 			<div class = "block">
 				<input class = "cal" type = "radio" name = "${movie.id}" value = "1"/>1
@@ -46,6 +50,6 @@
 				</span>
 			</div>
 		</c:forEach>		
-		<a href = "test?page=${prev}">prev</a><a href = "test?page=${next}">next</a>
+		<a href = "list?page=${prev}">prev</a><a href = "list?page=${next}">next</a>
 	</body>
 </html>

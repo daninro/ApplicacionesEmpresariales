@@ -80,7 +80,6 @@ public class JdbcUserDAO implements UserDAO{
 			statement.setBoolean(7,  u.isAdmin());
 			statement.executeUpdate();
 			user = getUser(u.getUsername());
-			connection.close();
 		}catch(SQLException e){ 
 			throw new RuntimeException(e);
 		}catch (MyNotFoundException e) {
@@ -207,7 +206,7 @@ public class JdbcUserDAO implements UserDAO{
 			ResultSet result = statement.executeQuery();
 			while(result.next()){
 				User user = new User(result.getString(3), result.getDate(4), result.getString(5), result.getString(6), result.getString(2), result.getString(1), result.getBoolean(7));
-				if(!user.getisAdmin())
+				if(!user.isAdmin())
 					u.add(user);			
 			}
 						

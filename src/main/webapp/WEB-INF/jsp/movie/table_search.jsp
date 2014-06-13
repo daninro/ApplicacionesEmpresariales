@@ -1,25 +1,17 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-	<table border="1" bgcolor="cyan" align="center" >
-		<tr>
-			<th>Name</th>
-			<th>Year</th>
-			<th>Running_time</th>
-			<th>Country</th>
-			<th>Budget</th>
-			<th>Box Office</th>
-		</tr>
-
-		<c:forEach var="movie" items="${movieList}" varStatus="status">
-
-			<tr>
-				<td>${movie.name}</td>
-				<td>${movie.year}</td>
-				<td>${movie.running_time}</td>
-				<td>${movie.country}</td>
-				<td>${movie.budget}</td>
-				<td>${movie.box_office}</td>
-			</tr>
-
-		</c:forEach>
-
-	</table>
+	
+			<c:forEach var="movie" items="${movieList}" varStatus="status">
+			<div class = "block">
+				<input class = "cal" type = "radio" name = "${movie.id}" value = "1"/>1
+				<input class = "cal" type = "radio" name = "${movie.id}" value = "2"/>2
+				<input class = "cal" type = "radio" name = "${movie.id}" value = "3"/>3
+				<input class = "cal" type = "radio" name = "${movie.id}" value = "4"/>4
+				<input class = "cal" type = "radio" name = "${movie.id}" value = "5"/>5
+				<h3> ${movie.name}</h3>
+				<p>Year: ${movie.year}</p>
+				<p>Country: ${movie.country}</p>
+				<span id = "${movie.id}">
+					<input type = "submit" value = "Agregar a Wishlist" class = "wish" name = "${movie.id}">
+				</span>
+			</div>
+		</c:forEach>		

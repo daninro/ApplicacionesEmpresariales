@@ -12,10 +12,30 @@ $(document).ready(function(){
       $("span").html(result);
     });
   });
+  $(".cal").click(function(){
+	    cal = $(this).val();
+	    id = $(this).attr("name");
+	    $.post("mark",{movieId:id, mark:cal},function(result){});
+	  });
+
+	  $(".wish").click(function(){
+		id = $(this).attr("name");
+		$.post("../movie/moviedetails",{name:id},function(result){
+		$("span#"+id).html(result);
+		});
+	  });
 });
 </script>
-
-
+	<style type="text/css"> 
+	.block{
+		float: left;
+		width: 300px;
+		height: 300px;
+		border-style:solid;
+		border-color:#ff0000 #0000ff;
+	}
+	</style>
+	
 </head>
 <body>
 <ul>
@@ -28,24 +48,8 @@ $(document).ready(function(){
 			<input type = "submit" value = "buscar" >
 	</form>
 	<span>
-	<table border="1" bgcolor="cyan" align="center" >
-		<tr>
-			<th>Name</th>
-			<th>Year</th>
-			<th>Country</th>
-		</tr>
-
-		<c:forEach var="movie" items="${movieList}" varStatus="status">
-
-			<tr>
-				<td>${movie.name}</td>
-				<td>${movie.year}</td>
-				<td>${movie.country}</td>
-			</tr>
-
-		</c:forEach>
-
-	</table>
-	</span>
+	
+	
+		</span>
 </body>
 </html>
