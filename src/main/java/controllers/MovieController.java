@@ -57,24 +57,6 @@ public class MovieController extends MyController{
 		return "redirect:/user/bad_confirmation";
 		
 	}
-		
-	/***movie/list list movie***/
-	@RequestMapping
-	public String list(Model model, HttpSession session){
-		if(!isLogin(session)) return getLogin();
-		List<Movie> list = null;
-		try {
-			list = movieService.getAllMovies();
-		} catch (OperationUncompletedException e) {
-			//incompleto
-			System.out.println("enviar a pagina de error con e.getMessage");
-		}
-		model.addAttribute("movieList",list);
-		return "/movie/list";
-	}	
-	/**movie/search movie search***/
-	
-	
 	
 	
 	@RequestMapping
@@ -121,41 +103,8 @@ public class MovieController extends MyController{
 		System.out.println(m.containsAttribute("movieList"));
 		return "movie/table_search";
 	}
-	
-	@RequestMapping
-	public String mark(Model model, HttpSession session){
-		if(!isLogin(session)) return getLogin();
-		List<Movie> list = null;
-		try {
-			list = movieService.getAllMovies();
-		} catch (OperationUncompletedException e) {
-			//incompleto
-			System.out.println("enviar a pagina de error con e.getMessage");
-		}
-		model.addAttribute("movieList",list);
-		return "/movie/mark";
-	}	
 
-	@RequestMapping(method = {RequestMethod.POST})
-	public String mark(Model model, HttpSession session, HttpServletRequest request){
-		if(!isLogin(session)) return getLogin();
-		String id = request.getParameter("id");
-		System.out.println(id);
-		String mark = request.getParameter(id+"_mark");
-		
-		
-		try {
-			movieService.setMark(Integer.parseInt(id), Integer.parseInt(mark), (String)session.getAttribute("username"));
-		} catch (NumberFormatException e) {
-			//problemas con la transformacion numerica, javascripts deberia preocuparse (la interfaz)
-			
-		} catch (OperationUncompletedException e) {
-			//incompleto
-			System.out.println("enviar a pagina de error con e.getMessage");
-		}
-		return "redirect:/movie/list";
-	}
-	
+
 	@RequestMapping
 	public String moviedetails(Model model, HttpSession session, HttpServletRequest request){
 		if(!isLogin(session)) return getLogin();
@@ -273,6 +222,44 @@ public class MovieController extends MyController{
 //falta enviar a la ficha de la película
 		return "movie/editmovie";
 	}
+		
+		
+		/*ajax/test*/
+		@RequestMapping
+		public String list(Model m, HttpServletRequest request, HttpSession session){
+			if(!isLogin(session)) return getLogin();
+			List<Movie> l;
+			try {
+				int page = 1;
+				if(request.getParameter("page")!=null){
+					page = Integer.parseInt(request.getParameter("page"));
+					if(page == 0) page++;
+				}
+				l = movieService.getAllMovies(page, 20, (String)session.getAttribute("username"));
+				m.addAttribute("movieList",l);
+				m.addAttribute("prev", page - 1);
+				m.addAttribute("next", page + 1);
+			} catch (OperationUncompletedException e) {
+				
+			}
+			return "movie/list";
+		}
+		
+		
+		/*ajax/mark*/
+		@RequestMapping(method = {RequestMethod.POST})
+		public String mark(Model m, HttpServletRequest request, HttpSession session){
+			if(!isLogin(session)) return "ajax/empty";
+			int movieId = Integer.parseInt(request.getParameter("movieId"));
+			int mark = Integer.parseInt(request.getParameter("mark"));
+			try {
+				movieService.setMark(movieId, mark, (String)session.getAttribute("username"));
+			} catch (OperationUncompletedException e) {
+				return "ajax/empty";
+			}
+			return "ajax/empty";
+		}
+	
 	
 	
 }

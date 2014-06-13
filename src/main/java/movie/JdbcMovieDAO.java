@@ -260,6 +260,7 @@ public class JdbcMovieDAO implements MovieDAO{
 					m.add(movie);
 				}
 		}catch(SQLException e){
+				
 			throw new RuntimeException(e);
 		}
 		return m;	

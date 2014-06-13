@@ -8,7 +8,6 @@
 			<c:out value="Hola @${user.username}">
 			</c:out>
 			<li><a href = "../movie/list">listar peliculas OK</a></li>
-			<li><a href = "../movie/mark">calificar</a></li>
 			<li><a href = "../movie/search">buscar OK</a></li>
 			<li><a href = "../movie/top20">Top n OK</a></li>
 			<li><a href = "../movie/last10">Ultimas agregadas OK</a></li>
