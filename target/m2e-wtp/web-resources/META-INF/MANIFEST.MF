@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+<<<<<<< HEAD
+Built-By: Taaalii_
+Build-Jdk: 1.8.0
+=======
+Built-By: Daniel
+Build-Jdk: 1.7.0_45
+>>>>>>> 91c6191eab4b28f08952948d6f06ce95f8630bd8
+Created-By: Maven Integration for Eclipse
+

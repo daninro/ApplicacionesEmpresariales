@@ -3,6 +3,8 @@
 <html>
 <head><title>Registro</title></head>
 <body>
+		<li><a href = "/ApplicacionesEmpresariales/user/login">Atrás</a></li>
+
     <p><h2>Registro 
     <c:if test="${user.isAdmin}">
       de Administradores
