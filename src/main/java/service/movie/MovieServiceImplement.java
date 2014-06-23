@@ -185,7 +185,7 @@ public class MovieServiceImplement implements MovieService{
 		}
 	return movies;
 	}
-
+	@Transactional
 	public List<Movie> getWishlist(User u)throws OperationUncompletedException{
 		List<Movie> movies = null;
 		try{
