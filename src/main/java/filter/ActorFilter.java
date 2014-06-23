@@ -2,26 +2,24 @@ package filter;
 
 public class ActorFilter extends Filter{
 
-		private String actor2;
+		private String actor;
 		public ActorFilter(String actor, String table){
-			String act="SELECT A.* " +
-							"FROM "+table+" AS A " +
-							"WHERE A.id IN (SELECT perform.id FROM perform WHERE id_actor='"+actor+"')"; 
-			actor2=actor;
-			super.setFilter(act);
+			this.actor=actor;
+			super.setQuery(getQuery(table));
 		}
-		
+		public ActorFilter(String actor){
+			this.actor=actor;
+			super.setQuery(getQuery());
+		}
+		@Override
 		public String getQuery(){
-			String act="SELECT A.* " +
-					"FROM perform AS A " +
-					"WHERE A.id IN (SELECT perform.id FROM perform WHERE id_actor='"+actor2+"')"; 
-			return act;
+			return getQuery("movies");
 		}
-		
+		@Override
 		public String getQuery(String tabla){
 			String act="SELECT A.* " +
 					"FROM "+tabla+" AS A " +
-					"WHERE A.id IN (SELECT perform.id FROM perform WHERE id_actor='"+actor2+"')"; 
+					"WHERE A.id IN (SELECT perform.id FROM perform WHERE id_actor='"+actor+"')"; 
 			return act;
 		}
 }

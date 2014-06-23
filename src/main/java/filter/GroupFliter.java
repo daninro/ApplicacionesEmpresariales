@@ -13,13 +13,22 @@ public class GroupFliter extends Filter{
 	public void addFilter(Filter f){
 		filters.add(f);
 	}
-	public String getFilter(){
+
+	public String getQuery(){
 		String toRet = "";
-		for(int i = 0; i < filters.size() - 1; i++){
-			toRet += filters.get(i).getFilter() + " AND ";
-		}
-		if(!filters.isEmpty())
-			toRet +=  filters.get(filters.size() - 1).getFilter();
+		if(filters.size() > 0)
+			toRet += filters.get(0).getQuery();
+		if(filters.size() > 1)
+			for (int i = 1; i < filters.size();i++){
+				toRet = filters.get(i).getQuery("(" + toRet + ")");
+			}
 		return toRet;
 	}
+	
+	@Override
+	public String getQuery(String query) {
+		return getQuery();
+	}
+	
+	
 }

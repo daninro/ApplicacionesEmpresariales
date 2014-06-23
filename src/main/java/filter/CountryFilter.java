@@ -1,27 +1,29 @@
 package filter;
 
+
 public class CountryFilter extends Filter{
 	
-	private String country2;
+	private String country;
 	public CountryFilter(String country, String table){
-			String pais ="SELECT C.* " +
-							"FROM "+table+" AS C " +
-							"WHERE C.country = '"+country+"')";
-			country2=country;
-			super.setFilter(pais);
-	}
-
-	public String getQuery(){
-		String pais ="SELECT C.* " +
-				"FROM movies AS C " +
-				"WHERE C.country = '"+country2+"')";
-		return pais;
+			this.country=country;
+			super.setQuery(getQuery(table));
 	}
 	
-	public String getQuery(String tabla){
-		String pais ="SELECT C.* " +
-				"FROM "+tabla+" AS C " +
-				"WHERE C.country = '"+country2+"')";
-		return pais;
+	public CountryFilter(String country){
+		this.country=country;
+		super.setQuery(getQuery());
 	}
+	
+	public String getQuery(){
+		return getQuery("movies");
+	}
+	
+	@Override
+	public String getQuery(String table){
+		String query ="SELECT C.* " +
+				"FROM "+table+" AS C " +
+				"WHERE C.country = '"+country+"'";
+		return query;
+	}
+	
 }

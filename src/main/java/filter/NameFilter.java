@@ -2,26 +2,25 @@ package filter;
 
 public class NameFilter extends Filter{
 	
-		private String name2;
+		private String name;
 		public NameFilter(String name, String table){
-			String nombre ="SELECT N.* " +
-							"FROM "+table+" AS N " +
-							"WHERE N.name LIKE '%"+name+"%')";
-			name2=name;
-			super.setFilter(nombre);
+			this.name=name;
+			this.setQuery(getQuery(table));
 		}
 		
+		public NameFilter(String name){
+			this.name=name;
+			this.setQuery(getQuery());
+		}
+
 		public String getQuery(){
-			String nombre ="SELECT N.* " +
-					"FROM movies AS N " +
-					"WHERE N.name LIKE '%"+name2+"%')";
-			return nombre;
+			return getQuery("movies");
 		}
 		
 		public String getQuery(String tabla){
 			String nombre ="SELECT N.* " +
 					"FROM "+tabla+" AS N " +
-					"WHERE N.name LIKE '%"+name2+"%')";
+					"WHERE N.name LIKE '%"+name+"%')";
 			return nombre;
 		}
 		
