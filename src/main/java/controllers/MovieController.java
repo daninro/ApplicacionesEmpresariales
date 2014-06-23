@@ -12,7 +12,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import exceptions.OperationUncompletedException;
 import service.movie.MovieService;
+import service.actor.ActorService;
+import actor.Actor;
 import user.User;
+
 
 
 public class MovieController extends MyController{
@@ -21,6 +24,13 @@ public class MovieController extends MyController{
 	public void setMovieService(MovieService movieService) {
 		this.movieService = movieService;
 	}
+	
+	private ActorService actorService;
+	/***services mutators***/
+	public void setActorService(ActorService actorService) {
+		this.actorService = actorService;
+	}
+	
 	
 	/***movie/addmovie view form***/
 	@RequestMapping
@@ -292,6 +302,68 @@ public class MovieController extends MyController{
 		
 		}
 		
+		@RequestMapping
+		public String addactor(Model m, HttpSession session){
+			if(!isLogin(session)) return getLogin();
+			User u = (User) session.getAttribute("user");
+			if(u.isAdmin()){
+			return "movie/addactor";}
+			return "redirect:/movie/list";
+		}
 	
-	
+		@RequestMapping(method = {RequestMethod.POST})
+		public String addactor(Model m, HttpServletRequest request, HttpSession session){
+			if(!isLogin(session)) return getLogin();
+			
+			Actor act = new Actor(
+					request.getParameter("id_name"), 
+					request.getParameter("name"), 
+					-1);
+			
+					Actor p = null;
+					try {
+						p = actorService.addActor(act);
+					} catch (OperationUncompletedException e) {
+						//incompleto
+						System.out.println("enviar a pagina de error");
+					}
+					if(p != null){
+						return "redirect:/movie/list";
+					}
+			
+			return "redirect:/user/bad_confirmation";
+		}
+		
+		@RequestMapping
+		public String deletemovie(Model model, HttpSession session){
+			if(!isLogin(session)) return getLogin();
+			List<Movie> movie = null;
+			try {
+				movie = movieService.getAllMovies();
+			} catch (OperationUncompletedException e) {
+				//incompleto
+				System.out.println("enviar a pagina de error con e.getMessage");
+			}
+			model.addAttribute("movies",movie);
+			return "/movie/deletemovie";
+		}	
+		
+		@RequestMapping(method = {RequestMethod.POST})
+		public String deletemovie(Model model, HttpSession session, HttpServletRequest request) throws OperationUncompletedException{
+			if(!isLogin(session)) return getLogin();
+			int movieid= Integer.parseInt(request.getParameter("movie"));
+			Movie mov = movieService.findMoviebyId(movieid);
+			
+					List <Movie>p = null;
+					try {
+						p = movieService.deleteMovie(mov);
+
+					} catch (OperationUncompletedException e) {
+						//incompleto
+						System.out.println("enviar a pagina de error asdasdsad" + e.toString());
+					}
+			model.addAttribute("movies", p);
+			return "movie/deletemovie2";
+		}	
+		
 }
