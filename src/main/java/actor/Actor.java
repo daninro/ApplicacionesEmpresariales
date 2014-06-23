@@ -1,21 +1,32 @@
 package actor;
 
-import java.sql.Date;
-
-import person.Person;
-
-public class Actor extends Person{
-	private int id;
-	public int getId() {
-		return id;
+public class Actor{
+	private int ranking;
+	private String id_name;
+	private String name;
+	
+	public Actor(String name, String id_name, int ranking) {
+		this.id_name = id_name;
+		this.name = name;
+		this.ranking = ranking;
 	}
-	public void setId(int id) {
-		this.id = id;
+	public int getRanking() {
+		return ranking;
 	}
-	public Actor(String name, Date date_of_birth, String country) {
-		super(name, date_of_birth, country);
+	public void setRanking(int ranking) {
+		this.ranking = ranking;
 	}
-	public String toString(){
-		return id + super.toString();
+	public String getId_name() {
+		return id_name;
 	}
+	public void setId_name(String id_name) {
+		this.id_name = id_name;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	
 }
