@@ -22,7 +22,9 @@ public class DirectorFilter extends Filter{
 		public String getQuery(String tabla){
 			String direct="SELECT D.* " +
 					"FROM "+tabla+" AS D " +
-					"WHERE D.id_director='"+director+"')"; 
+					"WHERE D.id_director='"+director+"'"; 
 			return direct;
 		}
+		
+		
 }

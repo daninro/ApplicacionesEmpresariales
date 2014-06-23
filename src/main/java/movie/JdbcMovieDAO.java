@@ -329,6 +329,28 @@ public class JdbcMovieDAO implements MovieDAO{
 		return m;	
 	}
 	
+	@Override
+	public List<Movie> Filter(filter.Filter F) {
+		List<Movie> m = new ArrayList<Movie>();
+		Connection connection = null;
+		try{
+			connection = DataSourceUtils.getConnection(datasource);
+			String query = F.getQuery();
+			PreparedStatement statement = connection.prepareStatement(query);
+			ResultSet result = statement.executeQuery();
+				while(result.next()){
+					Movie movie = new Movie(result.getString(2), result.getInt(3), result.getString(4), result.getString(5));;
+					movie.setId(result.getInt(1));
+					m.add(movie);
+				}
+		}catch(SQLException e){
+				
+			throw new RuntimeException(e);
+		}
+		return m;	
+	}
+	
+	
 	public List<Movie> last10(){
 		List<Movie> m = new ArrayList<Movie>();
 		Connection connection = null;
@@ -375,4 +397,5 @@ public class JdbcMovieDAO implements MovieDAO{
 		
 		return m;
 	}
+
 }

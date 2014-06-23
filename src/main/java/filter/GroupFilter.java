@@ -3,10 +3,10 @@ package filter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GroupFliter extends Filter{
+public class GroupFilter extends Filter{
 	private List<Filter> filters;
 	
-	public GroupFliter(){
+	public GroupFilter(){
 		filters = new ArrayList<Filter>();
 	}
 	

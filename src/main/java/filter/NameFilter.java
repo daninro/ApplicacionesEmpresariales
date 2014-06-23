@@ -20,7 +20,7 @@ public class NameFilter extends Filter{
 		public String getQuery(String tabla){
 			String nombre ="SELECT N.* " +
 					"FROM "+tabla+" AS N " +
-					"WHERE N.name LIKE '%"+name+"%')";
+					"WHERE N.name LIKE '%"+name+"%'";
 			return nombre;
 		}
 		

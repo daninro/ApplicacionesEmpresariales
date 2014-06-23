@@ -44,6 +44,8 @@ public interface MovieService {
 	public List<Movie> last10()throws OperationUncompletedException;
 	@Transactional
 	public List<Movie> getAllMovies(int page, int i, String username) throws OperationUncompletedException;
+	@Transactional
+	public List<Movie> FilterMovies(filter.Filter filter) throws OperationUncompletedException;
 	
 	
 	

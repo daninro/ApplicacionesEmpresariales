@@ -11,6 +11,7 @@ import user.User;
 import user.UserDAO;
 import exceptions.MyNotFoundException;
 import exceptions.OperationUncompletedException;
+import filter.Filter;
 
 public class MovieServiceImplement implements MovieService{
 	
@@ -209,6 +210,30 @@ public class MovieServiceImplement implements MovieService{
 		}
 	return movies;
 	}
+	
+	@Override
+	@Transactional
+	public List<Movie> getAllMovies(int page, int i, String username) throws OperationUncompletedException{
+		List<Movie> movie = null;
+		try{
+			movie = movieDAO.getAll(page, i, username);
+		} catch (RuntimeException e){
+			throw new OperationUncompletedException("No se pudieron obtener las peliculas");
+		}
+		return movie;
+	}
+	
+	@Override
+	@Transactional
+	public List<Movie> FilterMovies(Filter filter) throws OperationUncompletedException {
+		List<Movie> movie = null;
+		try{
+			movie = movieDAO.Filter(filter);
+		} catch (RuntimeException e){
+			throw new OperationUncompletedException("No se pudieron obtener las peliculas");
+		}
+		return movie;
+	}
 
 	
 	//@minux777: creo que esto hay que sacarlo y crear otro servicio para "personas" o algo asi
@@ -234,16 +259,8 @@ public class MovieServiceImplement implements MovieService{
 	return movies;
 	}
 
-	@Override
-	@Transactional
-	public List<Movie> getAllMovies(int page, int i, String username) throws OperationUncompletedException{
-		List<Movie> movie = null;
-		try{
-			movie = movieDAO.getAll(page, i, username);
-		} catch (RuntimeException e){
-			throw new OperationUncompletedException("No se pudieron obtener las peliculas");
-		}
-		return movie;
-	}
+	
+	
+	
 			
 }
