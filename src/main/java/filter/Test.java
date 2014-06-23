@@ -18,8 +18,8 @@ public class Test {
 		F.add(new GenreFilter("Fantasy"));
 		F.add(new CountryFilter("USA"));
 		F.add(new NameFilter("Toy"));
-		F.add(new ActorFilter("annie_potts"));
-		F.add(new DirectorFilter("john_lasseter"));
+		//F.add(new ActorFilter("annie_potts"));
+		//F.add(new DirectorFilter("john_lasseter"));
 		System.out.println(F.get(6).getQuery());
 		GroupFilter F4 = new GroupFilter();
 		

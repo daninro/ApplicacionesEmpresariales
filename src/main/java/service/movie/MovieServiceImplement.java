@@ -254,10 +254,10 @@ public class MovieServiceImplement implements MovieService{
 	
 	@Override
 	@Transactional
-	public List<Movie> FilterMovies(Filter filter) throws OperationUncompletedException {
+	public List<Movie> FilterMovies(Filter filter, int page, int limit) throws OperationUncompletedException {
 		List<Movie> movie = null;
 		try{
-			movie = movieDAO.Filter(filter);
+			movie = movieDAO.Filter(filter, page, limit);
 		} catch (RuntimeException e){
 			throw new OperationUncompletedException("No se pudieron obtener las peliculas" + e.getMessage());
 		}

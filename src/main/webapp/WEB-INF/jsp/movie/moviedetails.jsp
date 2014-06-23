@@ -8,7 +8,7 @@
 $(document).ready(function(){
   $("#wish").click(function(){
     txt=${movieDetails.id};
-    $.post("moviedetails",{name:txt},function(result){
+    $.post("ajaxdelete",{name:txt},function(result){
     $("span").html(result);
     });
   });
@@ -26,18 +26,12 @@ $(document).ready(function(){
 		<tr>
 			<th>Name</th>
 			<th>Year</th>
-			<th>Running_time</th>
 			<th>Country</th>
-			<th>Budget</th>
-			<th>Box Office</th>
 		</tr>
 		<tr>
 			<td>${movieDetails.name}</td>
 			<td>${movieDetails.year}</td>
-			<td>${movieDetails.running_time}</td>
 			<td>${movieDetails.country}</td>
-			<td>${movieDetails.budget}</td>
-			<td>${movieDetails.box_office}</td>
 		</tr>
 	</table>
 	<span>

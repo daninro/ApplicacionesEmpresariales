@@ -13,7 +13,7 @@
 	
 		  $(".wish").click(function(){
 			id = $(this).attr("name");
-			$.post("../movie/moviedetails",{name:id},function(result){
+			$.post("../movie/ajaxaddwishlist",{name:id},function(result){
 			$("span#"+id).html(result);
 			});
 		  });

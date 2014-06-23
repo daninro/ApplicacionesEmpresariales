@@ -373,12 +373,13 @@ public class JdbcMovieDAO implements MovieDAO{
 	}
 	
 	@Override
-	public List<Movie> Filter(filter.Filter F) {
+	public List<Movie> Filter(filter.Filter F, int page, int limit) {
 		List<Movie> m = new ArrayList<Movie>();
 		Connection connection = null;
 		try{
 			connection = DataSourceUtils.getConnection(datasource);
-			String query = F.getQuery();
+			String query = F.getQuery() + "LIMIT "+limit+" OFFSET " + (limit * (page - 1));
+			System.out.println(query);
 			PreparedStatement statement = connection.prepareStatement(query);
 			ResultSet result = statement.executeQuery();
 				while(result.next()){

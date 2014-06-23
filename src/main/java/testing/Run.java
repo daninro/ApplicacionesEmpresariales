@@ -51,12 +51,13 @@ public class Run {
 		
 		
 		
-		List<Actor> a = as.getMoviesPerforms(1);
+		//List<Actor> a = as.getMoviesPerforms(1);
+		
+		
+		//for(int i = 0; i < a.size(); i++)
+		//	System.out.println(a.get(i));
 		
 		ArrayList<Filter> F = new ArrayList<Filter>();
-		for(int i = 0; i < a.size(); i++)
-			System.out.println(a.get(i));
-		
 		F.add(new GenreFilter("Adventure"));
 		F.add(new GenreFilter("Animation"));
 		F.add(new GenreFilter("Children"));

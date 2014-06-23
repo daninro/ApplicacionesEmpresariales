@@ -1,7 +1,7 @@
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 	
-			<c:forEach var="movie" items="${movieList}" varStatus="status">
+		<c:forEach var="movie" items="${movieList}" varStatus="status">
 			<div class = "block">
 				<input class = "cal" type = "radio" name = "${movie.id}" value = "1"/>1
 				<input class = "cal" type = "radio" name = "${movie.id}" value = "2"/>2

@@ -23,7 +23,7 @@ public interface MovieDAO {
 	public List<Movie> last10();
 	public List<Movie> top20();
 	public List<Movie> getAll(int page, int i, String user);
-	public List<Movie> Filter(filter.Filter F);
+	public List<Movie> Filter(filter.Filter F, int page, int limit);
 	public List<Movie> getWishlistbyUsername(String user);
 	
 	
