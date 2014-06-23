@@ -1,6 +1,6 @@
 package service.actor;
 
-import java.sql.Date;
+import java.util.List;
 
 import org.springframework.transaction.annotation.Transactional;
 
@@ -34,10 +34,10 @@ public class ActorServiceImplement implements ActorService{
 		
 	}
 	
-	public Actor findActor(String name, Date date_of_birth)throws OperationUncompletedException {
+	public Actor findActor(String name)throws OperationUncompletedException {
 		Actor actor = null;
 		try{
-			actor = actorDAO.find(name, date_of_birth);
+			actor = actorDAO.find(name);
 		}catch(RuntimeException e){
 			throw new OperationUncompletedException("Ocurrio un problema en la busqueda");
 		}
@@ -66,7 +66,7 @@ public class ActorServiceImplement implements ActorService{
 	}
 
 	@Transactional
-	public Actor deleteActorbykey(int id) throws OperationUncompletedException{
+	public Actor deleteActorbykey(String id) throws OperationUncompletedException{
 		Actor actor = null;
 		try{
 			actor = actorDAO.delete(id);
@@ -91,6 +91,19 @@ public class ActorServiceImplement implements ActorService{
 			throw new OperationUncompletedException("El actor no existe");}
 	return actor;
 		
+	}
+	@Override
+	public List<Actor> getMoviesPerforms(int id)throws OperationUncompletedException {
+		List<Actor> actors = null;
+		try{
+			actors = actorDAO.getActorsOfMovie(id);
+			
+		}catch(RuntimeException e){
+			throw new OperationUncompletedException("Ocurrio un problema");
+		}catch (MyNotFoundException e) {
+			throw new OperationUncompletedException("no hay actores");
+			}
+	return actors;
 	}
 	
 

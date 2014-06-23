@@ -259,7 +259,7 @@ public class MovieServiceImplement implements MovieService{
 		try{
 			movie = movieDAO.Filter(filter);
 		} catch (RuntimeException e){
-			throw new OperationUncompletedException("No se pudieron obtener las peliculas");
+			throw new OperationUncompletedException("No se pudieron obtener las peliculas" + e.getMessage());
 		}
 		return movie;
 	}

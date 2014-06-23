@@ -10,6 +10,8 @@ public class Movie {
 	private boolean isWishlist;
 	private int number_user;
 	private String image;
+	private String director;
+	private String id_director;
 	
 	public Movie(String name, int year, String country, String image){
 		this.id = -1;
@@ -84,9 +86,28 @@ public class Movie {
 	public void setCountry(String country) {
 		this.country = country;
 	}
-
+	
+	
+	
+	
 	@Override
 	public String toString(){
 		return "Movie [name = " + name + " " + id + "]";
+	}
+
+	public String getDirector() {
+		return director;
+	}
+
+	public void setDirector(String director) {
+		this.director = director;
+	}
+
+	public String getId_director() {
+		return id_director;
+	}
+
+	public void setId_director(String id_director) {
+		this.id_director = id_director;
 	}
 }
