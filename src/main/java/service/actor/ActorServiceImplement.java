@@ -1,5 +1,7 @@
 package service.actor;
 
+import java.util.List;
+
 import org.springframework.transaction.annotation.Transactional;
 
 import actor.Actor;
@@ -89,6 +91,19 @@ public class ActorServiceImplement implements ActorService{
 			throw new OperationUncompletedException("El actor no existe");}
 	return actor;
 		
+	}
+	@Override
+	public List<Actor> getMoviesPerforms(int id)throws OperationUncompletedException {
+		List<Actor> actors = null;
+		try{
+			actors = actorDAO.getActorsOfMovie(id);
+			
+		}catch(RuntimeException e){
+			throw new OperationUncompletedException("Ocurrio un problema");
+		}catch (MyNotFoundException e) {
+			throw new OperationUncompletedException("no hay actores");
+			}
+	return actors;
 	}
 	
 

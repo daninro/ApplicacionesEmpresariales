@@ -10,9 +10,12 @@ import movie.Movie;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import actor.Actor;
+
 import exceptions.OperationUncompletedException;
 
 
+import service.actor.ActorService;
 import service.movie.MovieService;
 import service.movie.MovieServiceImplement;
 import service.user.UserService;
@@ -35,9 +38,20 @@ public class Run {
 		System.out.println(movie);
 		movie = ms.addMovie(movie);
 		System.out.println(movie);
+		ActorService as = (ActorService)context.getBean("actorService");
 		
-		List<Movie> l = ms.getAllMovies();
+		List<Actor> a = as.getMoviesPerforms(1);
 		
+		for(int i = 0; i < a.size(); i++)
+			System.out.println(a.get(i));
+		
+		
+		//List<Movie> l = ms.getAllMovies();
+		
+		
+		
+		
+		/*
 		try{
 			l = ms.deleteMovie(ms.findMoviebyId(12));
 		}
@@ -52,7 +66,7 @@ public class Run {
 		
 		User u = us.addUser(new User("Diego Seco", Date.valueOf("1982-10-31"), "espanol", "dseco@udec.cl","pass", "dsecos", true));
 		//System.out.println(u.toString());
-		
+		*/
 		
 		
 	}
