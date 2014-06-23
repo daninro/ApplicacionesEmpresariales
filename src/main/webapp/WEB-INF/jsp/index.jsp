@@ -18,7 +18,8 @@
 			<c:if test="${user.isAdmin}" >
 			<li><a href = "../movie/addmovie">Agregar Películas</a></li>
 			<li><a href = "../movie/editmovie">Modificar peliculas OK</a></li>
-			<li><a href = "../movie/addmovie">Eliminar peliculas</a></li>
+			<li><a href = "../movie/deletemovie">Eliminar peliculas</a></li>
+			<li><a href = "../movie/addactor">Agregar Actor</a></li>
 			<li><a href = "../user/deleteuser">Eliminar Usuarios OK</a></li>
 			<li><a href = "../user/register">Agregar Administradores OK</a></li>
 			<li><a href = "../movie/editmovie">Eliminar mi cuenta</a></li>
