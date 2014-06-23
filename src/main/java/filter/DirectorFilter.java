@@ -16,7 +16,7 @@ public class DirectorFilter extends Filter{
 		@Override
 		public String getQuery(){
 			 
-			return getQuery("movies");
+			return getQuery("movie");
 		}
 		@Override
 		public String getQuery(String tabla){

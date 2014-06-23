@@ -13,7 +13,7 @@ public class ActorFilter extends Filter{
 		}
 		@Override
 		public String getQuery(){
-			return getQuery("movies");
+			return getQuery("movie");
 		}
 		@Override
 		public String getQuery(String tabla){

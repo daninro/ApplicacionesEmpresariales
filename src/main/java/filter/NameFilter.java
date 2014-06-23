@@ -14,7 +14,7 @@ public class NameFilter extends Filter{
 		}
 
 		public String getQuery(){
-			return getQuery("movies");
+			return getQuery("movie");
 		}
 		
 		public String getQuery(String tabla){

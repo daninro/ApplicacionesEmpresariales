@@ -14,7 +14,7 @@ public class GenreFilter extends Filter{
 		}
 
 		public String getQuery(){
-			return getQuery("movies");
+			return getQuery("movie");
 		}
 		
 		@Override
