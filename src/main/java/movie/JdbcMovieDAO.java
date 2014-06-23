@@ -205,6 +205,29 @@ public class JdbcMovieDAO implements MovieDAO{
 		}
 		return movies;
 	}
+	public List<Movie> getWishlistbyUsername(String user){
+		List<Movie> movies = new ArrayList<Movie>();
+		Connection connection = null;
+		try{
+			connection = DataSourceUtils.getConnection(datasource);
+			String query = "SELECT id FROM  wishlist WHERE user_name = ?";
+			PreparedStatement statement = connection.prepareStatement(query);
+			statement.setString(1, user);
+			ResultSet result = statement.executeQuery();
+			while(result.next()){
+				movies.add(findbyId(result.getInt(1)));
+			}
+			
+		}catch(SQLException e){
+			
+			throw new RuntimeException(e); 
+		} catch (MyNotFoundException e) {
+			
+		
+		}
+		return movies;
+	}
+	
 
 	public List<Movie> deleteMoviefromWishlistbyUser(Movie m, User u) {
 		List<Movie> movies = null;
@@ -217,6 +240,26 @@ public class JdbcMovieDAO implements MovieDAO{
 			statement.setString(2, u.getName());
 			statement.executeUpdate();
 			movies = getWishlistbyUser(u);
+			
+		}catch(SQLException e){
+			
+			throw new RuntimeException(e);
+		}
+		return movies;
+	}
+	
+	public List<Movie> deleteMoviefromWishlistbyUser(int m, String u) {
+		List<Movie> movies = null;
+		Connection connection = null;
+	
+		try{
+			connection = DataSourceUtils.getConnection(datasource);
+			String query = "DELETE FROM  wishlist WHERE id = ? AND user_name = ?";
+			PreparedStatement statement = connection.prepareStatement(query);
+			statement.setInt(1, m);
+			statement.setString(2, u);
+			statement.executeUpdate();
+			movies = getWishlistbyUsername(u);
 			
 		}catch(SQLException e){
 			

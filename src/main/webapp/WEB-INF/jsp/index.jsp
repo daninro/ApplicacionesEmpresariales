@@ -12,7 +12,7 @@
 			<li><a href = "../movie/top20">Top n OK</a></li>
 			<li><a href = "../movie/last10">Ultimas agregadas OK</a></li>
 			<li><a href = "../user/edituser">Modificar datos OK</a></li>
-			<li><a href = "../movie/last10">Ver wishlist</a></li>
+			<li><a href = "../movie/verwishlist">Ver wishlist</a></li>
 			<li><a href = "../movie/last10">ver recomendaciones</a></li>
 			
 			<c:if test="${user.isAdmin}" >

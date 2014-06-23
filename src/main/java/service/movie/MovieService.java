@@ -37,6 +37,8 @@ public interface MovieService {
 	@Transactional
 	public List<Movie> deleteMoviefromWishlist(Movie m, User u) throws OperationUncompletedException;
 	@Transactional
+	public List<Movie> deleteMoviefromWishlist(int m, String u) throws OperationUncompletedException;
+	@Transactional
 	public List<Movie> getWishlist(User u)throws OperationUncompletedException;
 	@Transactional
 	public List<Movie> top20()throws OperationUncompletedException;
@@ -46,6 +48,8 @@ public interface MovieService {
 	public List<Movie> getAllMovies(int page, int i, String username) throws OperationUncompletedException;
 	@Transactional
 	public List<Movie> FilterMovies(filter.Filter filter) throws OperationUncompletedException;
+	@Transactional
+	public List<Movie> getWishlistbyUsername(String s) throws OperationUncompletedException;
 	
 	
 	

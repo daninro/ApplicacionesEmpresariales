@@ -15,6 +15,7 @@ public interface MovieDAO {
 	public List<Movie> addMovietoWishlist(Movie movie, User u);
 	public List<Movie> getWishlistbyUser(User u) throws MyNotFoundException;
 	public List<Movie> deleteMoviefromWishlistbyUser(Movie m, User u);
+	public List<Movie> deleteMoviefromWishlistbyUser(int m, String u);
 	public List<Movie> getAll();
 	public List<Movie> deleteMovie(Movie m);
 	public List<Movie> deleteMovie(Integer m);
@@ -23,6 +24,7 @@ public interface MovieDAO {
 	public List<Movie> top20();
 	public List<Movie> getAll(int page, int i, String user);
 	public List<Movie> Filter(filter.Filter F);
+	public List<Movie> getWishlistbyUsername(String user);
 	
 	
 }

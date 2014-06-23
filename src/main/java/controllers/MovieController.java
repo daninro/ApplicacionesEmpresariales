@@ -1,5 +1,6 @@
 package controllers;
 
+import java.sql.Date;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -260,6 +261,37 @@ public class MovieController extends MyController{
 			return "ajax/empty";
 		}
 	
+		
+		
+		@RequestMapping
+		public String verwishlist(Model model, HttpSession session){
+			if(!isLogin(session)) return getLogin();
+			List<Movie> list = null;
+			try {
+				
+				list = movieService.getWishlistbyUsername((String)session.getAttribute("username"));
+			
+			} catch (OperationUncompletedException e) {
+				//incompleto
+				System.out.println("enviar a pagina de error con e.getMessage");
+			}
+			model.addAttribute("movies",list);
+			return "/movie/verwishlist";
+		}	
+	
+		@RequestMapping(method = {RequestMethod.POST})
+		public String verwishlist(Model m, HttpServletRequest request, HttpSession session){
+			if(!isLogin(session)) return getLogin();
+			String movie = request.getParameter("wl"); 
+			try {
+				movieService.deleteMoviefromWishlist( Integer.parseInt(movie), (String)session.getAttribute("username"));
+			} catch (OperationUncompletedException e) {
+				
+			}
+		return "/user/verwishlist";	
+		
+		}
+		
 	
 	
 }

@@ -188,12 +188,28 @@ public class MovieServiceImplement implements MovieService{
 	@Transactional
 	public List<Movie> getWishlist(User u)throws OperationUncompletedException{
 		List<Movie> movies = null;
+	
 		try{
 			movies = movieDAO.getWishlistbyUser(u);
-			
+			System.out.println(u.getUsername());
 		}catch(RuntimeException e){
 			
 		} catch (MyNotFoundException e) {
+			throw new OperationUncompletedException("Ocurrio un problema al obtener la wishlist");
+		}
+	return movies;
+	}
+	
+	@Transactional
+	public List<Movie> getWishlistbyUsername(String user)throws OperationUncompletedException{
+		List<Movie> movies = null;
+	
+		try{
+			movies = movieDAO.getWishlistbyUsername(user);
+			
+		}catch(RuntimeException e){
+			
+		
 			throw new OperationUncompletedException("Ocurrio un problema al obtener la wishlist");
 		}
 	return movies;
@@ -210,6 +226,19 @@ public class MovieServiceImplement implements MovieService{
 		}
 	return movies;
 	}
+	
+	@Transactional
+	public List<Movie> deleteMoviefromWishlist(int m, String u)throws OperationUncompletedException{
+		List<Movie> movies = null;
+		try{
+			movies = movieDAO.deleteMoviefromWishlistbyUser(m,u);
+			
+		}catch(RuntimeException e){
+			throw new OperationUncompletedException("Ocurrio un problema al eliminar la pelicula de la wishlist");
+		}
+	return movies;
+	}
+	
 	
 	@Override
 	@Transactional
