@@ -24,4 +24,10 @@ public class NameFilter extends Filter{
 			return nombre;
 		}
 		
+		public String getQueryByUser(String User){
+			System.out.println(User);
+			System.out.println(super.getQueryByUser(User));
+			return getQuery("("+super.getQueryByUser(User)+")");
+		}
+
 }

@@ -6,9 +6,6 @@ import java.util.List;
 import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-
-import movie.Movie;
-
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -167,14 +164,11 @@ public class UserController extends MyController{
 				request.getParameter("email"),
 				request.getParameter("password"), 
 				request.getParameter("user"),
-				Boolean.valueOf(request.getParameter("isAdim"))
+				Boolean.valueOf(request.getParameter("isAdmin"))
 			);
-	
 			userService.editUser(u);
-	
+			model.addAttribute("user", u);
 		return "user/edituser"; 
-		
-	
 	}
 	
 

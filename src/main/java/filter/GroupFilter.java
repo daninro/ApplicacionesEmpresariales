@@ -29,6 +29,17 @@ public class GroupFilter extends Filter{
 	public String getQuery(String query) {
 		return getQuery();
 	}
-	
+
+	public String getQueryByUser(String User){
+		
+		String toRet = "";
+		if(filters.size() > 0)
+			toRet += filters.get(0).getQueryByUser(User);
+		if(filters.size() > 1)
+			for (int i = 1; i < filters.size();i++){
+				toRet = filters.get(i).getQuery("(" + toRet + ")");
+			}
+		return toRet;
+	}
 	
 }

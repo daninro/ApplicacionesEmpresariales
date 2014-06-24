@@ -21,10 +21,11 @@ $(document).ready(function(){
 
 	  $(".wish").click(function(){
 		id = $(this).attr("name");
-		$.post("../movie/moviedetails",{name:id},function(result){
+		$.post("../movie/ajaxaddwishlist",{name:id},function(result){
 		$("span#"+id).html(result);
 		});
 	  });
+	  
 });
 </script>
 	<style type="text/css"> 
@@ -60,7 +61,12 @@ $(document).ready(function(){
 				<p>Year: ${movie.year}</p>
 				<p>Country: ${movie.country}</p>
 				<span id = "${movie.id}">
-					<input type = "submit" value = "Agregar a Wishlist" class = "wish" name = "${movie.id}">
+					<c:if test="${movie.isWishlist}">
+						<input type = "submit" value = "Quitar de la wishlist" class = "wish" name = "${movie.id}">
+					</c:if>
+					<c:if test="${!movie.isWishlist}">
+						<input type = "submit" value = "Agregar a Wishlist" class = "wish" name = "${movie.id}">
+					</c:if>
 				</span>
 			</div>
 		</c:forEach>		

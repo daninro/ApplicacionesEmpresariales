@@ -26,5 +26,8 @@ public class DirectorFilter extends Filter{
 			return direct;
 		}
 		
-		
+		public String getQueryByUser(String User){
+			return getQuery("("+super.getQueryByUser(User)+")");
+		}
+
 }

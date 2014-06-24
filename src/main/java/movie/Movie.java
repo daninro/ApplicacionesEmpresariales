@@ -39,11 +39,11 @@ public class Movie {
 	}
 	
 	
-	public boolean isWishlist(){
+	public boolean getIsWishlist(){
 		return isWishlist;
 	}
 	
-	public void isWishlist(boolean isWishlist){
+	public void setIsWishlist(boolean isWishlist){
 		this.isWishlist=isWishlist;
 	}
 	

@@ -25,5 +25,9 @@ public class CountryFilter extends Filter{
 				"WHERE C.country = '"+country+"'";
 		return query;
 	}
-	
+
+	public String getQueryByUser(String User){
+		return getQuery("("+super.getQueryByUser(User)+")");
+	}
+
 }

@@ -138,14 +138,10 @@ public class JdbcMovieDAO implements MovieDAO{
 			m = findbyId(movie.getId());
 			
 		}catch(SQLException e){
-			
 			throw new RuntimeException(e);
-			
 		}catch(MyNotFoundException e){
-			
 			e.addDetails("actualizacion fallida");
 			throw e;
-		
 		}
 		return m;
 	}
@@ -210,7 +206,7 @@ public class JdbcMovieDAO implements MovieDAO{
 		Connection connection = null;
 		try{
 			connection = DataSourceUtils.getConnection(datasource);
-			String query = "SELECT id FROM  wishlist WHERE user_name = ?";
+			String query = "SELECT id FROM  evaluate2 WHERE user_name = ? AND iswished = 'TRUE'";
 			PreparedStatement statement = connection.prepareStatement(query);
 			statement.setString(1, user);
 			ResultSet result = statement.executeQuery();
@@ -254,7 +250,7 @@ public class JdbcMovieDAO implements MovieDAO{
 	
 		try{
 			connection = DataSourceUtils.getConnection(datasource);
-			String query = "DELETE FROM  wishlist WHERE id = ? AND user_name = ?";
+			String query = "DELETE FROM  evaluate2 WHERE id = ? AND user_name = ?";
 			PreparedStatement statement = connection.prepareStatement(query);
 			statement.setInt(1, m);
 			statement.setString(2, u);
@@ -293,7 +289,7 @@ public class JdbcMovieDAO implements MovieDAO{
 		Connection connection = null;
 		try{
 			connection = DataSourceUtils.getConnection(datasource);
-			String query = "SELECT id, name, year, country, picture FROM movie WHERE movie.id NOT IN (SELECT id FROM evaluate2 WHERE user_name = ?) LIMIT "+pagesize+" OFFSET " + (pagesize * (page - 1));
+			String query = "SELECT id, name, year, country, picture FROM movie WHERE movie.id NOT IN (SELECT id FROM evaluate2 WHERE user_name = ?) ORDER BY name LIMIT "+pagesize+" OFFSET " + (pagesize * (page - 1));
 			PreparedStatement statement = connection.prepareStatement(query);
 			statement.setString(1, user_name);
 			ResultSet result = statement.executeQuery();
@@ -378,13 +374,22 @@ public class JdbcMovieDAO implements MovieDAO{
 		Connection connection = null;
 		try{
 			connection = DataSourceUtils.getConnection(datasource);
-			String query = F.getQuery() + "LIMIT "+limit+" OFFSET " + (limit * (page - 1));
+			String query;
+			if(F.getUsername() != null)
+				query = F.getQueryByUser(F.getUsername()) + " ORDER BY name LIMIT "+limit+" OFFSET " + (limit * (page - 1));
+			else
+				query = F.getQuery() + " ORDER BY name LIMIT "+limit+" OFFSET " + (limit * (page - 1));
 			System.out.println(query);
 			PreparedStatement statement = connection.prepareStatement(query);
 			ResultSet result = statement.executeQuery();
 				while(result.next()){
-					Movie movie = new Movie(result.getString(2), result.getInt(3), result.getString(4), result.getString(5));;
+					System.out.println(result);
+					Movie movie = new Movie(result.getString(2), result.getInt(3), result.getString(4), result.getString(7));;
 					movie.setId(result.getInt(1));
+					if(F.getUsername() != null){
+						movie.setAvg(result.getInt(10));
+						movie.setIsWishlist(result.getBoolean(11));
+					}
 					m.add(movie);
 				}
 		}catch(SQLException e){

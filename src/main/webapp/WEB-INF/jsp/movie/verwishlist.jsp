@@ -9,8 +9,10 @@
 $(document).ready(function(){
 	   $(".delete").click(function(){
 		mov = $(this).attr("name");
-		$.post("verwishlist",{wl:mov},function(result){
-	});
+		
+		$.post("ajaxdeletefromwishlist",{wl:mov},function(result){
+			$("#" + mov).remove();
+		});
 	  });
 	});
 </script>
@@ -23,13 +25,12 @@ $(document).ready(function(){
 		<h3>Wishlist </h3>
 		<table>
 		<c:forEach var="movie" items="${movies}" varStatus="status">
-		<tr><td><a href = "/ApplicacionesEmpresariales/user/index">${movie.name}</a></td> <!--  Falta llevar a info de pelicula -->
-		<td>
-		<span id = "${movie.id}">
-		<input type = "submit" value = "eliminar" class = "delete" name = "${movie.id}">
-		</span>
-		</td>
-		</tr>
+		
+			<div id = "${movie.id}">
+			<a href = "/ApplicacionesEmpresariales/user/index">${movie.name}</a> 
+			<input type = "submit" value = "eliminar" class = "delete" name = "${movie.id}"/>
+			</div>	
+		
 		</c:forEach>
 		</table>
 	</body>

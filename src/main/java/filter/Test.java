@@ -25,7 +25,7 @@ public class Test {
 		
 		for(int i = 0; i < F.size(); i++)
 			F4.addFilter(F.get(i));
-		System.out.println(F4.getQuery());
+		System.out.println(F4.getQueryByUser("ale"));
 	}
 
 }

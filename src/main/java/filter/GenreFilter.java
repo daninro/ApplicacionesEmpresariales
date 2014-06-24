@@ -25,4 +25,8 @@ public class GenreFilter extends Filter{
 			return genero;
 		}
 		
+		public String getQueryByUser(String User){
+			return getQuery("("+super.getQueryByUser(User)+")");
+		}
+
 }

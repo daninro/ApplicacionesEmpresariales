@@ -25,6 +25,9 @@ public class YearFilter extends Filter{
 		return getQuery("movie");
 	}
 	
+	public String getQueryByUser(String User){
+		return getQuery("("+super.getQueryByUser(User)+")");
+	}
 	
 	
 }

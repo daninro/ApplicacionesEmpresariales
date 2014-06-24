@@ -22,4 +22,8 @@ public class ActorFilter extends Filter{
 					"WHERE A.id IN (SELECT perform.id FROM perform WHERE id_actor='"+actor+"')"; 
 			return act;
 		}
+		
+		public String getQueryByUser(String User){
+			return getQuery(super.getQueryByUser(User));
+		}
 }

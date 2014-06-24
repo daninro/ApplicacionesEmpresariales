@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import exceptions.OperationUncompletedException;
+import filter.Filter;
 import filter.NameFilter;
 import service.movie.MovieService;
 import service.actor.ActorService;
@@ -82,8 +83,10 @@ public class MovieController extends MyController{
 				if(page == 0) page++;
 			}
 			System.out.println(page);
-			l = movieService.FilterMovies(new NameFilter(name), page, 20);
-			if(movieService.FilterMovies(new NameFilter(name), page + 1, 20).isEmpty()){
+			Filter F = new NameFilter(name);
+			F.setUsername((String)session.getAttribute("username"));
+			l = movieService.FilterMovies(F, page, 20);
+			if(movieService.FilterMovies(F, page + 1, 20).isEmpty()){
 				m.addAttribute("next", page);	
 			}else{
 				m.addAttribute("next", page + 1);
@@ -143,13 +146,12 @@ public class MovieController extends MyController{
 		User u = (User) session.getAttribute("user");
 		int movieid= Integer.parseInt(request.getParameter("name"));
 		Movie mov = movieService.findMoviebyId(movieid);
-				List <Movie>p = null;
+				List <Movie> p = null;
 				try {
 					p = movieService.addWishlist(mov, u);
 
 				} catch (OperationUncompletedException e) {
-					//incompleto
-					System.out.println("enviar a pagina de error asdasdsad" + e.toString());
+					m.addAttribute("info", "No se pudo agregar :(");
 				}
 		m.addAttribute("info", "agregada a la wishlist");
 		return "message/info";
@@ -244,7 +246,9 @@ public class MovieController extends MyController{
 					page = Integer.parseInt(request.getParameter("page"));
 					if(page == 0) page++;
 				}
-				l = movieService.getAllMovies(page, 20, (String)session.getAttribute("username"));
+				Filter F = new NameFilter("");
+				F.setUsername((String)session.getAttribute("username"));
+				l = movieService.FilterMovies(F, page, 20);
 				m.addAttribute("movieList",l);
 				m.addAttribute("prev", page - 1);
 				m.addAttribute("next", page + 1);
@@ -288,16 +292,17 @@ public class MovieController extends MyController{
 		}	
 	
 		@RequestMapping(method = {RequestMethod.POST})
-		public String verwishlist(Model m, HttpServletRequest request, HttpSession session){
+		public String ajaxdeletefromwishlist(Model m, HttpServletRequest request, HttpSession session){
 			if(!isLogin(session)) return getLogin();
-			String movie = request.getParameter("wl"); 
+			String movie = request.getParameter("wl");
+			System.out.println("aqui esta el id: " + movie);
 			try {
 				movieService.deleteMoviefromWishlist( Integer.parseInt(movie), (String)session.getAttribute("username"));
 			} catch (OperationUncompletedException e) {
 				
 			}
-		return "/user/verwishlist";	
-		
+			m.addAttribute("info", "pelicula quitada de la wishlist");
+			return "/message/info";	
 		}
 		
 		@RequestMapping
