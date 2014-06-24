@@ -340,14 +340,6 @@ public class MovieController extends MyController{
 		@RequestMapping
 		public String deletemovie(Model model, HttpSession session){
 			if(!isLogin(session)) return getLogin();
-			List<Movie> movie = null;
-			try {
-				movie = movieService.getAllMovies();
-			} catch (OperationUncompletedException e) {
-				//incompleto
-				System.out.println("enviar a pagina de error con e.getMessage");
-			}
-			model.addAttribute("movies",movie);
 			return "/movie/deletemovie";
 		}	
 		
@@ -359,7 +351,7 @@ public class MovieController extends MyController{
 			
 					List <Movie>p = null;
 					try {
-						p = movieService.deleteMovie(mov);
+						movieService.deleteMovie(mov);
 
 					} catch (OperationUncompletedException e) {
 						//incompleto
@@ -367,6 +359,15 @@ public class MovieController extends MyController{
 					}
 			model.addAttribute("movies", p);
 			return "movie/deletemovie2";
-		}	
+		}
+		@RequestMapping
+		public String movie(Model model, HttpSession session, HttpServletRequest request) throws OperationUncompletedException{
+			if(!isLogin(session)) return getLogin();
+			int movieid= Integer.parseInt(request.getParameter("movie"));
+			Movie m = movieService.findMoviebyId(movieid);
+			List<Actor> a = actorService.getMoviesPerforms(movieid);
+			//int mark = movieService.
+			return "";
+		}
 		
 }

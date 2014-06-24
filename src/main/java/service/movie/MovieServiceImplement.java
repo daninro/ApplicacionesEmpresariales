@@ -40,17 +40,7 @@ public class MovieServiceImplement implements MovieService{
 	 * @throws OperationUncompletedException if a problem is founded while
 	 * the method is executed
 	 */
-	@Transactional
-	public List<Movie> getAllMovies() throws OperationUncompletedException{
-		List<Movie> movie = null;
-		try{
-			movie = movieDAO.getAll();
-		} catch (RuntimeException e){
-			throw new OperationUncompletedException("No se pudieron obtener las peliculas");
-		}
-		return movie;
-	}
-		
+			
 	@Transactional
 	public Movie findMoviebyId(Integer id) throws OperationUncompletedException{
 		Movie movie = null;
@@ -75,29 +65,7 @@ public class MovieServiceImplement implements MovieService{
 		
 		return movies;
 	}
-	@Transactional
-	public List<Movie> findMoviebyYear(Integer year) throws OperationUncompletedException{
-		List<Movie> movie = null;
-		try{
-			movie = movieDAO.findbyYear(year);
-		} catch (RuntimeException e){
-			throw new OperationUncompletedException("El elemento buscado no existe");
-		}
 		
-		return movie;
-	}
-	@Transactional
-	public List<Movie> findMoviebyCountry(String c) throws OperationUncompletedException{
-		List<Movie> movie = null;
-		try{
-			movie = movieDAO.findbyCountry(c);
-		} catch (RuntimeException e){
-			throw new OperationUncompletedException("Ocurrio un problema Durante la busqueda");
-		}
-		
-		return movie;
-	}
-	
 	@Transactional
 	public Movie addMovie(Movie m) throws OperationUncompletedException{
 		try{
@@ -124,14 +92,13 @@ public class MovieServiceImplement implements MovieService{
 	}
 
 	@Transactional
-	public List<Movie> deleteMovie(Movie m) throws OperationUncompletedException{
-		List<Movie> movie = null;
+	public void deleteMovie(Movie m) throws OperationUncompletedException{
 		try{
-			movie = movieDAO.deleteMovie(m);
+			 movieDAO.deleteMovie(m);
 		}catch(RuntimeException e){
 			throw new OperationUncompletedException("ocurrio un problema durante la eliminacion");
 		}
-		return movie;
+		
 	}
 	
 	@Transactional
@@ -240,17 +207,7 @@ public class MovieServiceImplement implements MovieService{
 	}
 	
 	
-	@Override
-	@Transactional
-	public List<Movie> getAllMovies(int page, int i, String username) throws OperationUncompletedException{
-		List<Movie> movie = null;
-		try{
-			movie = movieDAO.getAll(page, i, username);
-		} catch (RuntimeException e){
-			throw new OperationUncompletedException("No se pudieron obtener las peliculas");
-		}
-		return movie;
-	}
+	
 	
 	@Override
 	@Transactional

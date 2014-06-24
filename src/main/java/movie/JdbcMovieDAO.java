@@ -78,50 +78,6 @@ public class JdbcMovieDAO implements MovieDAO{
 		return m;
 	}
 
-	public List<Movie> findbyYear(Integer year) {
-		List<Movie> m = new ArrayList<Movie>();
-		Connection connection = null;
-		try{
-			
-			connection = DataSourceUtils.getConnection(datasource);
-			String query = "SELECT * FROM movie WHERE year = ?";
-			PreparedStatement statement = connection.prepareStatement(query);
-			statement.setInt(1, year);
-			ResultSet result = statement.executeQuery();
-			while(result.next()){
-				Movie movie = new Movie(result.getString(2), result.getInt(3), result.getString(4), result.getString(7));
-				movie.setId(result.getInt(1));
-				m.add(movie);
-			}
-			
-		}catch(SQLException e){
-			throw new RuntimeException(e);
-		}
-		return m;
-	}
-
-	public List<Movie> findbyCountry(String c) {
-		List<Movie> m = new ArrayList<Movie>();
-		Connection connection = null;
-		try{
-			connection = DataSourceUtils.getConnection(datasource);
-			String query = "SELECT * FROM movie WHERE country = ?";
-			PreparedStatement statement = connection.prepareStatement(query);
-			statement.setString(1, c);
-			ResultSet result = statement.executeQuery();
-			while(result.next()){
-				Movie movie = new Movie(result.getString(2), result.getInt(3), result.getString(4), result.getString(7));
-				movie.setId(result.getInt(1));
-				m.add(movie);
-			}
-			
-		}catch(SQLException e){
-			
-			throw new RuntimeException(e);
-		}
-		return m;
-	}
-
 	public Movie update(Movie movie) throws MyNotFoundException {
 		if(movie == null) return null;
 		Movie m = null;
@@ -264,51 +220,7 @@ public class JdbcMovieDAO implements MovieDAO{
 		return movies;
 	}
 
-	public List<Movie> getAll() {
-		List<Movie> m = new ArrayList<Movie>();
-		Connection connection = null;
-		try{
-			
-			connection = DataSourceUtils.getConnection(datasource);
-			String query = "SELECT * FROM movie ";
-			PreparedStatement statement = connection.prepareStatement(query);
-			ResultSet result = statement.executeQuery();
-			while(result.next()){
-				Movie movie = new Movie(result.getString(2), result.getInt(3), result.getString(4), result.getString(7));
-				movie.setId(result.getInt(1));
-				m.add(movie);
-			}
-		}catch(SQLException e){
-			throw new RuntimeException(e);
-		}
-		return m;	
-	}
-
-	public List<Movie> getAll(int page, int pagesize, String user_name) {
-		List<Movie> m = new ArrayList<Movie>();
-		Connection connection = null;
-		try{
-			connection = DataSourceUtils.getConnection(datasource);
-			String query = "SELECT id, name, year, country, picture FROM movie WHERE movie.id NOT IN (SELECT id FROM evaluate2 WHERE user_name = ?) ORDER BY name LIMIT "+pagesize+" OFFSET " + (pagesize * (page - 1));
-			PreparedStatement statement = connection.prepareStatement(query);
-			statement.setString(1, user_name);
-			ResultSet result = statement.executeQuery();
-				while(result.next()){
-					Movie movie = new Movie(result.getString(2), result.getInt(3), result.getString(4), result.getString(5));;
-					movie.setId(result.getInt(1));
-					m.add(movie);
-				}
-		}catch(SQLException e){
-				
-			throw new RuntimeException(e);
-		}
-		return m;	
-	}
-	
-	
-
-	public List<Movie> deleteMovie(Movie m) {
-		List<Movie> movies = null;
+	public void deleteMovie(Movie m) {
 		Connection connection = null;
 		try{
 			connection = DataSourceUtils.getConnection(datasource);
@@ -316,17 +228,14 @@ public class JdbcMovieDAO implements MovieDAO{
 			PreparedStatement statement = connection.prepareStatement(query);
 			statement.setInt(1, m.getId());
 			statement.executeUpdate();
-			movies = getAll();
 			
 		}catch(SQLException e){
 			
 			throw new RuntimeException(e);
 		}
-		return movies;
 	}
 	
-	public List<Movie> deleteMovie(Integer m) {
-		List<Movie> movies = null;
+	public void deleteMovie(Integer m) {
 		Connection connection = null;
 		try{
 			connection = DataSourceUtils.getConnection(datasource);
@@ -334,13 +243,11 @@ public class JdbcMovieDAO implements MovieDAO{
 			PreparedStatement statement = connection.prepareStatement(query);
 			statement.setInt(1, m);
 			statement.executeUpdate();
-			movies = getAll();
 			
 		}catch(SQLException e){
 			
 			throw new RuntimeException(e);
 		}
-		return movies;
 	}
 
 	@Override
@@ -446,5 +353,6 @@ public class JdbcMovieDAO implements MovieDAO{
 		
 		return m;
 	}
+
 
 }

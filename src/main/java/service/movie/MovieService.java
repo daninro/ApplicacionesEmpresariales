@@ -11,13 +11,7 @@ import exceptions.OperationUncompletedException;
 
 public interface MovieService {
 	@Transactional
-	public List<Movie> getAllMovies() throws OperationUncompletedException;
-	@Transactional
 	public Movie findMoviebyId(Integer id) throws OperationUncompletedException;
-	@Transactional
-	public List<Movie> findMoviebyYear(Integer year) throws OperationUncompletedException;
-	@Transactional
-	public List<Movie> findMoviebyCountry(String c) throws OperationUncompletedException;
 	@Transactional
 	public List<Movie> searchByName(String name) throws OperationUncompletedException;
 	@Transactional
@@ -25,7 +19,7 @@ public interface MovieService {
 	@Transactional
 	public Movie updateMovie(Movie m) throws OperationUncompletedException;
 	@Transactional
-	public List<Movie> deleteMovie(Movie m) throws OperationUncompletedException;
+	public void deleteMovie(Movie m) throws OperationUncompletedException;
 	@Transactional
 	public Integer setMark(Movie m, Integer mark, User u) throws OperationUncompletedException;
 	@Transactional
@@ -44,8 +38,6 @@ public interface MovieService {
 	public List<Movie> top20()throws OperationUncompletedException;
 	@Transactional
 	public List<Movie> last10()throws OperationUncompletedException;
-	@Transactional
-	public List<Movie> getAllMovies(int page, int i, String username) throws OperationUncompletedException;
 	@Transactional
 	public List<Movie> FilterMovies(filter.Filter filter, int page, int limit) throws OperationUncompletedException;
 	@Transactional
