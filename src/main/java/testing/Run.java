@@ -42,20 +42,14 @@ public class Run {
 		
 		MovieService ms = (MovieService)context.getBean("movieService");
 		UserService us = (UserService)context.getBean("userService"); 
-		Movie movie = new Movie("lola", 1997, "EEUU", "imagen");
-		System.out.println(movie);
-		movie = ms.addMovie(movie);
-		System.out.println(movie);
 		ActorService as = (ActorService)context.getBean("actorService");
+	
+		List<Actor> a = as.getMoviesPerforms(1);
 		
+		//List<Actor> a = actorService.getMoviesPerforms(movieid);
 		
-		
-		
-		//List<Actor> a = as.getMoviesPerforms(1);
-		
-		
-		//for(int i = 0; i < a.size(); i++)
-		//	System.out.println(a.get(i));
+		for(int i = 0; i < a.size(); i++)
+			System.out.println(a.get(i));
 		
 		ArrayList<Filter> F = new ArrayList<Filter>();
 		F.add(new GenreFilter("Adventure"));

@@ -7,6 +7,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.sql.DataSource;
+
+import org.apache.commons.math3.stat.correlation.PearsonsCorrelation;
 import org.springframework.jdbc.datasource.DataSourceUtils;
 
 import exceptions.MyNotFoundException;
@@ -26,6 +28,8 @@ public class JdbcMovieDAO implements MovieDAO{
 	public void setDatasource(DataSource datasource) {
 		this.datasource = datasource;
 	}
+	
+
 	/** accesors and mutators
 	 * @throws MyNotFoundException **/
 	
@@ -67,6 +71,8 @@ public class JdbcMovieDAO implements MovieDAO{
 			if(result.next()){
 			m = new Movie(result.getString(2), result.getInt(3), result.getString(4), result.getString(7));
 				m.setId(result.getInt(1));
+				m.setId_director(result.getString(8));
+				m.setDirector(result.getString(9));
 			}else{
 				
 				throw new MyNotFoundException("id no encontrado");
@@ -353,6 +359,147 @@ public class JdbcMovieDAO implements MovieDAO{
 		
 		return m;
 	}
-
+	
+	public void setGenre(String Genre, int id){
+		Connection connection = null;
+		try{
+			String query = "INSERT INTO has (name, id) VALUES (?, ?)";
+			connection = DataSourceUtils.getConnection(datasource);
+			PreparedStatement statement = connection.prepareStatement(query);
+			statement.setString(1, Genre);
+			statement.setInt(2, id);
+			statement.executeUpdate();
+		}catch(SQLException e){
+			throw new RuntimeException(e);
+		}
+	}
+	
+	public List<String> getGenres(int id){
+		Connection connection = null;
+		List<String> l = new ArrayList<String>();
+		try{
+			String query = "SELECT name FROM has WHERE id = ?";
+			connection = DataSourceUtils.getConnection(datasource);
+			PreparedStatement statement = connection.prepareStatement(query);
+			statement.setInt(1, id);
+			ResultSet result = statement.executeQuery();
+			
+			while(result.next()){
+				l.add(result.getString(1));
+			}
+			
+		}catch(SQLException e){
+			throw new RuntimeException(e);
+		}
+		return l;
+	}
+	
+	
+	
+	
+	public double corr(int id1, int id2){
+		Connection connection;
+		double toret;
+		try{
+			connection = DataSourceUtils.getConnection(datasource);
+			String query = "SELECT * FROM corr WHERE id1 = ? AND id2 = ?";
+			PreparedStatement statement = connection.prepareStatement(query);
+			statement.setInt(1, id1);
+			statement.setInt(2, id2);
+			ResultSet result = statement.executeQuery();
+			List<Integer> m = new ArrayList<Integer>();
+			List<Integer> n = new ArrayList<Integer>();
+			while(result.next()){
+				m.add(result.getInt(4));
+				n.add(result.getInt(5));
+			}
+			double[] m1 = new double[m.size()];
+			double[] n1 = new double[n.size()];
+			for(int i = 0; i < m.size(); i++){
+				m1[i] = m.get(i);
+				n1[i] = n.get(i);
+			}
+			PearsonsCorrelation correlation = new PearsonsCorrelation();
+			if(m1.length > 1)
+				toret = correlation.correlation(m1, n1);
+			else
+				toret = 0;
+			//connection.close();
+		}catch(SQLException e){
+			System.out.println(e.toString());
+			throw new RuntimeException(e);
+		}
+		return toret;
+	}
+	
+	public double P(String username, int id){
+		Connection connection;
+		double toret = 0;
+		try{
+			connection = DataSourceUtils.getConnection(datasource);
+			String query = "SELECT id, calification FROM evaluate2 WHERE user_name = ? AND calification > '0'";
+			PreparedStatement statement = connection.prepareStatement(query);
+			statement.setString(1, username);
+			ResultSet result = statement.executeQuery();
+			List<Integer> l_id = new ArrayList<Integer>();
+			List<Integer> l_cal = new ArrayList<Integer>();
+			while(result.next()){
+				l_id.add(result.getInt(1));
+				l_cal.add(result.getInt(2));
+			}
+			double sum = 0;
+			double div = 0;
+			for(int i = 0; i < l_id.size(); i++){
+				double corr = corr(id, l_id.get(i));
+				if(Double.isNaN(corr)) corr = 0;
+				sum += corr * l_cal.get(i);
+				div += Math.abs(corr);
+			}
+			if(!(div == 0))
+				toret = sum / div;
+			
+		}catch(SQLException e){
+			System.out.println(e.toString());
+			throw new RuntimeException(e);
+		}
+		
+		return toret;
+	}
+	
+	public  void algorithm(){
+		Connection connection = null;
+		try{			
+			connection = DataSourceUtils.getConnection(datasource);
+			String query = "SELECT A.id, U.user_name " +
+			"FROM (SELECT DISTINCT id FROM evaluate2) AS A, (SELECT DISTINCT user_name FROM evaluate2) AS U, movie " +
+			"WHERE "+
+			"'0'= ( "+
+			"SELECT COUNT(id) "+
+			"FROM evaluate2 "+
+			"WHERE id = A.id AND user_name = U.user_name) AND movie.id = A.id";
+			PreparedStatement statement = connection.prepareStatement(query);
+			ResultSet result = statement.executeQuery();
+			while(result.next()){
+				recomendInsert(result.getString(2), result.getInt(1), P(result.getString(2), result.getInt(1)));
+			}
+		}catch(SQLException e){
+			throw new RuntimeException(e);
+		}
+	}
+	public void recomendInsert(String username, int id, double calification){
+		
+		Connection connection = null;
+		try{
+			String query = "INSERT INTO evaluate (user_name, id, calification) VALUES (?, ?, ?)";
+			connection = DataSourceUtils.getConnection(datasource);
+			PreparedStatement statement = connection.prepareStatement(query);
+			statement.setString(1, username);
+			statement.setInt(2, id);
+			statement.setDouble(3, calification);
+			
+			statement.executeUpdate();
+		}catch(SQLException e){
+		}
+	}
 
 }

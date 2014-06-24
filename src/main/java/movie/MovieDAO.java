@@ -21,6 +21,10 @@ public interface MovieDAO {
 	public List<Movie> top20();
 	public List<Movie> Filter(filter.Filter F, int page, int limit);
 	public List<Movie> getWishlistbyUsername(String user);
-	
+	//public double P(String username, int id);
+	//public double corr(int id1, int id2);
+	public void algorithm();
+	public void setGenre(String Genre, int id);
+	public List<String> getGenres(int id);
 	
 }

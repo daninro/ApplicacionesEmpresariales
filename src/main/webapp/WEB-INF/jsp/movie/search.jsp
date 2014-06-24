@@ -46,17 +46,28 @@ $(document).ready(function(){
 	
 	<form method = "GET" action="search" name = "filter">
 			
-			<input type = "text" id = "keywords" name = "name" value = "${name}"/></p>
+			<input type = "text" id = "keywords" name = "name" value = "${name}"/>
 			<input type = "submit" value = "buscar" >
 	</form>
 	<span>
 		<c:forEach var="movie" items="${movieList}" varStatus="status">
 			<div class = "block">
-				<input class = "cal" type = "radio" name = "${movie.id}" value = "1"/>1
-				<input class = "cal" type = "radio" name = "${movie.id}" value = "2"/>2
-				<input class = "cal" type = "radio" name = "${movie.id}" value = "3"/>3
-				<input class = "cal" type = "radio" name = "${movie.id}" value = "4"/>4
-				<input class = "cal" type = "radio" name = "${movie.id}" value = "5"/>5
+				<input class = "cal" type = "radio" name = "${movie.id}" value = "1"
+				<c:if test="${movie.avg == 1}">checked</c:if>
+				/>1
+				<input class = "cal" type = "radio" name = "${movie.id}" value = "2"
+				<c:if test="${movie.avg == 2}">checked</c:if>
+				/>2
+				<input class = "cal" type = "radio" name = "${movie.id}" value = "3"
+				<c:if test="${movie.avg == 3}">checked</c:if>
+				/>3
+				<input class = "cal" type = "radio" name = "${movie.id}" value = "4"
+				<c:if test="${movie.avg == 4}">checked</c:if>
+				/>4
+				<input class = "cal" type = "radio" name = "${movie.id}" value = "5"
+				<c:if test="${movie.avg == 5}">checked</c:if>
+				/>5
+
 				<h3> ${movie.name}</h3>
 				<p>Year: ${movie.year}</p>
 				<p>Country: ${movie.country}</p>

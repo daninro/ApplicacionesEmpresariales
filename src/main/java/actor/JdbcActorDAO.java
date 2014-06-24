@@ -126,7 +126,7 @@ public class JdbcActorDAO  implements ActorDAO{
 			statement.setInt(1, id);
 			ResultSet result = statement.executeQuery();
 			while(result.next()){
-				actor.add(new Actor(result.getString(2), result.getString(3), result.getInt(4)));
+				actor.add(new Actor(result.getString(3), result.getString(2), result.getInt(4)));
 			}
 		}catch(SQLException e){
 			throw new RuntimeException(e);

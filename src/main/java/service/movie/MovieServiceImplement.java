@@ -244,6 +244,31 @@ public class MovieServiceImplement implements MovieService{
 		}catch(RuntimeException e){	}
 	return movies;
 	}
+	@Override
+	@Transactional
+	public void executeAlgorithm() {
+		try{
+			movieDAO.algorithm();
+			
+		}catch(RuntimeException e){	}		
+	}
+	@Override
+	@Transactional
+	public List<String> getGenres(int id) {
+		List<String> l = null;
+		try{
+			l = movieDAO.getGenres(id);
+			
+		}catch(RuntimeException e){	}
+		return l;
+	}
+	@Override
+	@Transactional
+	public void setGenres(String Genre, int id) {
+		try{
+			movieDAO.setGenre(Genre, id);			
+		}catch(RuntimeException e){	}	
+	}
 
 	
 	

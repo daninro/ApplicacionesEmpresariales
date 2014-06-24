@@ -42,8 +42,10 @@ public interface MovieService {
 	public List<Movie> FilterMovies(filter.Filter filter, int page, int limit) throws OperationUncompletedException;
 	@Transactional
 	public List<Movie> getWishlistbyUsername(String s) throws OperationUncompletedException;
-	
-	
-	
-	
+	@Transactional
+	public void executeAlgorithm();
+	@Transactional
+	public List<String> getGenres(int id);
+	@Transactional
+	public void setGenres(String genre, int id);
 }

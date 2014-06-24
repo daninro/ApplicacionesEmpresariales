@@ -1,38 +1,40 @@
 package controllers;
 
-import java.sql.Date;
 import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+
 import movie.Movie;
 
-import org.postgresql.translation.messages_bg;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import service.actor.ActorService;
+import service.movie.MovieService;
+import user.User;
+import actor.Actor;
 import exceptions.OperationUncompletedException;
 import filter.Filter;
 import filter.NameFilter;
-import service.movie.MovieService;
-import service.actor.ActorService;
-import actor.Actor;
-import user.User;
 
 
 
 public class MovieController extends MyController{
 	private MovieService movieService;
+	private ActorService actorService;
+	
 	/***services mutators***/
 	public void setMovieService(MovieService movieService) {
 		this.movieService = movieService;
 	}
 	
-	private ActorService actorService;
 	/***services mutators***/
 	public void setActorService(ActorService actorService) {
 		this.actorService = actorService;
 	}
+	
 	
 	/***movie/addmovie view form***/
 	@RequestMapping
@@ -50,21 +52,25 @@ public class MovieController extends MyController{
 	public String addmovie(Model m, HttpServletRequest request, HttpSession session){
 		if(!isLogin(session)) return getLogin();
 		Movie mov = new Movie(
-				request.getParameter("name"), 
-				Integer.parseInt(request.getParameter("year")), 
-				request.getParameter("country"),
-				request.getParameter("image")
-				);
+			request.getParameter("name"), 
+			Integer.parseInt(request.getParameter("year")), 
+			request.getParameter("country"),
+			request.getParameter("image")
+		);
+				
+		String[] checkbox= request.getParameterValues("genre");
+		for(int i = 0; i < checkbox.length; i++)
+			movieService.setGenres(checkbox[i], mov.getId());
 		
-				Movie p = null;
-				try {
-					p = movieService.addMovie(mov);
-				} catch (OperationUncompletedException e) {
-					m.addAttribute("message", e.toString());
-				}
-				if(p != null){
-					return "redirect:/movie/list";
-				}
+		Movie p = null;
+		try {
+			p = movieService.addMovie(mov);
+		} catch (OperationUncompletedException e) {
+			m.addAttribute("message", e.toString());
+		}
+		if(p != null){
+			return "redirect:/movie/list";
+		}
 		return "message/message";
 	}
 	
@@ -103,27 +109,6 @@ public class MovieController extends MyController{
 		return "movie/search";
 	}
 	
-	/*
-	@RequestMapping(method = {RequestMethod.POST})
-	public String table_search(Model m, HttpServletRequest request, HttpSession session){
-		if(!isLogin(session)) return getLogin();
-		String name = request.getParameter("name");
-		List<Movie> l = null;
-		try {
-				l = movieService.searchByName(name);
-				} catch (OperationUncompletedException e) {
-					//incompleto
-					System.out.println("enviar a pagina de error");
-					return "movie/search";
-				}
-		if(!l.isEmpty()) {
-			m.addAttribute("movieList",l);
-		}
-		System.out.println(m.containsAttribute("movieList"));
-		return "movie/table_search";
-	}
-	*/
-
 	@RequestMapping
 	public String moviedetails(Model model, HttpSession session, HttpServletRequest request){
 		if(!isLogin(session)) return getLogin();
@@ -138,18 +123,15 @@ public class MovieController extends MyController{
 		return "movie/moviedetails";
 	}
 	
-
-	
 	@RequestMapping(method = {RequestMethod.POST})
 	public String ajaxaddwishlist(Model m, HttpServletRequest request, HttpSession session) throws OperationUncompletedException{
 		if(!isLogin(session)) return getLogin();
 		User u = (User) session.getAttribute("user");
 		int movieid= Integer.parseInt(request.getParameter("name"));
 		Movie mov = movieService.findMoviebyId(movieid);
-				List <Movie> p = null;
+				//List <Movie> p = null;
 				try {
-					p = movieService.addWishlist(mov, u);
-
+					movieService.addWishlist(mov, u);
 				} catch (OperationUncompletedException e) {
 					m.addAttribute("info", "No se pudo agregar :(");
 				}
@@ -360,14 +342,44 @@ public class MovieController extends MyController{
 			model.addAttribute("movies", p);
 			return "movie/deletemovie2";
 		}
+		
 		@RequestMapping
 		public String movie(Model model, HttpSession session, HttpServletRequest request) throws OperationUncompletedException{
 			if(!isLogin(session)) return getLogin();
-			int movieid= Integer.parseInt(request.getParameter("movie"));
+			int movieid = 0;
+			if(request.getParameter("movie") == null) return "index";
+			else movieid = Integer.parseInt(request.getParameter("movie"));
+			
+			
+			System.out.println(movieid);
+			System.out.println(actorService.toString());
+			
 			Movie m = movieService.findMoviebyId(movieid);
 			List<Actor> a = actorService.getMoviesPerforms(movieid);
-			//int mark = movieService.
-			return "";
+			List<String> l = movieService.getGenres(movieid);
+			
+			model.addAttribute("genre", l);
+			model.addAttribute("movie",m);
+			model.addAttribute("actor", a);
+			return "movie/movie";
 		}
+		
+		@RequestMapping
+		public String executealgorithm(Model model, HttpSession session, HttpServletRequest request) throws OperationUncompletedException{
+			if(!isLogin(session)) return getLogin();
+			new Thread(new Thread_algorithm()).start();
+			return "index";
+		}
+		
+		
+		private class Thread_algorithm implements Runnable 
+		{
+		    public void run() 
+		    {
+		        movieService.executeAlgorithm();
+		    }
+		    
+		}
+		
 		
 }

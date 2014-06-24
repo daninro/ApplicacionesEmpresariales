@@ -23,6 +23,7 @@
 			<li><a href = "../user/deleteuser">Eliminar Usuarios OK</a></li>
 			<li><a href = "../user/register">Agregar Administradores OK</a></li>
 			<li><a href = "../movie/editmovie">Eliminar mi cuenta</a></li>
+			<li><a href = "../movie/executealgorithm">ejecutar algoritmo</a></li>
 			</c:if>
 			<li><a href = "../user/logout">Logout</a></li>
 			</ul>

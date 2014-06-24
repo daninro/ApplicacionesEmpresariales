@@ -93,6 +93,7 @@ public class ActorServiceImplement implements ActorService{
 		
 	}
 	@Override
+	@Transactional
 	public List<Actor> getMoviesPerforms(int id)throws OperationUncompletedException {
 		List<Actor> actors = null;
 		try{

@@ -37,19 +37,14 @@
 		<p>Country: ${movie.country}</p>
 		<p>Director: ${movie.director}</p>
 		<input type = "submit" value = "Agregar a Wishlist" class = "wish" name = "${movie.id}">
-	
-		
-			<div class = "block">
-				
-				<h3> ${movie.name}</h3>
-				<p>Year: ${movie.year}</p>
-				<p>Country: ${movie.country}</p>
-				<p>Director: ${movie.country}</p>
-			</div>
 			<h3>Actores</h3>
-			<c:forEach var="actor" items="${actors}" varStatus="status">
-				<p>${actor.name}</p>
+			<c:forEach var="act" items="${actor}" varStatus="status">
+				<p>${act.name}</p>
 			</c:forEach>		
+			
+			<c:forEach var="gen" items="${genre}" varStatus="status">
+				<p>${gen}</p>
+			</c:forEach>
 	</body>
 	
 	

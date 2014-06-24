@@ -66,7 +66,7 @@
 	<bean id = "actorService" class = "service.actor.ActorServiceImplement">
 		<property name="actorDAO" ref= "actorDao" ></property>
 	</bean>
-	
+
 	<bean id = "directorService" class = "service.director.DirectorServiceImplement">
 		<property name="directorDAO" ref= "directorDao" ></property>
 	</bean>
@@ -77,6 +77,7 @@
 	
 	<bean name="/movie/*" class="controllers.MovieController">
 		<property name="movieService" ref="movieService"/>
+		<property name="actorService" ref="actorService"/>
 		<!-- <property name="userService" ref="userService"/>-->
 	</bean>
 	
