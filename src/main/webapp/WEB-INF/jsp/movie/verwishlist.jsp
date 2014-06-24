@@ -23,7 +23,7 @@ $(document).ready(function(){
 </ul>
 
 		<h3>Wishlist </h3>
-		<table>
+
 		<c:forEach var="movie" items="${movies}" varStatus="status">
 		
 			<div id = "${movie.id}">
@@ -32,6 +32,5 @@ $(document).ready(function(){
 			</div>	
 		
 		</c:forEach>
-		</table>
 	</body>
 </html>

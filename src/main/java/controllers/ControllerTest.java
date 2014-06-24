@@ -21,27 +21,6 @@ public class ControllerTest extends MyController{
 	}
 	
 	
-	/*ajax/test*/
-	@RequestMapping
-	public String test(Model m, HttpServletRequest request, HttpSession session){
-		if(!isLogin(session)) return getLogin();
-		List<Movie> l;
-		try {
-			int page = 1;
-			if(request.getParameter("page")!=null){
-				page = Integer.parseInt(request.getParameter("page"));
-				if(page == 0) page++;
-			}
-			//l = movieService.getAllMovies(page, 20, (String)session.getAttribute("username"));
-			m.addAttribute("movieList",l);
-			m.addAttribute("prev", page - 1);
-			m.addAttribute("next", page + 1);
-		} catch (OperationUncompletedException e) {
-			
-		}
-		return "ajax/test";
-	}
-	
 	
 	/*ajax/mark*/
 	@RequestMapping(method = {RequestMethod.POST})

@@ -73,9 +73,6 @@ public class Run {
 			F4.addFilter(F.get(i));
 		}
 		
-		List<Movie> m = ms.FilterMovies(F4);
-		for(int i = 0; i < m.size(); i++)
-			System.out.println(m.get(i));
 		
 		//List<Movie> l = ms.getAllMovies();
 		
