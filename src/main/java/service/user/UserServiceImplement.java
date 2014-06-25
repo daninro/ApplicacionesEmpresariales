@@ -6,7 +6,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import exceptions.MyNotFoundException;
 import exceptions.OperationUncompletedException;
-import movie.Movie;
 import movie.MovieDAO;
 import user.User;
 import user.UserDAO;
@@ -102,5 +101,7 @@ public class UserServiceImplement  implements UserService{
 			
 		}
 	}
+	
+
 	
 }

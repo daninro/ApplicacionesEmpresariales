@@ -3,6 +3,21 @@
 <html>
 <head>
 <title>List of movies</title>
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script>
+$(document).ready(function(){
+	   $(".delete").click(function(){
+		txt = $(this).attr("name");
+		$.post("deletemovie",{movie:txt},function(result){
+			$("#data").remove();
+			
+	});
+	  });
+	});
+</script>
+
+
 </head>
 <body>
 <ul>
@@ -11,7 +26,8 @@
  	<form method = "POST" action="editmovie">
 
 	<h3>${movieDetails.name}</h3>
-
+	<span id = "data">
+	<input type = "button" value = "eliminar" class = "delete" name = "${movieDetails.id}" id="${movieDetails.id}">
 	<table border="1" bgcolor="cyan" align="center" >
 		<tr>
 			<th>Name</th>
@@ -38,5 +54,6 @@
 				<input type = "submit" value = "Guardar cambios" id="wish">
 		</p>
 		</form>
+	</span>
 </body>
 </html>

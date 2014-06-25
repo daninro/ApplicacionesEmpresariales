@@ -156,7 +156,6 @@ public class UserController extends MyController{
 	@RequestMapping(method = {RequestMethod.POST})
 	public String edituser(Model model, HttpSession session, HttpServletRequest request) throws OperationUncompletedException{
 		if(!isLogin(session)) return getLogin();
-		String user = request.getParameter("user");
 		User u = new User(
 				request.getParameter("name"), 
 				Date.valueOf(request.getParameter("date")),

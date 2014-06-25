@@ -63,9 +63,10 @@
 				<c:if test="${movie.avg == 5}">checked</c:if>
 				/>5
 				
-				<h3> ${movie.name}</h3>
-				<p>Year: ${movie.year}</p>
-				<p>Country: ${movie.country}</p>
+				<a href = "/ApplicacionesEmpresariales/movie/movie?movie=${movie.id}" ><h3> ${movie.name}</h3></a>
+				<p>Year: <a href = "/ApplicacionesEmpresariales/movie/filter?year=${movie.year}">${movie.year}</a></p>
+				<p>Country: <a href = "/ApplicacionesEmpresariales/movie/filter?country=${movie.country}">${movie.country}</a></p>
+				<img style = "float:right;" width = "90px" alt="" src="${movie.image}"/>
 				<span id = "${movie.id}">
 					<c:if test="${movie.isWishlist}">
 						<input type = "submit" value = "Quitar de la wishlist" class = "nowish" name = "${movie.id}">

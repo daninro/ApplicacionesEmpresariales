@@ -2,7 +2,6 @@ package service.user;
 
 import java.util.List;
 
-import movie.Movie;
 
 import org.springframework.transaction.annotation.Transactional;
 

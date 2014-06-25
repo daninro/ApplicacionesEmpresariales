@@ -15,7 +15,7 @@ public interface UserDAO {
 		public Integer setMarkbyUser(int movieId, Integer mark, String username);
 		public List<User> getAll();
 		public void delete(String user);
-		
+		public Movie getMarkbyUser(int m, String u) throws MyNotFoundException; 
 		
 		
 	

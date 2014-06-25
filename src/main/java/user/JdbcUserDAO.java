@@ -10,6 +10,7 @@ import java.util.List;
 import javax.sql.DataSource;
 
 import org.springframework.jdbc.datasource.DataSourceUtils;
+import org.springframework.transaction.annotation.Transactional;
 
 import movie.Movie;
 import exceptions.MyNotFoundException;
@@ -174,27 +175,7 @@ public class JdbcUserDAO implements UserDAO{
 		return mark;
 	}
 	
-	public int getMarkbyUser(int m, String u) throws MyNotFoundException {
-		int n=0;
-		Connection connection;
-		try{
-			connection = DataSourceUtils.getConnection(datasource);
-			String query = "SELECT calification FROM  evaluate WHERE user_name = ? AND id = ?";
-			PreparedStatement statement = connection.prepareStatement(query);
-			statement.setString(1, u);
-			statement.setInt(2, m);
-			ResultSet result = statement.executeQuery();
-			if(result.next()){
-				n = result.getInt(1);
-			}else{ 
-				throw new MyNotFoundException("no se enonctro calificaioj");
-			}
-		}catch(SQLException e){
-			throw new RuntimeException();
-		}
-		
-		return n;
-	}
+	
 	
 	public List<User> getAll(){
 		List<User> u = new ArrayList<User>();
@@ -235,5 +216,35 @@ public class JdbcUserDAO implements UserDAO{
 		}
 		
 	}
+	@Override
+	@Transactional
+	public Movie getMarkbyUser(int m, String u) throws MyNotFoundException {
+		int n=0;
+		boolean b = false;
+		Movie a;
+		Connection connection;
+		try{
+			connection = DataSourceUtils.getConnection(datasource);
+			String query = "SELECT calification, iswished FROM  evaluate2 WHERE user_name = ? AND id = ?";
+			PreparedStatement statement = connection.prepareStatement(query);
+			statement.setString(1, u);
+			statement.setInt(2, m);
+			ResultSet result = statement.executeQuery();
+			if(result.next()){
+				n = result.getInt(1);
+				b = result.getBoolean(2);
+				a = new Movie(null, -1, null, null);
+				a.setAvg(n);
+				a.setIsWishlist(b);
+				
+			}else{ 
+				throw new MyNotFoundException("no se enonctro calificaioj");
+			}
+		}catch(SQLException e){
+			throw new RuntimeException();
+		}
+		return a;
+	}
+
 	
 }

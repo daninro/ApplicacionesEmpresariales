@@ -24,6 +24,6 @@ public class ActorFilter extends Filter{
 		}
 		
 		public String getQueryByUser(String User){
-			return getQuery(super.getQueryByUser(User));
+			return getQuery("("+super.getQueryByUser(User)+")");
 		}
 }

@@ -35,9 +35,9 @@ public interface MovieService {
 	@Transactional
 	public List<Movie> getWishlist(User u)throws OperationUncompletedException;
 	@Transactional
-	public List<Movie> top20()throws OperationUncompletedException;
+	public List<Movie> top20(String username)throws OperationUncompletedException;
 	@Transactional
-	public List<Movie> last10()throws OperationUncompletedException;
+	public List<Movie> last10(String username)throws OperationUncompletedException;
 	@Transactional
 	public List<Movie> FilterMovies(filter.Filter filter, int page, int limit) throws OperationUncompletedException;
 	@Transactional
@@ -48,4 +48,5 @@ public interface MovieService {
 	public List<String> getGenres(int id);
 	@Transactional
 	public void setGenres(String genre, int id);
+	Movie getWandM(int m, String u);
 }

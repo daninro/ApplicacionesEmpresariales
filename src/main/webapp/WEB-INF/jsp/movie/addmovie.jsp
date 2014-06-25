@@ -5,7 +5,6 @@
 <ul>
 		<li><a href = "/ApplicacionesEmpresariales/user/index">Principal</a></li>
 	</ul>
-	<h1>Falta la conexion!!!!!!</h1>
     <h1>Añadir película</h1>
     <h2>Datos Generales</h2>
  	<form method = "POST" action="addmovie">
@@ -26,6 +25,16 @@
 				<td><label for = "keywords">Imagen</label></td>
 				<td><input type = "text" id = "keywords" name = "image"/></td>
 			</tr>
+			<tr>
+				<td><label for = "keywords">Director</label></td>
+				<td><input type = "text" id = "keywords" name = "director_name"/></td>
+			</tr>
+			
+			<tr>
+				<td><label for = "keywords">Director_id</label></td>
+				<td><input type = "text" id = "keywords" name = "director_id"/></td>
+			</tr>
+			
 			
 		</table>
 		<h2>Géneros</h2>

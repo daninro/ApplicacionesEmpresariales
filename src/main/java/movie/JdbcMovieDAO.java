@@ -37,13 +37,17 @@ public class JdbcMovieDAO implements MovieDAO{
 		if(movie == null) return null;
 		Connection connection = null;
 		try{
-			String query = "INSERT INTO movie (name, year, country, avg, number_users, picture) VALUES (?, ?, ?,'0','0',?)";
+			String query = "INSERT INTO movie (name, year, country, avg, number_users, picture, id_director, director_name) VALUES (?, ?, ?,'0','0',?, ?, ?)";
 			connection = DataSourceUtils.getConnection(datasource);
 			PreparedStatement statement = connection.prepareStatement(query , Statement.RETURN_GENERATED_KEYS);
 			statement.setString(1, movie.getName());
 			statement.setInt(2, movie.getYear());
 			statement.setString(3, movie.getCountry());
 			statement.setString(4, movie.getImage());
+			
+				statement.setString(5, movie.getId_director());
+				statement.setString(6, movie.getDirector());
+		
 			statement.executeUpdate();
 			ResultSet resultset = statement.getGeneratedKeys();
 			if(resultset != null && resultset.next()){
@@ -313,17 +317,23 @@ public class JdbcMovieDAO implements MovieDAO{
 	}
 	
 	
-	public List<Movie> last10(){
+	public List<Movie> last10(String username){
 		List<Movie> m = new ArrayList<Movie>();
 		Connection connection = null;
 		try{			
 			connection = DataSourceUtils.getConnection(datasource);
-			String query = "SELECT * FROM movie ORDER BY id DESC LIMIT 10; ";
+			//String query = "SELECT * FROM movie ORDER BY id DESC LIMIT 10; ";
+				String query ="SELECT DISTINCT movie.*, evaluate2.calification, evaluate2.iswished " +
+				"FROM movie LEFT JOIN evaluate2 " +
+				"ON movie.id = evaluate2.id AND evaluate2.user_name = ? ORDER BY id DESC LIMIT 10";
 			PreparedStatement statement = connection.prepareStatement(query);
+			statement.setString(1, username);
 			ResultSet result = statement.executeQuery();
 			while(result.next()){
 				Movie movie = new Movie(result.getString(2), result.getInt(3), result.getString(4), result.getString(7));
 				movie.setId(result.getInt(1));
+				movie.setAvg(result.getInt(10));
+				movie.setIsWishlist(result.getBoolean(11));
 				m.add(movie);
 			}
 		}catch(SQLException e){
@@ -333,7 +343,7 @@ public class JdbcMovieDAO implements MovieDAO{
 	}
 
 	//REVISAR QUEDE ACAAAAAA
-	public List<Movie> top20(){
+	public List<Movie> top(int limit, String username){
 		List<Movie> m = new ArrayList<Movie>();
 		Connection connection = null;
 		try{			
@@ -344,8 +354,15 @@ public class JdbcMovieDAO implements MovieDAO{
 					"GROUP BY(movie.id)" +
 					"ORDER BY P DESC LIMIT 20";
 			*/
-			String query = "SELECT * FROM movie ORDER BY avg DESC LIMIT 20";
+			//String query = "SELECT * FROM movie ORDER BY avg DESC LIMIT 20";
+			//String query = "SELECT * from movie WHERE id IN (SELECT id FROM evaluate WUERE user_name = ?) ORDER BY avg DESC LIMIT " + limit;
+			String query = "SELECT movie.*, E.calification " +  
+			"FROM movie, evaluate AS E " +
+			"WHERE movie.id = E.id AND E.calification > 0 AND movie.id IN (SELECT id FROM evaluate AS E WHERE E.user_name = ?) "+ 
+			"ORDER BY E.calification DESC LIMIT " + limit;
+			
 			PreparedStatement statement = connection.prepareStatement(query);
+			statement.setString(1, username);
 			ResultSet result = statement.executeQuery();
 			while(result.next()){
 				Movie movie = new Movie(result.getString(2), result.getInt(3), result.getString(4), result.getString(7));
@@ -368,8 +385,12 @@ public class JdbcMovieDAO implements MovieDAO{
 			PreparedStatement statement = connection.prepareStatement(query);
 			statement.setString(1, Genre);
 			statement.setInt(2, id);
+			
+			System.out.println("antes de instertar");
 			statement.executeUpdate();
+			System.out.println("despues de instertar");
 		}catch(SQLException e){
+			System.out.println("aqui: " + e.toString());
 			throw new RuntimeException(e);
 		}
 	}
@@ -463,13 +484,16 @@ public class JdbcMovieDAO implements MovieDAO{
 			throw new RuntimeException(e);
 		}
 		
-		return toret;
+		return Math.abs(toret);
 	}
 	
 	public  void algorithm(){
 		Connection connection = null;
 		try{			
 			connection = DataSourceUtils.getConnection(datasource);
+			PreparedStatement statement = connection.prepareStatement("TRUNCATE TABLE evaluate;");
+			statement.executeUpdate();
+			
 			String query = "SELECT A.id, U.user_name " +
 			"FROM (SELECT DISTINCT id FROM evaluate2) AS A, (SELECT DISTINCT user_name FROM evaluate2) AS U, movie " +
 			"WHERE "+
@@ -477,8 +501,8 @@ public class JdbcMovieDAO implements MovieDAO{
 			"SELECT COUNT(id) "+
 			"FROM evaluate2 "+
 			"WHERE id = A.id AND user_name = U.user_name) AND movie.id = A.id";
-			PreparedStatement statement = connection.prepareStatement(query);
-			ResultSet result = statement.executeQuery();
+			PreparedStatement statement2 = connection.prepareStatement(query);
+			ResultSet result = statement2.executeQuery();
 			while(result.next()){
 				recomendInsert(result.getString(2), result.getInt(1), P(result.getString(2), result.getInt(1)));
 			}
@@ -487,9 +511,11 @@ public class JdbcMovieDAO implements MovieDAO{
 		}
 	}
 	public void recomendInsert(String username, int id, double calification){
+		if(calification == 0) return;
 		
 		Connection connection = null;
 		try{
+			
 			String query = "INSERT INTO evaluate (user_name, id, calification) VALUES (?, ?, ?)";
 			connection = DataSourceUtils.getConnection(datasource);
 			PreparedStatement statement = connection.prepareStatement(query);
@@ -499,7 +525,10 @@ public class JdbcMovieDAO implements MovieDAO{
 			
 			statement.executeUpdate();
 		}catch(SQLException e){
+			System.out.println("recomendinsert");
 		}
 	}
+
+	
 
 }

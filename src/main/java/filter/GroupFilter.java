@@ -41,5 +41,7 @@ public class GroupFilter extends Filter{
 			}
 		return toRet;
 	}
-	
+	public int size(){
+		return filters.size();
+	}
 }

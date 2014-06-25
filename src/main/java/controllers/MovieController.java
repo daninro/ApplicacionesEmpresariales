@@ -16,8 +16,14 @@ import service.movie.MovieService;
 import user.User;
 import actor.Actor;
 import exceptions.OperationUncompletedException;
+import filter.ActorFilter;
+import filter.CountryFilter;
+import filter.DirectorFilter;
 import filter.Filter;
+import filter.GenreFilter;
+import filter.GroupFilter;
 import filter.NameFilter;
+import filter.YearFilter;
 
 
 
@@ -57,14 +63,14 @@ public class MovieController extends MyController{
 			request.getParameter("country"),
 			request.getParameter("image")
 		);
-				
+		mov.setDirector(request.getParameter("director_name"));
+		mov.setId_director(request.getParameter("director_id"));
 		String[] checkbox= request.getParameterValues("genre");
-		for(int i = 0; i < checkbox.length; i++)
-			movieService.setGenres(checkbox[i], mov.getId());
-		
 		Movie p = null;
 		try {
 			p = movieService.addMovie(mov);
+			for(int i = 0; i < checkbox.length; i++)
+				movieService.setGenres(checkbox[i], p.getId());
 		} catch (OperationUncompletedException e) {
 			m.addAttribute("message", e.toString());
 		}
@@ -108,21 +114,7 @@ public class MovieController extends MyController{
 		}
 		return "movie/search";
 	}
-	
-	@RequestMapping
-	public String moviedetails(Model model, HttpSession session, HttpServletRequest request){
-		if(!isLogin(session)) return getLogin();
-		Movie m= null;
-		try {
-			m = movieService.findMoviebyId(5);
-		} catch (OperationUncompletedException e) {
-			//incompleto
-			System.out.println("enviar a pagina de error con e.getMessage");
-		}
-		model.addAttribute("movieDetails",m);
-		return "movie/moviedetails";
-	}
-	
+		
 	@RequestMapping(method = {RequestMethod.POST})
 	public String ajaxaddwishlist(Model m, HttpServletRequest request, HttpSession session) throws OperationUncompletedException{
 		if(!isLogin(session)) return getLogin();
@@ -138,54 +130,25 @@ public class MovieController extends MyController{
 		m.addAttribute("info", "agregada a la wishlist");
 		return "message/info";
 	}
-	
-
-	@RequestMapping
-	public String top20(Model model, HttpSession session){
-		if(!isLogin(session)) return getLogin();
-		List<Movie> list = null;
-		try {
-			list = movieService.top20();
-			
-		} catch (OperationUncompletedException e) {
-			//incompleto
-			System.out.println("enviar a pagina de error con e.getMessage");
-		}
-		model.addAttribute("top20",list);
-		return "/movie/top20";
-	}	
-	
-	@RequestMapping
-	public String last10(Model model, HttpSession session){
-		if(!isLogin(session)) return getLogin();
-		List<Movie> list = null;
-		try {
-			list = movieService.last10();
-			System.out.println(list.get(0).getName());
-		} catch (OperationUncompletedException e) {
-			//incompleto
-			System.out.println("enviar a pagina de error con e.getMessage");
-		}
-		model.addAttribute("last10",list);
-		return "/movie/last10";
-	}	
-
 	@RequestMapping
 	public String editmovie(Model model, HttpServletRequest request,  HttpSession session){
 		if(!isLogin(session)) return getLogin();
 		User u = (User) session.getAttribute("user");
 		Movie m= null;
 		try {
-//agarrar la película que viene de la pag anterior a la edición, en vez del 5
-			m = movieService.findMoviebyId(5);
-		} catch (OperationUncompletedException e) {
-			//incompleto
+			int id;
+			if(request.getParameter("id") != null)
+				id = Integer.parseInt(request.getParameter("id"));
+			else return "redirect:index";
+			m = movieService.findMoviebyId(id);
+		} catch (OperationUncompletedException e) {	
 			System.out.println("enviar a pagina de error con e.getMessage");
+			return "redirect:index";
 		}
 		model.addAttribute("movieDetails",m);
-		
 		if(u.isAdmin()){
-			return "movie/editmovie";}
+			return "movie/editmovie";
+		}
 			return "redirect:index";
 	}
 	
@@ -210,37 +173,70 @@ public class MovieController extends MyController{
 		} catch (OperationUncompletedException e) {
 			//incompleto
 			System.out.println("enviar a pagina de error con e.getMessage");
+			return "redirect:index";
 		}
 		model.addAttribute("movieDetails",p);
-//falta enviar a la ficha de la película
-		return "movie/editmovie";
+		
+		return "redirect: movie/movie?movie="+p.getId();
 	}
-		
-		
-		/*ajax/test*/
-		@RequestMapping
-		public String list(Model m, HttpServletRequest request, HttpSession session){
-			if(!isLogin(session)) return getLogin();
-			List<Movie> l;
-			try {
-				int page = 1;
-				if(request.getParameter("page")!=null){
-					page = Integer.parseInt(request.getParameter("page"));
-					if(page == 0) page++;
-				}
-				Filter F = new NameFilter("");
-				F.setUsername((String)session.getAttribute("username"));
-				l = movieService.FilterMovies(F, page, 20);
-				m.addAttribute("movieList",l);
-				m.addAttribute("prev", page - 1);
-				m.addAttribute("next", page + 1);
-			} catch (OperationUncompletedException e) {
-				
+	/*ajax/test*/
+	@RequestMapping
+	public String list(Model m, HttpServletRequest request, HttpSession session){
+		if(!isLogin(session)) return getLogin();
+		List<Movie> l;
+		try {
+			int page = 1;
+			if(request.getParameter("page")!=null){
+				page = Integer.parseInt(request.getParameter("page"));
+				if(page == 0) page++;
 			}
-			return "movie/list";
+			Filter F = new NameFilter("");
+			F.setUsername((String)session.getAttribute("username"));
+			l = movieService.FilterMovies(F, page, 20);
+			m.addAttribute("movieList",l);
+			m.addAttribute("prev", page - 1);
+			m.addAttribute("next", page + 1);
+		} catch (OperationUncompletedException e) {
+			return "redirect:index";
 		}
-		
-		
+		return "movie/list";
+	}
+	
+	
+	/****listo ***/
+
+	@RequestMapping
+	public String top20(Model model, HttpSession session){
+		if(!isLogin(session)) return getLogin();
+		List<Movie> list = null;
+		try {
+			list = movieService.top20((String)session.getAttribute("username"));
+			
+		} catch (OperationUncompletedException e) {
+			//incompleto
+			System.out.println("enviar a pagina de error con e.getMessage");
+			return "redirect:index";
+		}
+		model.addAttribute("top20",list);
+		return "/movie/top20";
+	}	
+	/****listo ***/
+	@RequestMapping
+	public String last10(Model model, HttpSession session){
+		if(!isLogin(session)) return getLogin();
+		List<Movie> list = null;
+		try {
+			list = movieService.last10((String)session.getAttribute("username"));
+			System.out.println(list.get(0).getName());
+		} catch (OperationUncompletedException e) {
+			//incompleto
+			System.out.println("enviar a pagina de error con e.getMessage");
+			return "redirect:index";
+		}
+		model.addAttribute("last10",list);
+		return "/movie/last10";
+	}	
+	/**/
 		/*ajax/mark*/
 		@RequestMapping(method = {RequestMethod.POST})
 		public String mark(Model m, HttpServletRequest request, HttpSession session){
@@ -262,12 +258,10 @@ public class MovieController extends MyController{
 			if(!isLogin(session)) return getLogin();
 			List<Movie> list = null;
 			try {
-				
 				list = movieService.getWishlistbyUsername((String)session.getAttribute("username"));
-			
 			} catch (OperationUncompletedException e) {
-				//incompleto
 				System.out.println("enviar a pagina de error con e.getMessage");
+				return "redirect:index";
 			}
 			model.addAttribute("movies",list);
 			return "/movie/verwishlist";
@@ -281,11 +275,13 @@ public class MovieController extends MyController{
 			try {
 				movieService.deleteMoviefromWishlist( Integer.parseInt(movie), (String)session.getAttribute("username"));
 			} catch (OperationUncompletedException e) {
-				
+				return "redirect:index";
 			}
 			m.addAttribute("info", "pelicula quitada de la wishlist");
 			return "/message/info";	
 		}
+		
+		//listo
 		
 		@RequestMapping
 		public String addactor(Model m, HttpSession session){
@@ -311,12 +307,13 @@ public class MovieController extends MyController{
 					} catch (OperationUncompletedException e) {
 						//incompleto
 						System.out.println("enviar a pagina de error");
+						return "redirect:index";
 					}
 					if(p != null){
 						return "redirect:/movie/list";
 					}
 			
-			return "redirect:/user/bad_confirmation";
+			return "redirect:/message/message";
 		}
 		
 		@RequestMapping
@@ -326,38 +323,43 @@ public class MovieController extends MyController{
 		}	
 		
 		@RequestMapping(method = {RequestMethod.POST})
-		public String deletemovie(Model model, HttpSession session, HttpServletRequest request) throws OperationUncompletedException{
+		public String deletemovie(Model model, HttpSession session, HttpServletRequest request){
 			if(!isLogin(session)) return getLogin();
 			int movieid= Integer.parseInt(request.getParameter("movie"));
-			Movie mov = movieService.findMoviebyId(movieid);
-			
 					List <Movie>p = null;
 					try {
+						Movie mov = movieService.findMoviebyId(movieid);
 						movieService.deleteMovie(mov);
 
 					} catch (OperationUncompletedException e) {
 						//incompleto
 						System.out.println("enviar a pagina de error asdasdsad" + e.toString());
+						return "redirect:index";
 					}
 			model.addAttribute("movies", p);
-			return "movie/deletemovie2";
+			return "index";
 		}
 		
 		@RequestMapping
-		public String movie(Model model, HttpSession session, HttpServletRequest request) throws OperationUncompletedException{
+		public String movie(Model model, HttpSession session, HttpServletRequest request){
 			if(!isLogin(session)) return getLogin();
 			int movieid = 0;
 			if(request.getParameter("movie") == null) return "index";
 			else movieid = Integer.parseInt(request.getParameter("movie"));
-			
-			
-			System.out.println(movieid);
-			System.out.println(actorService.toString());
-			
-			Movie m = movieService.findMoviebyId(movieid);
-			List<Actor> a = actorService.getMoviesPerforms(movieid);
+			Movie m;
+			List<Actor> a;
+			try {
+				a = actorService.getMoviesPerforms(movieid);
+				m = movieService.findMoviebyId(movieid);
+				Movie test = movieService.getWandM(movieid, (String)session.getAttribute("username"));
+				if(test != null){
+					m.setAvg(test.getAvg());
+					m.setIsWishlist(test.getIsWishlist());
+				}
+			} catch (OperationUncompletedException e) {
+				return "redirect:index";
+			}
 			List<String> l = movieService.getGenres(movieid);
-			
 			model.addAttribute("genre", l);
 			model.addAttribute("movie",m);
 			model.addAttribute("actor", a);
@@ -371,12 +373,70 @@ public class MovieController extends MyController{
 			return "index";
 		}
 		
+		@RequestMapping
+		public String index(Model model, HttpSession session, HttpServletRequest request) throws OperationUncompletedException{
+			if(!isLogin(session)) return getLogin();
+			new Thread(new Thread_algorithm()).start();
+			return "index";
+		}
+		
+		@RequestMapping
+		public String filter(Model m, HttpServletRequest request, HttpSession session){
+			if(!isLogin(session)) return getLogin();
+			String name = request.getParameter("name");
+
+			List<Movie> l = null;
+			int page = 1;
+			try {
+				if(request.getParameter("page")!=null){
+					page = Integer.parseInt(request.getParameter("page"));
+					if(page == 0) page++;
+				}
+				GroupFilter F = new GroupFilter();
+				if(request.getParameter("genre") != null)
+					F.addFilter(new GenreFilter(request.getParameter("genre")));
+				if(request.getParameter("year") != null)
+					F.addFilter(new YearFilter(request.getParameter("year")));
+				if(request.getParameter("country") != null)
+					F.addFilter(new CountryFilter(request.getParameter("country")));
+				if(request.getParameter("actor") != null)
+					F.addFilter(new ActorFilter(request.getParameter("actor")));
+				if(request.getParameter("director") != null)
+					F.addFilter(new DirectorFilter(request.getParameter("director")));
+				if(request.getParameter("name") != null)
+					F.addFilter(new NameFilter(request.getParameter("name")));
+				
+				if(F.size() <= 0) return "movie/search";
+				
+				F.setUsername((String)session.getAttribute("username"));
+				
+				l = movieService.FilterMovies(F, page, 20);
+				if(movieService.FilterMovies(F, page + 1, 20).isEmpty()){
+					m.addAttribute("next", page);	
+				}else{
+					m.addAttribute("next", page + 1);
+				}
+			} catch (OperationUncompletedException e) {
+				m.addAttribute("message", e.toString());
+				return "message/message";
+			}
+			if(!l.isEmpty()) {
+				m.addAttribute("movieList",l);
+				m.addAttribute("prev", page - 1);
+				m.addAttribute("name", name);
+			}
+			return "movie/search";
+		}
+		
+		
+		
 		
 		private class Thread_algorithm implements Runnable 
 		{
 		    public void run() 
 		    {
 		        movieService.executeAlgorithm();
+		        System.out.println("Termino!");
 		    }
 		    
 		}

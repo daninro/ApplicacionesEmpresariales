@@ -27,7 +27,7 @@ $(document).ready(function(){
 		<c:forEach var="movie" items="${movies}" varStatus="status">
 		
 			<div id = "${movie.id}">
-			<a href = "/ApplicacionesEmpresariales/user/index">${movie.name}</a> 
+			<a href = "/ApplicacionesEmpresariales/movie/movie?movie=${movie.id}">${movie.name}</a> 
 			<input type = "submit" value = "eliminar" class = "delete" name = "${movie.id}"/>
 			</div>	
 		

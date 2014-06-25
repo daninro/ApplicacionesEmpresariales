@@ -17,8 +17,8 @@ public interface MovieDAO {
 	public void deleteMovie(Movie m);
 	public void deleteMovie(Integer m);
 	public List<Movie> searchByName(String name);
-	public List<Movie> last10();
-	public List<Movie> top20();
+	public List<Movie> last10(String username);
+	public List<Movie> top(int limit, String username);
 	public List<Movie> Filter(filter.Filter F, int page, int limit);
 	public List<Movie> getWishlistbyUsername(String user);
 	//public double P(String username, int id);

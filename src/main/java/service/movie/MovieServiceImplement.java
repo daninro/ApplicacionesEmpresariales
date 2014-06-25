@@ -224,10 +224,10 @@ public class MovieServiceImplement implements MovieService{
 	
 	//@minux777: creo que esto hay que sacarlo y crear otro servicio para "personas" o algo asi
 	@Transactional
-	public List<Movie> last10(){
+	public List<Movie> last10(String username){
 		List<Movie> movies = null;
 		try{
-			movies = movieDAO.last10();
+			movies = movieDAO.last10(username);
 			
 			
 		}catch(RuntimeException e){	}
@@ -235,10 +235,10 @@ public class MovieServiceImplement implements MovieService{
 	}
 	
 	@Transactional
-	public List<Movie> top20(){
+	public List<Movie> top20(String username){
 		List<Movie> movies = null;
 		try{
-			movies = movieDAO.top20();
+			movies = movieDAO.top(20, username);
 			System.out.println(movies.get(1).getName());
 			
 		}catch(RuntimeException e){	}
@@ -266,11 +266,24 @@ public class MovieServiceImplement implements MovieService{
 	@Transactional
 	public void setGenres(String Genre, int id) {
 		try{
+			
 			movieDAO.setGenre(Genre, id);			
 		}catch(RuntimeException e){	}	
 	}
 
-	
+	@Override
+	@Transactional
+	public Movie getWandM(int m, String u){
+		Movie movie = null;
+		try{
+			movie = userDAO.getMarkbyUser(m, u);
+		} catch (RuntimeException e){
+			
+		} catch (MyNotFoundException e) {
+			e.printStackTrace();
+		}
+		return movie;
+	}
 	
 	
 			
