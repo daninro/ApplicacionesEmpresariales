@@ -130,12 +130,11 @@ public class UserController extends MyController{
 	
 	
 	
-	/*ajax/mark*/
+	
 	@RequestMapping(method = {RequestMethod.POST})
 	public String deleteuser(Model m, HttpServletRequest request, HttpSession session){
 		if(!isLogin(session)) return getLogin();
 		String user = request.getParameter("user"); 
-		System.out.println("eliminado "+ user);
 			try {
 			userService.deleteUser(user);
 		} catch (OperationUncompletedException e) {
@@ -148,7 +147,6 @@ public class UserController extends MyController{
 	public void edituser(Model model, HttpServletRequest request,  HttpSession session){
 		User u = (User)session.getAttribute("user");
 		model.addAttribute("user",u);
-		System.out.println(u.getName());
 		
 		
 	}
@@ -167,6 +165,8 @@ public class UserController extends MyController{
 			);
 			userService.editUser(u);
 			model.addAttribute("user", u);
+			session.removeAttribute("user");
+			session.setAttribute("user", u);
 		return "user/edituser"; 
 	}
 	

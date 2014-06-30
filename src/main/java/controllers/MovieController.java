@@ -94,7 +94,6 @@ public class MovieController extends MyController{
 				page = Integer.parseInt(request.getParameter("page"));
 				if(page == 0) page++;
 			}
-			System.out.println(page);
 			Filter F = new NameFilter(name);
 			F.setUsername((String)session.getAttribute("username"));
 			l = movieService.FilterMovies(F, page, 20);
@@ -121,7 +120,6 @@ public class MovieController extends MyController{
 		User u = (User) session.getAttribute("user");
 		int movieid= Integer.parseInt(request.getParameter("name"));
 		Movie mov = movieService.findMoviebyId(movieid);
-				//List <Movie> p = null;
 				try {
 					movieService.addWishlist(mov, u);
 				} catch (OperationUncompletedException e) {
@@ -130,6 +128,7 @@ public class MovieController extends MyController{
 		m.addAttribute("info", "agregada a la wishlist");
 		return "message/info";
 	}
+	
 	@RequestMapping
 	public String editmovie(Model model, HttpServletRequest request,  HttpSession session){
 		if(!isLogin(session)) return getLogin();
@@ -142,8 +141,8 @@ public class MovieController extends MyController{
 			else return "redirect:index";
 			m = movieService.findMoviebyId(id);
 		} catch (OperationUncompletedException e) {	
-			System.out.println("enviar a pagina de error con e.getMessage");
-			return "redirect:index";
+			model.addAttribute("info", "No se pudo encontrar: " + e.getMessage());
+			return "message/info";
 		}
 		model.addAttribute("movieDetails",m);
 		if(u.isAdmin()){
@@ -171,9 +170,9 @@ public class MovieController extends MyController{
 				try {
 					p = movieService.updateMovie(mov);
 		} catch (OperationUncompletedException e) {
-			//incompleto
-			System.out.println("enviar a pagina de error con e.getMessage");
-			return "redirect:index";
+			
+			model.addAttribute("info", "No se pudo agregar: " + e.getMessage());
+			return "message/info";
 		}
 		model.addAttribute("movieDetails",p);
 		
