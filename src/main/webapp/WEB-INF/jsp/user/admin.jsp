@@ -71,7 +71,6 @@
 			<div id = "header">
 				<div id = "logo"></div>
 				<div id = "header-content">
-				<c:if test="${user.isAdmin}" >
 				<form method = "GET" action="filter" name = "filter">
 					<input type="radio" name="search" value="name" 
 						<c:if test="${search == 'name'}">checked</c:if>
@@ -92,90 +91,38 @@
 					<input type = "text" id = "keywords" name = "name" value = "${name}"/>
 					<input type = "submit" id = "buscar" value = "buscar"/>
 					</div>
-					
-					
 				</form>
 				
-				</c:if>
+				
 				</div>
 				<div id = "userblock">
-				<c:choose>
-				
-				<c:when test="${user.isAdmin}" >
 					<h1> Hola</h1>
-					
 					<h2><c:out value="@${user.username}">
 					</c:out></h2>
 					<h3><a href = "/ApplicacionesEmpresariales/movie/verwishlist"> WishList </a> | <a href ="/ApplicacionesEmpresariales/user/edituser"> Perfil </a> | <a href ="/ApplicacionesEmpresariales/user/logout"> Cerrar Sesión </a></h3>
-				</c:when>
-				<c:when test="${!user.isAdmin}" >
-				 <h2>Iniciar Sesión</h2>
-	
-		<form method = "POST" action="login">
-			<p>
-			<input type = "text" id = "keywords" name = "username"/></p>
-		
-			<p>
-			<input type = "password" id = "keywords" name = "password"/></p>
-			
-			<input type = "submit" value = "Iniciar Sesión" >
-		</form>
 				
-				</c:when>
-				</c:choose>
 				</div>
 			</div>			<div id = "menu">
 			<ul>
-			<c:if test="${user.isAdmin}" >
 				<a href ="/ApplicacionesEmpresariales/movie/list"><li>Home</li></a>
 
-				
+				<c:if test="${user.isAdmin}" >
 				<a href = "../movie/addmovie"><li>Agregar Películas</li></a>
 				<a href = "../user/deleteuser"><li>Eliminar Usuarios</li></a>
 				<a href = "../user/register"><li>Agregar Administradores</li></a>
 				<a href = "../movie/executealgorithm"><li>ejecutar algoritmo</li></a>
-				
-				
+				</c:if>
 			</ul>
-			</c:if>
+			
 			</div>
 			<div id = "center">
 				
 				
 				
 				<div >	
-			    <p><h1>Registro 
-    <c:if test="${user.isAdmin}">
-      de Administradores
-    </c:if>
-    </h1></p>
- 	<form method = "POST" action="register">
-	<table>
-			<tr><td><label for = "keywords">Nombre</label></td>
-			<td><input type = "text" id = "keywords" name = "name"/></td></tr>
+			
 
-			<tr><td><label for = "keywords">User</label></td>
-			<td><input type = "text" id = "keywords" name = "username"/></td></tr>
-
-			<tr><td><label for = "keywords">Password</label></td>
-			<td><input type = "password" id = "keywords" name = "password"/></td></tr>
-
-			<tr><td><label for = "keywords">E-Mail</label></td>
-			<td><input type = "text" id = "keywords" name = "email"/></td></tr>
-
-			<tr><td><label for = "keywords">Pais</label></td>
-			<td><input type = "text" id = "keywords" name = "country"/></td></tr>
-
-			<tr><td><label for = "keywords">Fecha de nacimiento</label></td>
-			<td><input type = "text" id = "keywords" name = "date"/></td></tr>
-			<c:if test="${user.isAdmin}" >
-				<input type = "hidden" id = "keywords" name = "isAdmin" value = "${user.isAdmin}"/>
-			</c:if>
-			<tr><td><input type = "submit" value = "Registrarse" ><td></tr>
-			</table>
-	</form>
-
-			<h1><c:out value="${message}"/></h1>
+			
 			
 					</div>
 			<div>

@@ -369,7 +369,7 @@ public class MovieController extends MyController{
 		public String executealgorithm(Model model, HttpSession session, HttpServletRequest request) throws OperationUncompletedException{
 			if(!isLogin(session)) return getLogin();
 			new Thread(new Thread_algorithm()).start();
-			return "index";
+			return "redirect:/movie/list";
 		}
 		
 		@RequestMapping
@@ -386,24 +386,52 @@ public class MovieController extends MyController{
 
 			List<Movie> l = null;
 			int page = 1;
+			String search = "";
+			String val = "";
 			try {
 				if(request.getParameter("page")!=null){
 					page = Integer.parseInt(request.getParameter("page"));
 					if(page == 0) page++;
 				}
 				GroupFilter F = new GroupFilter();
-				if(request.getParameter("genre") != null)
+				
+				if(request.getParameter("genre") != null){
+					val = request.getParameter("genre");
 					F.addFilter(new GenreFilter(request.getParameter("genre")));
-				if(request.getParameter("year") != null)
+					search = "genre";
+					System.out.println(search);
+				}
+				if(request.getParameter("year") != null){
+					val = request.getParameter("year");
 					F.addFilter(new YearFilter(request.getParameter("year")));
-				if(request.getParameter("country") != null)
+					search = "year";
+					System.out.println(search);
+				}
+				
+				if(request.getParameter("country") != null){
+					val = request.getParameter("country");
 					F.addFilter(new CountryFilter(request.getParameter("country")));
-				if(request.getParameter("actor") != null)
+					search = "country";	
+					System.out.println(search);
+				}
+				if(request.getParameter("actor") != null){
+					val = request.getParameter("actor");
 					F.addFilter(new ActorFilter(request.getParameter("actor")));
-				if(request.getParameter("director") != null)
+					search = "actor";
+					System.out.println(search);
+					}
+				if(request.getParameter("director") != null){
+					val = request.getParameter("director");
 					F.addFilter(new DirectorFilter(request.getParameter("director")));
-				if(request.getParameter("name") != null)
+					search = "director";		
+					System.out.println(search);
+				}
+				if(request.getParameter("name") != null){
+					val = request.getParameter("name");
 					F.addFilter(new NameFilter(request.getParameter("name")));
+					search = "name";	
+					System.out.println(search);
+				}
 				
 				if(F.size() <= 0) return "movie/search";
 				
@@ -417,15 +445,90 @@ public class MovieController extends MyController{
 				}
 			} catch (OperationUncompletedException e) {
 				m.addAttribute("message", e.toString());
-				return "message/message";
+				m.addAttribute("prev", 0);
+				m.addAttribute("next", 0);
+				m.addAttribute("search", "name");
+				m.addAttribute("val", "");
+					
+			
+				
+				return "movie/search";
+				
+				
 			}
 			if(!l.isEmpty()) {
 				m.addAttribute("movieList",l);
 				m.addAttribute("prev", page - 1);
-				m.addAttribute("name", name);
+			}else{
+				m.addAttribute("prev", page - 1);
 			}
+			
+			if(search != ""){
+				m.addAttribute("search", search);
+			m.addAttribute("val", val);
+			}
+			else{
+				m.addAttribute("search", "name");
+			m.addAttribute("val", "");
+				
+			}
+
 			return "movie/search";
 		}
+		
+		@RequestMapping
+		public String init(Model m, HttpServletRequest request, HttpSession session){
+			
+			if(!isLogin(session)) return getLogin();
+			List<Movie> l;
+			try {
+				int page = 1;
+				if(request.getParameter("page")!=null){
+					page = Integer.parseInt(request.getParameter("page"));
+					if(page == 0) page++;
+				}
+				Filter F = new NameFilter("");
+				F.setUsername((String)session.getAttribute("username"));
+				l = movieService.FilterMovies(F, page, 20);
+				m.addAttribute("movieList",l);
+				m.addAttribute("prev", page - 1);
+				m.addAttribute("next", page + 1);
+			} catch (OperationUncompletedException e) {
+				return "redirect:index";
+			}
+			
+			return "movie/init";
+		}
+		
+		
+		@RequestMapping(method = {RequestMethod.POST})
+		public String ajaxcounter(Model m, HttpServletRequest request, HttpSession session){
+			
+			int counter = 1;
+			try{
+				counter = (int)session.getAttribute("counter");
+			}catch(NumberFormatException e){
+				
+			}catch(NullPointerException e){
+				
+				m.addAttribute("info", counter);
+					
+			}
+			counter--;
+			
+			session.setAttribute("counter", counter);
+			m.addAttribute("info", counter);
+			if(counter == 0)
+				session.removeAttribute("counter");
+			
+			return "message/info";
+		}
+		
+		@RequestMapping
+		public String style(Model m) throws OperationUncompletedException{
+			return "ajax/style";
+		}
+		
 		
 		
 		

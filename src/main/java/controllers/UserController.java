@@ -39,7 +39,7 @@ public class UserController extends MyController{
 	
 	
 	@RequestMapping(method = {RequestMethod.POST})
-	public String register(Model m, HttpServletRequest request){
+	public String register(Model m, HttpServletRequest request, HttpSession session){
 		String admin = request.getParameter("isAdmin");
 		System.out.println("aqui "+admin);
 		User u = new User(
@@ -55,7 +55,34 @@ public class UserController extends MyController{
 			User p = userService.addUser(u);
 			if(u.getUsername().equals(p.getUsername())){
 				m.addAttribute("message", "usuario agregado");
+				
+				System.out.println(u.isAdmin());
+				if(!u.isAdmin()){
+					
+				u = null;
+				try {
+					u = userService.getUserbyUsername(request.getParameter("username"));
+				} catch (OperationUncompletedException e) {
+				}
+				if(u!=null){
+					if(u.getPassword().compareTo(request.getParameter("password"))==0){
+						session.setAttribute("user", u);
+						session.setAttribute("username", u.getUsername());
+						session.setAttribute("counter", 10);
+						System.out.println(u.getName());
+						m.addAttribute("user", u);
+						return "redirect:/movie/init";
+					}
+				}
+				}
+				else{
+					return "user/register";
+				}
+				
+				m.addAttribute("message", "problemas logeandote");
 				return "/message/message";
+				
+				
 			}
 		}catch(OperationUncompletedException e){
 			m.addAttribute("message", e.getMessage());
@@ -86,7 +113,7 @@ public class UserController extends MyController{
 				session.setAttribute("username", u.getUsername());
 				
 				System.out.println(u.getName());
-				return "redirect:/user/index";
+				return "redirect:/movie/list";
 				
 			}
 		}
@@ -96,6 +123,7 @@ public class UserController extends MyController{
 	@RequestMapping
 	public String logout(Model m, HttpSession session){
 		session.removeAttribute("username");
+		session.removeAttribute("user");
 		return "redirect:/user/login";
 	}
 	
@@ -169,6 +197,14 @@ public class UserController extends MyController{
 			session.setAttribute("user", u);
 		return "user/edituser"; 
 	}
+	
+	@RequestMapping
+	public String admin(Model m, ServletRequest request, HttpSession session){
+		if(!isLogin(session)) return getLogin();
+		return "/user/admin";
+		
+	}
+	
 	
 
 }

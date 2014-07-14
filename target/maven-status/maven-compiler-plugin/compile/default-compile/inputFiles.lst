@@ -16,7 +16,6 @@ C:\Users\Minux777\workspace\ApplicacionesEmpresariales\src\main\java\service\use
 C:\Users\Minux777\workspace\ApplicacionesEmpresariales\src\main\java\filter\DirectorFilter.java
 C:\Users\Minux777\workspace\ApplicacionesEmpresariales\src\main\java\actor\JdbcActorDAO.java
 C:\Users\Minux777\workspace\ApplicacionesEmpresariales\src\main\java\movie\JdbcMovieDAO.java
-C:\Users\Minux777\workspace\ApplicacionesEmpresariales\src\main\java\controllers\ControllerTest.java
 C:\Users\Minux777\workspace\ApplicacionesEmpresariales\src\main\java\service\director\DirectorServiceImplement.java
 C:\Users\Minux777\workspace\ApplicacionesEmpresariales\src\main\java\user\User.java
 C:\Users\Minux777\workspace\ApplicacionesEmpresariales\src\main\java\filter\GroupFilter.java
@@ -29,6 +28,7 @@ C:\Users\Minux777\workspace\ApplicacionesEmpresariales\src\main\java\service\scr
 C:\Users\Minux777\workspace\ApplicacionesEmpresariales\src\main\java\service\movie\MovieServiceImplement.java
 C:\Users\Minux777\workspace\ApplicacionesEmpresariales\src\main\java\director\DirectorDAO.java
 C:\Users\Minux777\workspace\ApplicacionesEmpresariales\src\main\java\user\JdbcUserDAO.java
+C:\Users\Minux777\workspace\ApplicacionesEmpresariales\src\main\java\controllers\AjaxController.java
 C:\Users\Minux777\workspace\ApplicacionesEmpresariales\src\main\java\controllers\UserController.java
 C:\Users\Minux777\workspace\ApplicacionesEmpresariales\src\main\java\filter\Test.java
 C:\Users\Minux777\workspace\ApplicacionesEmpresariales\src\main\java\movie\Movie.java

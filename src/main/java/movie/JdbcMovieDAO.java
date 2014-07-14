@@ -472,7 +472,7 @@ public class JdbcMovieDAO implements MovieDAO{
 			double div = 0;
 			for(int i = 0; i < l_id.size(); i++){
 				double corr = corr(id, l_id.get(i));
-				if(Double.isNaN(corr)) corr = 0;
+				if(Double.isNaN(corr)) corr = 5;
 				sum += corr * l_cal.get(i);
 				div += Math.abs(corr);
 			}

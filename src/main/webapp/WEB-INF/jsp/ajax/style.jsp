@@ -83,6 +83,7 @@ color: #b10402;
 	margin: 10px;
 	box-shadow: 1px 1px 5px #888888;
 	float: left;
+	margin-top: 50px;
 }
 #menu{
 	width: 880px;
@@ -233,7 +234,9 @@ color: #b10402;
 	width:100%;
 	background-color: black;
 	color: white;
-	opacity: 0.7;
+	opacity: 0.9;
+	font-weight: bold;
+	min-height: 20px;
 	
 }
 
@@ -243,7 +246,7 @@ color: #b10402;
 	width:100%;
 	background-color: black;
 	color: white;
-	opacity: 0.7;
+	opacity: 0.9;
 }
 
 .ficha2{
@@ -251,10 +254,13 @@ color: #b10402;
 	float: left;
 	height: 200px;
 	width: 45%;
-
 	margin: 2%;
 	position: relative;
 	
+}
+ficha h3{
+	margin: 0;
+	padding: 0;
 }
 
 .ficha2 img{
@@ -272,6 +278,11 @@ color: #b10402;
 	float: left;
 	
 }
+#center #content{
+	float: left;
+	min-height: 400px;
+}
+
 #center>div>h1{
 	margin-top: 30px;
 	text-align: center;
@@ -285,9 +296,119 @@ color: #b10402;
 	//	margin: 0;
 	
 }
+#center>div>form{
+	clear: both;
+	margin-left: 280px;
+	margin-bottom: 30px;
+}
+#center>div>form input[type="submit"]{
+	margin-top: 30px;
+	
+}
+#center h1{
+	margin-bottom: 30px;
+}
+#center h1 span{
+	font-size: 0.5em;
+	vertical-align: text-top;
+}
+#center h2{
+	margin: 30px;
+	font-size: 1.5em;
+	
+}
+
+.pag{
+	clear: both;
+	width: 100%;
+	text-align: center;
+}
 
 
 
 
 
+form input[type="text"]{
+	box-shadow: inset 1px 1px 5px #888888, inset -1px -1px 5px #888888;
+    border: none;
+    color: #525252;
+	font-size: 1.3em;
+}
 
+form input[type="password"]{
+	box-shadow: inset 1px 1px 5px #888888, inset -1px -1px 5px #888888;
+    border: none;
+    color: #525252;
+	font-size: 1.3em;
+}
+form input[type="submit"]{
+    
+	//height: 34px;
+    border: none;
+    //padding: 10px 25px 10px 25px;
+    //color: #585858;
+    //text-shadow: 1px 1px 1px #FFE477;
+    font-weight: bold;
+	box-shadow: 1px 1px 1px #3D3D3D;
+    -webkit-box-shadow:1px 1px 1px #3D3D3D;
+    -moz-box-shadow:1px 1px 1px #3D3D3D;
+}
+
+
+
+form input[type="submit"]:hover {
+    color: #333;
+    background-color: #EBEBEB;
+}
+
+#delete_user{
+	margin-left: 300px;
+	font-size: 1.2em;
+	margin-bottom: 40px;
+}
+
+#delete_user td{
+padding-left: 30px;
+}
+
+
+#general, #image{
+	float: left;
+	margin: 20px;
+}
+
+#image{
+	box-shadow: 1px 1px 5px #888888;
+}
+#general p, #actors p, #genres p{ 
+	margin-top: 10px;
+	font-size: 1.1em;
+}
+#general p span{ 
+	font-weight: bold;
+}
+
+.clear{
+	clear: both;
+}
+
+#actors, #genres{
+	width: 80%;
+}
+
+#actors p, #genres p{
+	width: 150px;
+	margin-left: 30px;
+	float: left;
+}
+
+
+#actors h3, #genres h3{
+	font-weight: bold;
+	font-size: 1.5em;
+	margin: 10px;
+	margin-top: 25px;
+}
+.markandwish{
+	margin-left: 50px;
+}
